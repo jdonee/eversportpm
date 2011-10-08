@@ -1,0 +1,4 @@
+1,缺省少如下几个目录
+scripts                  groovy脚本
+test/integration         集成测试
+gralis-app/gateways      mybatis配置
