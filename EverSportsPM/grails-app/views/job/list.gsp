@@ -109,7 +109,7 @@
                                     <g:link action="show" id="${jobInstance.id}">
                                         <img  src="${resource(dir:'images/skin',file:'database_go.png')}" alt="${message(code: 'default.button.show.label', default: 'Show')}" />
                                     </g:link>
-                                </td>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>

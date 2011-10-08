@@ -3,6 +3,8 @@ package com.jdonee
 class PerformanceController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	
+	def filterPaneService
 
     def index = {
         redirect(action: "list", params: params)
@@ -12,6 +14,15 @@ class PerformanceController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [performanceInstanceList: Performance.list(params), performanceInstanceTotal: Performance.count()]
     }
+	
+	def filter = {
+		if(!params.max) params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		render( view:"list",
+			model:[ performanceInstanceList: filterPaneService.filter( params, Performance ),
+			performanceCount: filterPaneService.count( params, Performance ),
+			filterParams: org.grails.plugin.filterpane.FilterPaneUtils.extractFilterParams(params), params:params ]
+		)
+	}
 
     def create = {
         def performanceInstance = new Performance()

@@ -34,9 +34,7 @@
                         
                             <g:sortableColumn property="closed" title="${message(code: 'department.closed.label', default: 'closed')}" params="${filterParams}"/>
                             
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'department.dateCreated.label', default: 'dateCreated')}" params="${filterParams}"/>
-                            
-                            <th class="sortable" style="font-size:10px;">${message(code: 'department.lastUpdated.label', default: 'lastUpdated')}</th>
+                            <g:sortableColumn property="dateCreated" title="${message(code: 'department.dateCreated.label', default: 'dateCreated')}" params="${filterParams}"/>                            
                             
                             <th class="sortable" style="font-size:10px;">${message(code: 'default.operater.label', default: 'Operater')}</th>
                         
@@ -44,7 +42,7 @@
                     </thead>
                     <tbody>
                     <g:each in="${departmentInstanceList}" status="i" var="departmentInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
                         
                             <td>${fieldValue(bean: departmentInstance, field: "id")}</td>
                         
@@ -58,10 +56,11 @@
                         
                             <td><g:formatDate date="${departmentInstance.dateCreated}"/></td>
                             
-                            <td><g:formatDate date="${departmentInstance.lastUpdated}"/></td>
-                            
-                            <td><g:link action="show" id="${departmentInstance.id}">${message(code: 'default.button.show.label', default: 'Show')}</g:link></td>
-                        
+                        	 <td class="notClickable">
+                                    <g:link action="show" id="${departmentInstance.id}">
+                                        <img  src="${resource(dir:'images/skin',file:'database_go.png')}" alt="${message(code: 'default.button.show.label', default: 'Show')}" />
+                                    </g:link>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>

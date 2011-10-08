@@ -23,17 +23,15 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="sortable" style="font-size:10px;">${message(code: 'company.id.label', default: 'id')}</th>
+                            <th class="sortable" style="font-size:10px;">${message(code: 'company.id.label', default: 'Id')}</th>
                         
-                            <g:sortableColumn property="name" title="${message(code: 'company.name.label', default: 'name')}" params="${filterParams}"/>
+                            <g:sortableColumn property="name" title="${message(code: 'company.name.label', default: 'Name')}" params="${filterParams}"/>
                         
-                            <g:sortableColumn property="code" title="${message(code: 'company.code.label', default: 'code')}" params="${filterParams}"/>       
+                            <g:sortableColumn property="code" title="${message(code: 'company.code.label', default: 'Code')}" params="${filterParams}"/>       
                         
-                            <g:sortableColumn property="closed" title="${message(code: 'company.closed.label', default: 'closed')}" params="${filterParams}"/>
+                            <g:sortableColumn property="closed" title="${message(code: 'company.closed.label', default: 'Closed')}" params="${filterParams}"/>
                         
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'company.dateCreated.label', default: 'dateCreated')}" params="${filterParams}"/>
-                            
-                            <th class="sortable" style="font-size:10px;">${message(code: 'company.lastUpdated.label', default: 'lastUpdated')}</th>
+                            <g:sortableColumn property="dateCreated" title="${message(code: 'company.dateCreated.label', default: 'Date Created')}" params="${filterParams}"/>                          
                             
                             <th class="sortable" style="font-size:10px;">${message(code: 'default.operater.label', default: 'Operater')}</th>
                         
@@ -41,7 +39,7 @@
                     </thead>
                     <tbody>
                     <g:each in="${companyInstanceList}" status="i" var="companyInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
                         
                             <td>${fieldValue(bean: companyInstance, field: "id")}</td>
                         
@@ -51,11 +49,13 @@
                         
                             <td><g:formatBoolean boolean="${companyInstance.closed}"/></td>
                         
-                            <td><g:formatDate date="${companyInstance.dateCreated}"/></td>
-                            
-                            <td><g:formatDate date="${companyInstance.lastUpdated}"/></td>
-                        
-                        	<td><g:link action="show" id="${companyInstance.id}">${message(code: 'default.button.show.label', default: 'Show')}</g:link></td>
+                            <td><g:formatDate date="${companyInstance.dateCreated}"/></td>                            
+
+                        	<td class="notClickable">
+                                    <g:link action="show" id="${companyInstance.id}">
+                                        <img  src="${resource(dir:'images/skin',file:'database_go.png')}" alt="${message(code: 'default.button.show.label', default: 'Show')}" />
+                                    </g:link>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>
@@ -63,7 +63,7 @@
             </div>
             <div class="paginateButtons">
                 <g:paginate total="${companyCount == null ? companyInstanceTotal: companyCount}" params="${filterParams}"/>
-                <filterpane:filterButton text="${message(code: 'default.filter.label', default: 'Filter')}" /> 
+                <filterpane:filterButton text="${message(code: 'default.filter.label', default: 'Filter')}" />                
             </div>
         </div>
         </div>

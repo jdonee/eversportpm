@@ -32,15 +32,13 @@
                         
                             <g:sortableColumn property="dateCreated" title="${message(code: 'scoreLevel.dateCreated.label', default: 'Date Created')}" />
                         
-                            <g:sortableColumn property="lastUpdated" title="${message(code: 'scoreLevel.lastUpdated.label', default: 'Last Updated')}" />
-                            
                             <th class="sortable" style="font-size:10px;">${message(code: 'default.operater.label', default: 'Operater')}</th>
                         
                         </tr>
                     </thead>
                     <tbody>
                     <g:each in="${scoreLevelInstanceList}" status="i" var="scoreLevelInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
                         
                             <td>${fieldValue(bean: scoreLevelInstance, field: "id")}</td>
                         
@@ -51,11 +49,12 @@
                             <td>${fieldValue(bean: scoreLevelInstance, field: "maxValue")}</td>
                         
                             <td><g:formatDate date="${scoreLevelInstance.dateCreated}" /></td>
-                        
-                            <td><g:formatDate date="${scoreLevelInstance.lastUpdated}" /></td>
                             
-                            <td><g:link action="show" id="${scoreLevelInstance.id}">${message(code: 'default.button.show.label', default: 'Show')}</g:link></td>
-                        
+                            <td class="notClickable">
+                                    <g:link action="show" id="${scoreLevelInstance.id}">
+                                        <img  src="${resource(dir:'images/skin',file:'database_go.png')}" alt="${message(code: 'default.button.show.label', default: 'Show')}" />
+                                    </g:link>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>

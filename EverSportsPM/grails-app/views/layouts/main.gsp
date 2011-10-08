@@ -3,8 +3,7 @@
     <head>
         <title><g:layoutTitle default="Grails" /></title>
         <link rel="stylesheet" href="${resource(dir:'css',file:'main.css')}" />
-        <link rel="stylesheet" href="${resource(dir:'js/jquery-easyui-1.2.4/themes/default',file:'easyui.css')}"/>
-		<link rel="stylesheet" href="${resource(dir:'js/jquery-easyui-1.2.4/themes',file:'icon.css')}"/>
+        
         <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
         <style type="text/css">
         .icon_warn {
@@ -46,6 +45,8 @@
         <g:javascript library="jquery" plugin="jquery"/>
         <jqui:resources theme="ui-lightness" />
         <jqueryui:javascript/>
+        <link rel="stylesheet" href="${resource(dir:'js/jquery-easyui-1.2.4/themes/default',file:'easyui.css')}"/>
+		<link rel="stylesheet" href="${resource(dir:'js/jquery-easyui-1.2.4/themes',file:'icon.css')}"/>
         <g:javascript src="jquery-easyui-1.2.4/jquery.easyui.min.js"/>
         <g:layoutHead />
     </head>

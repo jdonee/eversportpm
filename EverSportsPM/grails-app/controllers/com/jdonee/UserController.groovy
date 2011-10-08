@@ -4,6 +4,7 @@ class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	def springSecurityService
+	def filterPaneService
     def index = {
         redirect(action: "list", params: params)
     }
@@ -12,6 +13,15 @@ class UserController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [userInstanceList: User.list(params), userInstanceTotal: User.count()]
     }
+	
+	def filter = {
+		if(!params.max) params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		render( view:"list",
+			model:[ userInstanceList: filterPaneService.filter( params, User ),
+			userCount: filterPaneService.count( params, User ),
+			filterParams: org.grails.plugin.filterpane.FilterPaneUtils.extractFilterParams(params), params:params ]
+		)
+	}
 
     def create = {
         def userInstance = new User()

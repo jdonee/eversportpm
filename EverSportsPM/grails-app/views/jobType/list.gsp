@@ -27,8 +27,6 @@
                             <g:sortableColumn property="name" title="${message(code: 'jobType.name.label', default: 'Name')}" />
                         
                             <g:sortableColumn property="dateCreated" title="${message(code: 'jobType.dateCreated.label', default: 'Date Created')}" />
-                        
-                            <g:sortableColumn property="lastUpdated" title="${message(code: 'jobType.lastUpdated.label', default: 'Last Updated')}" />
                             
                             <th class="sortable" style="font-size:10px;">${message(code: 'default.operater.label', default: 'Operater')}</th>
                         
@@ -36,18 +34,19 @@
                     </thead>
                     <tbody>
                     <g:each in="${jobTypeInstanceList}" status="i" var="jobTypeInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
                         
                             <td>${fieldValue(bean: jobTypeInstance, field: "id")}</td>
                         
                             <td>${fieldValue(bean: jobTypeInstance, field: "name")}</td>
                         
                             <td><g:formatDate date="${jobTypeInstance.dateCreated}" /></td>
-                        
-                            <td><g:formatDate date="${jobTypeInstance.lastUpdated}" /></td>
                             
-                            <td><g:link action="show" id="${jobTypeInstance.id}">${message(code: 'default.button.show.label', default: 'Show')}</g:link></td>
-                        
+                            <td class="notClickable">
+                                    <g:link action="show" id="${jobTypeInstance.id}">
+                                        <img  src="${resource(dir:'images/skin',file:'database_go.png')}" alt="${message(code: 'default.button.show.label', default: 'Show')}" />
+                                    </g:link>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>

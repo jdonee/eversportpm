@@ -31,8 +31,6 @@
                             <g:sortableColumn property="enabled" title="${message(code: 'systemTemplate.enabled.label', default: 'Enabled')}" />
                         
                             <g:sortableColumn property="dateCreated" title="${message(code: 'systemTemplate.dateCreated.label', default: 'Date Created')}" />
-                        
-                            <g:sortableColumn property="lastUpdated" title="${message(code: 'systemTemplate.lastUpdated.label', default: 'Last Updated')}" />
                             
                             <th class="sortable" style="font-size:10px;">${message(code: 'default.operater.label', default: 'Operater')}</th>
                         
@@ -40,7 +38,7 @@
                     </thead>
                     <tbody>
                     <g:each in="${systemTemplateInstanceList}" status="i" var="systemTemplateInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
                         
                             <td>${fieldValue(bean: systemTemplateInstance, field: "id")}</td>
                         
@@ -51,11 +49,12 @@
                             <td><g:formatBoolean boolean="${systemTemplateInstance.enabled}"/></td>
                         
                             <td><g:formatDate date="${systemTemplateInstance.dateCreated}"/></td>
-                        
-                            <td><g:formatDate date="${systemTemplateInstance.lastUpdated}"/></td>
                             
-                            <td><g:link action="show" id="${systemTemplateInstance.id}">${message(code: 'default.button.show.label', default: 'Show')}</g:link></td>
-                        
+                            <td class="notClickable">
+                                    <g:link action="show" id="${systemTemplateInstance.id}">
+                                        <img  src="${resource(dir:'images/skin',file:'database_go.png')}" alt="${message(code: 'default.button.show.label', default: 'Show')}" />
+                                    </g:link>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>
