@@ -2,3 +2,4 @@
 scripts                  groovy脚本
 test/integration         集成测试
 gralis-app/gateways      mybatis配置
+config/hibernate		 hibernate其它配置
