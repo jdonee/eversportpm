@@ -136,6 +136,7 @@ grails.plugins.springsecurity.interceptUrlMap = [
 //grails.plugins.springsecurity.rejectIfNoRule = true
 grails.plugins.springsecurity.password.algorithm='SHA-512'
 
+//jqueryUi.cdn = 'googlecode'
 // Added by the JQuery Validation plugin:
 jqueryValidation.packed = true
 jqueryValidation.cdn = false  // false or "microsoft"

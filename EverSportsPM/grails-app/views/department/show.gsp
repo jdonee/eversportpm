@@ -8,7 +8,8 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
-        <div title="<g:message code="default.show.label" args="[entityName]" />" closable="true">
+        <h3 class="ui-widget-header"><g:message code="default.show.label" args="[entityName]" /></h3>
+    	<div id="pageBody">
         <div class="nav">
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
@@ -101,6 +102,7 @@
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </g:form>
             </div>
+        </div>
         </div>
     </body>
 </html>
