@@ -14,28 +14,11 @@
     	   padding-left: 15px;
     	   font-size: 12px;
 		}
-		
-		div#accordion h3 a{
-			font-size:15px;
-		}
-		
-		div#accordion ul {
-			color: #48802c;
-            padding-top:10px;
-            padding-left: 15px;
-            margin-bottom:10px;
-            overflow:auto;
-        }
-        div#accordion ul li{
-			background: transparent url('${fam.icon(name: 'lightning_go')}') 0px 50% no-repeat;
-    	    padding-left: 20px;
-    	    padding-top: 5px;
-    	    list-style-type:none;
-        }
         </style>
         <g:javascript library="jquery" plugin="jquery"/>
-        <!--<g:javascript src="themeroller/themeswitchertool.js"/>--> 
-        <jqui:resources theme="cupertino"/>
+        <!--<g:javascript src="themeroller/themeswitchertool.js"/>
+        <jqui:resources theme="cupertino"/>-->
+        <jqui:resources/> 
         <jqueryui:javascript/>
         <g:javascript src="jquery-ui-layout/jquery.layout-latest.js"/>
         <g:layoutHead />
@@ -68,7 +51,12 @@
 	            <img src="${resource(dir:'images',file:'spinner.gif')}" alt="${message(code:'spinner.alt',default:'Loading...')}" />
 	        </div>
 	         <div id="grailsLogo"><a href="${createLink(uri: '/')}"><img src="${resource(dir:'images',file:'everSport-logo.jpg')}" alt="上海艾动实业有限公司" border="0" /></a></div>
-        	  	
+        	 <sec:ifLoggedIn>
+        	 	<div>
+        	 		<span style="float:left;color:#48802c;"><sec:username/>.${message(code: 'main.title.label')}.</span>
+        	 		<span style="float:right;margin-right:5px;font-size:15px;"><g:link controller="logout" style="color:#48802c;">${message(code: 'main.logout.label')}</g:link></span>
+        	 	</div>
+        	 </sec:ifLoggedIn>
         </div>
         <div class="ui-layout-south hidden">
         	<g:render template="/layouts/footer"/>
@@ -93,7 +81,7 @@
                     </ul>
 					<h3><a href="javascript:void(0);">${message(code: 'menu.person.label', default: 'Person Management')}</a></h3>
 					<ul>
-                    	<li><g:link controller="/">${message(code: 'menu.personInfo.label', default: 'Person Info')}</g:link></li>
+                    	<li><g:link controller="personInfo">${message(code: 'menu.personInfo.label', default: 'Person Info')}</g:link></li>
                         <li><g:link controller="/">${message(code: 'menu.personPerformance.label', default: 'Person Performance')}</g:link></li>
                         <li><g:link controller="/">${message(code: 'menu.queryPersonPerformance.label', default: 'Query Person Performance')}</g:link></li>
                         <li><g:link controller="/">${message(code: 'menu.peripheralPersonPerformance.label', default: 'Peripheral Person Performance')}</g:link></li>

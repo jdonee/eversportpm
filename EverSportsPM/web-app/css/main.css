@@ -390,6 +390,30 @@ a:hover {
 	display: none;
 }
 
+div#accordion h3 a {
+	font-size: 15px;
+}
+
+div#accordion ul {
+	color: #48802c;
+	padding-top: 10px;
+	padding-left: 15px;
+	margin-bottom: 10px;
+	overflow: auto;
+}
+
+div#accordion ul li {
+	/*background: transparent url('${fam.icon(name: ' lightning_go ')}') 0px
+		50% no-repeat;*/
+	padding-left: 20px;
+	padding-top: 5px;
+	list-style-type: none;
+}
+
+div#accordion ul li a {
+	font-size: 15px;
+}
+
 #tabs {
 	margin-top: 1em;
 }
