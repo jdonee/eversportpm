@@ -17,7 +17,8 @@
 	renderErrorsOnTop="true" />
 </head>
 <body>
-	<div title="<g:message code="default.edit.label" args="[entityName]" />" closable="true">
+	<h3 class="ui-widget-header"><g:message code="default.edit.label" args="[entityName]" /></h3>
+    	<div id="pageBody">
         <div class="nav">
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>

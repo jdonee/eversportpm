@@ -1,7 +1,10 @@
 <link rel="stylesheet" href="${resource(dir:'js/select-autocomplete',file:'autocomplete.css')}"/>
 <g:javascript src="select-autocomplete/jquery.autocomplete.js"/>
+<g:javascript src="select-autocomplete/jquery.select-autocomplete.js"/>
 <jq:jquery>
 	getDepartments($("select[id^='company']").val());
+	$('select.autocomplete').select_autocomplete({width:'145px'});
+    $('select.autocomplete').show();
     $('#parentCode').autocomplete(  
          "${createLink(controller:'job', action: 'autocompleteSearchCode')}"  
          , {    
@@ -84,7 +87,7 @@
                                     <label for="user"><g:message code="job.user.label" default="User" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: jobInstance, field: 'user', 'errors')}">
-                                    <g:select name="user.id"  from="${com.jdonee.User.findAllByEnabled(Boolean.TRUE)}" optionKey="id" value="${jobInstance?.user?.id}"  />
+                                    <g:select class="autocomplete" name="user.id"  from="${com.jdonee.User.findAllByEnabled(Boolean.TRUE)}" optionKey="id" value="${jobInstance?.user?.id}"  />
                                 </td>
                                 <td>&nbsp;
                                 <g:if test="${hasErrors(bean: jobInstance, field: 'user', 'errors')}">
