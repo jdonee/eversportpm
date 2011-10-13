@@ -26,10 +26,27 @@ class BootStrap {
 				testUser1.save(flush: true)
 				def testUser2 = new User(username: 'tina',firstName:'晓婷',lastName:'沈', enabled: true, password: springSecurityService.encodePassword('tina'))
 				testUser2.save(flush: true)
+				def testUser3 = new User(username: 'alice', firstName:'婷婷',lastName:'沈',enabled: true, password: springSecurityService.encodePassword('alice'))
+				testUser3.save(flush: true)
+				def testUser4 = new User(username: 'joy',firstName:'小晓',lastName:'沈', enabled: true, password: springSecurityService.encodePassword('joy'))
+				testUser4.save(flush: true)
+				def testUser5 = new User(username: 'joyce', firstName:'娟娟',lastName:'沈',enabled: true, password: springSecurityService.encodePassword('joyce'))
+				testUser5.save(flush: true)
+				def testUser6 = new User(username: 'nancy',firstName:'凤燕',lastName:'沈', enabled: true, password: springSecurityService.encodePassword('nancy'))
+				testUser6.save(flush: true)
+				def testUser7 = new User(username: 'jane', firstName:'雯雯',lastName:'沈',enabled: true, password: springSecurityService.encodePassword('jane'))
+				testUser7.save(flush: true)
+				def testUser8 = new User(username: 'lori',firstName:'梦琪',lastName:'沈', enabled: true, password: springSecurityService.encodePassword('lori'))
+				testUser8.save(flush: true)
 				UserRole.create testUser1, adminRole, true
 				UserRole.create testUser1, userRole, true
-				UserRole.create testUser2, userRole, true
-				def company1=new Company(name:'艾实实业上海分公司',code:'01')
+				UserRole.create testUser3, userRole, true
+				UserRole.create testUser4, userRole, true
+				UserRole.create testUser5, userRole, true
+				UserRole.create testUser6, userRole, true
+				UserRole.create testUser7, userRole, true
+				UserRole.create testUser8, userRole, true				
+				def company1=new Company(name:'艾实实业上海总公司',code:'01')
 				company1.save(flush: true)
 				def company2=new Company(name:'艾实实业北京分公司',code:'02')
 				company2.save(flush: true)
@@ -37,10 +54,12 @@ class BootStrap {
 				department1.save(flush: true)
 				def department2=new Department(company:company1,code:'0102',name:'人事部')
 				department2.save(flush: true)
-				def department3=new Department(company:company2,code:'0201',name:'财务部')
+				def department3=new Department(company:company1,code:'0103',name:'财务部')
 				department3.save(flush: true)
-				def department4=new Department(company:company2,code:'0202',name:'销售部')
+				def department4=new Department(company:company2,code:'0201',name:'销售部')
 				department4.save(flush: true)
+				def department5=new Department(company:company2,code:'0202',name:'市场部')
+				department5.save(flush: true)
 				def jobType1= new JobType(name:'综合管理类')
 				jobType1.save(flush: true)
 				def jobType2= new JobType(name:'职能管理类')
@@ -55,10 +74,30 @@ class BootStrap {
 				jobType6.save(flush: true)
 				def jobType7= new JobType(name:'作业类')
 				jobType7.save(flush: true)
-				def job1=new Job(name:'市场部经理',code:'010401',user:testUser1,company:company2,department:department4,jobType:jobType4)
+				def job1=new Job(name:'市场部经理',code:'020202',user:testUser1,company:company2,department:department5,jobType:jobType4)
 				job1.save(flush:true)
-				def job2=new Job(name:'人事部经理',code:'010201',user:testUser2,company:company1,department:department2,jobType:jobType1)
+				def job2=new Job(name:'财务部经理',code:'010302',user:testUser2,company:company1,department:department3,jobType:jobType1)
 				job2.save(flush:true)
+				def job3=new Job(name:'销售部经理',code:'020102',user:testUser3,company:company2,department:department4,jobType:jobType4)
+				job3.save(flush:true)
+				def job4=new Job(name:'总经理秘书',code:'010103',user:testUser4,company:company1,department:department1,jobType:jobType1)
+				job4.save(flush:true)
+				def job5=new Job(name:'市场总监',code:'020201',user:testUser5,company:company2,department:department5,jobType:jobType4)
+				job5.save(flush:true)
+				def job6=new Job(name:'人事总监',code:'010201',user:testUser6,company:company1,department:department2,jobType:jobType1,companyResponsible:true)
+				job6.save(flush:true)
+				def job7=new Job(name:'财务总监',code:'010301',user:testUser7,company:company1,department:department3,jobType:jobType1)
+				job7.save(flush:true)
+				def job8=new Job(name:'总经理',code:'010101',user:testUser8,company:company1,department:department1,jobType:jobType1)
+				job8.save(flush:true)
+				def job9=new Job(name:'总经理助理',code:'010102',user:testUser3,company:company1,department:department1,jobType:jobType1)
+				job9.save(flush:true)
+				def job10=new Job(name:'市场部专员',code:'020203',user:testUser4,company:company2,department:department5,jobType:jobType4)
+				job10.save(flush:true)
+				def job11=new Job(name:'销售部专员',code:'020103',user:testUser5,company:company2,department:department4,jobType:jobType4)
+				job11.save(flush:true)
+				def job12=new Job(name:'人事部专员',code:'010203',user:testUser6,company:company1,department:department2,jobType:jobType1)
+				job12.save(flush:true)
 				def testPerformance=new Performance(name:'第三季度考核',startDate:new Date()+1,endDate:new Date()+2,mainWeight:60,auxiliaryWeight:40,peripheralWeight:50)
 				testPerformance.save(flush:true)
 				def testPersonalPerformance=new PersonalPerformance(performance:testPerformance,job:job2)
@@ -75,13 +114,13 @@ class BootStrap {
 				ScoreLevelD.save(flush:true)
 				def ScoreLevelE=new ScoreLevel(level:"E",minValue:0,maxValue:59)
 				ScoreLevelE.save(flush:true)
-				assert User.count() == 2
+				assert User.count() == 8
 				assert Role.count() == 2
-				assert UserRole.count() == 3
+				assert UserRole.count() == 8
 				assert Company.count() == 2
-				assert Department.count() == 4
+				assert Department.count() == 5
 				assert JobType.count() == 7
-				assert Job.count() == 2
+				assert Job.count() == 12
 				assert Performance.count() == 1
 				assert PersonalPerformance.count() == 1
 				assert SystemTemplate.count() == 1
