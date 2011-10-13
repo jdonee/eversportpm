@@ -9,12 +9,14 @@ import java.util.Date;
 class JobRuleScore {
 
 	Integer score //评分
-	User user
+	Job job
 	JobRule jobRule
-    static belongsTo=[jobRule:JobRule,user:User]
+	Boolean used=false //是否评价过
+    static belongsTo=[jobRule:JobRule,job:Job]
     static constraints = {
 		jobRule()
-		user()
+		job()
+		used()
 		score(blank: false,min:0,max:100)
     }
 	

@@ -83,7 +83,7 @@
 					<h3><a href="javascript:void(0);">${message(code: 'menu.person.label', default: 'Person Management')}</a></h3>
 					<ul>
                     	<li><g:link controller="personInfo">${message(code: 'menu.personInfo.label', default: 'Person Info')}</g:link></li>
-                        <li><g:link controller="/">${message(code: 'menu.personPerformance.label', default: 'Person Performance')}</g:link></li>
+                        <li><g:link controller="personalPerformance">${message(code: 'menu.personPerformance.label', default: 'Person Performance')}</g:link></li>
                         <li><g:link controller="/">${message(code: 'menu.queryPersonPerformance.label', default: 'Query Person Performance')}</g:link></li>
                         <li><g:link controller="/">${message(code: 'menu.peripheralPersonPerformance.label', default: 'Peripheral Person Performance')}</g:link></li>
                         <li><g:link controller="/">${message(code: 'menu.superiorPersonPerformance.label', default: 'Superior Person Performance')}</g:link></li>

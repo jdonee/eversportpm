@@ -17,6 +17,7 @@ class PersonalPerformance  {
 	Integer score=0 //KPI和岗位职责要项分数
 	String feedback //领导反馈
 	String feedbackPeople //反馈人
+	String peripheralPeople //周边评价岗位列表,多个使用逗号分隔
 	PerformanceStatus status=PerformanceStatus.INIT
 	Date dateCreated
 	Date lastUpdated
@@ -29,6 +30,7 @@ class PersonalPerformance  {
 		mainLevel(nullable: true,maxSize:2)
 		jobRuleScore(nullable: true,min:0,max:100)
 		kpiRuleScore(nullable: true,min:0,max:100)
+		peripheralPeople(nullable: true,maxSize:100)
 		score(nullable: true,min:0,max:100)
 		status()
 		feedback(nullable: true,maxSize:200)
