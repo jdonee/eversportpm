@@ -16,6 +16,7 @@
 		}
         </style>
         <g:javascript library="jquery" plugin="jquery"/>
+        <g:setProvider library="jquery"/>
         <!--<g:javascript src="themeroller/themeswitchertool.js"/>
         <jqui:resources theme="cupertino"/>-->
         <jqui:resources/> 
@@ -95,7 +96,20 @@
                         config="${[header:'h3',autoHeight:'false',navigation:'true',icons:[header:'ui-icon-plus',headerSelected:'ui-icon-minus']]}"/> 
         </div>
         <div class="ui-layout-center hidden">
-	        <g:layoutBody />
+        	<sec:ifNotLoggedIn>
+	          	<g:render template="/login/sidebar_login"/>
+                <jq:jquery>
+                	$("#login").dialog({
+                	   modal:true,
+                	   height:200,
+                	   width:320,
+                	   resizable:false,
+					   closeOnEscape: false,
+					   open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); }
+					});
+                </jq:jquery>
+	        </sec:ifNotLoggedIn>
+        	<g:layoutBody />
         </div>
         </body>
 </html>

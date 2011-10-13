@@ -44,7 +44,6 @@
 </head>
 
 <body>
-	<div><a href="${createLink(uri: '/')}"><img  src="${resource(dir:'images',file:'everSport-logo.jpg')}" alt="上海艾动实业有限公司" border="0" /></a></div>	
 	<div id='login'>
 		<div class='inner'>
 			<g:if test='${flash.message}'>

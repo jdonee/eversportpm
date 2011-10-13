@@ -25,6 +25,13 @@ body {
 	position: relative;
 }
 
+#pageBody p{
+	color: #48802c;
+	font-weight: normal;
+	font-size: 12px;
+	margin: .2em 0 .2em 0;
+}
+
 #grailsLogo {
 	padding: 5px;
 }
