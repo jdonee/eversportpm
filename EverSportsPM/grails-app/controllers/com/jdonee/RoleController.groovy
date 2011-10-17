@@ -86,6 +86,7 @@ class RoleController {
 				if(roleInstance.isAdmin()){
 					flash.message = "${message(code: 'role.not.deleted.message', args: [message(code: 'role.label', default: 'Role'), params.id])}"
 				}else{
+					UserRole.removeAll(roleInstance)//同步删除中间表数据
 					roleInstance.delete(flush: true)
 					flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'role.label', default: 'Role'), params.id])}"
 				}

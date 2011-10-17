@@ -25,8 +25,9 @@ class UserController {
 
     def create = {
         def userInstance = new User()
+		def roleInstanceList = Role.getAll() 
         userInstance.properties = params
-        return [userInstance: userInstance]
+        return [userInstance: userInstance,roleInstanceList:roleInstanceList]
     }
 
     def save = {
@@ -54,12 +55,13 @@ class UserController {
 
     def edit = {
         def userInstance = User.get(params.id)
+		def roleInstanceList = Role.getAll()
         if (!userInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
             redirect(action: "list")
         }
         else {
-            return [userInstance: userInstance]
+            return [userInstance: userInstance,roleInstanceList:roleInstanceList]
         }
     }
 
@@ -95,6 +97,7 @@ class UserController {
         def userInstance = User.get(params.id)
         if (userInstance) {
             try {
+				UserRole.removeAll(userInstance)//同步删除中间表数据
                 userInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
                 redirect(action: "list")

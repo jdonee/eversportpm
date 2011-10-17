@@ -100,6 +100,17 @@
 				</g:if>
 				</td>
 			</tr>
+			
+			<tr class="prop">
+				<td valign="top" class="name"><label for="roles"><g:message
+							code="user.roles.label" default="Roles" />
+				</label></td>
+				<td valign="top" class="value ${hasErrors(bean: userInstance, field: 'roles', 'errors')}">
+					<g:each in="${roleInstanceList}" var="vr">
+							<g:checkBox name="roles" var="${vr.id}" value="${vr.id}"/>&nbsp;<span>${vr?.encodeAsHTML()}</span>
+					</g:each>
+				<td>&nbsp;</td>
+			</tr>
 
 			<tr class="prop">
 				<td valign="top" class="name"><label for="accountExpired"><g:message

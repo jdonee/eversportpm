@@ -39,7 +39,6 @@ class BootStrap {
 				def testUser8 = new User(username: 'lori',firstName:'梦琪',lastName:'沈', enabled: true, password: springSecurityService.encodePassword('lori'))
 				testUser8.save(flush: true)
 				UserRole.create testUser1, adminRole, true
-				UserRole.create testUser1, userRole, true
 				UserRole.create testUser3, userRole, true
 				UserRole.create testUser4, userRole, true
 				UserRole.create testUser5, userRole, true
@@ -116,7 +115,7 @@ class BootStrap {
 				ScoreLevelE.save(flush:true)
 				assert User.count() == 8
 				assert Role.count() == 2
-				assert UserRole.count() == 8
+				assert UserRole.count() == 7
 				assert Company.count() == 2
 				assert Department.count() == 5
 				assert JobType.count() == 7
