@@ -409,6 +409,8 @@ div#accordion ul {
 	overflow: auto;
 }
 
+.ui-autocomplete-loading { background: white url('../images/ui-anim_basic_16x16.gif') right center no-repeat; }
+
 div#accordion ul li {
 	/*background: transparent url('${fam.icon(name: ' lightning_go ')}') 0px
 		50% no-repeat;*/

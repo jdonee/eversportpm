@@ -8,12 +8,13 @@
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
+<h3 class="ui-widget-header"><g:message code="default.list.label" args="[entityName]" /></h3>
+    	<div id="pageBody">
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
+        <br/>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -28,18 +29,37 @@
                         
                             <g:sortableColumn property="configAttribute" title="${message(code: 'requestmap.configAttribute.label', default: 'Config Attribute')}" />
                         
+                            <g:sortableColumn property="description" title="${message(code: 'requestmap.description.label', default: 'Description')}" />
+                        
+                            <g:sortableColumn property="customed" title="${message(code: 'requestmap.customed.label', default: 'Customed')}" />
+                            
+                            <g:sortableColumn property="dateCreated" title="${message(code: 'scoreLevel.dateCreated.label', default: 'Date Created')}" />
+                        
+                            <th class="sortable" style="font-size:10px;">${message(code: 'default.operater.label', default: 'Operater')}</th>
+                        
                         </tr>
                     </thead>
                     <tbody>
                     <g:each in="${requestmapInstanceList}" status="i" var="requestmapInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
                         
-                            <td><g:link action="show" id="${requestmapInstance.id}">${fieldValue(bean: requestmapInstance, field: "id")}</g:link></td>
+                        	<td>${fieldValue(bean: requestmapInstance, field: "id")}</td>
                         
                             <td>${fieldValue(bean: requestmapInstance, field: "url")}</td>
                         
                             <td>${fieldValue(bean: requestmapInstance, field: "configAttribute")}</td>
                         
+                            <td>${fieldValue(bean: requestmapInstance, field: "description")}</td>
+                        
+                            <td><g:formatBoolean boolean="${requestmapInstance.customed}" /></td>
+                        
+                        	<td><g:formatDate date="${requestmapInstance.dateCreated}" /></td>
+                            
+                            <td class="notClickable">
+                                    <g:link action="show" id="${requestmapInstance.id}">
+                                        <img  src="${resource(dir:'images/skin',file:'database_go.png')}" alt="${message(code: 'default.button.show.label', default: 'Show')}" />
+                                    </g:link>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>
@@ -49,5 +69,6 @@
                 <g:paginate total="${requestmapInstanceTotal}" />
             </div>
         </div>
+       </div>
     </body>
 </html>

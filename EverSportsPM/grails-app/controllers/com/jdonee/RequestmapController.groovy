@@ -1,8 +1,11 @@
 package com.jdonee
 
-class RequestmapController {
+import grails.converters.JSON
 
+class RequestmapController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	def springSecurityService
+	def roleService
 
     def index = {
         redirect(action: "list", params: params)
@@ -12,6 +15,12 @@ class RequestmapController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [requestmapInstanceList: Requestmap.list(params), requestmapInstanceTotal: Requestmap.count()]
     }
+	
+	def searchRoleByAuthorityJSON = {
+		String authority = params.remove('term');
+		List roles = roleService.searchRoleByAuthority(authority)
+		render roles as JSON
+	}
 
     def create = {
         def requestmapInstance = new Requestmap()
@@ -22,6 +31,7 @@ class RequestmapController {
     def save = {
         def requestmapInstance = new Requestmap(params)
         if (requestmapInstance.save(flush: true)) {
+			springSecurityService.clearCachedRequestmaps()
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'requestmap.label', default: 'Requestmap'), requestmapInstance.id])}"
             redirect(action: "show", id: requestmapInstance.id)
         }
@@ -57,8 +67,7 @@ class RequestmapController {
         if (requestmapInstance) {
             if (params.version) {
                 def version = params.version.toLong()
-                if (requestmapInstance.version > version) {
-                    
+                if (requestmapInstance.version > version) {                    
                     requestmapInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'requestmap.label', default: 'Requestmap')] as Object[], "Another user has updated this Requestmap while you were editing")
                     render(view: "edit", model: [requestmapInstance: requestmapInstance])
                     return
@@ -66,6 +75,7 @@ class RequestmapController {
             }
             requestmapInstance.properties = params
             if (!requestmapInstance.hasErrors() && requestmapInstance.save(flush: true)) {
+				springSecurityService.clearCachedRequestmaps()
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'requestmap.label', default: 'Requestmap'), requestmapInstance.id])}"
                 redirect(action: "show", id: requestmapInstance.id)
             }
@@ -84,6 +94,7 @@ class RequestmapController {
         if (requestmapInstance) {
             try {
                 requestmapInstance.delete(flush: true)
+				springSecurityService.clearCachedRequestmaps()
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'requestmap.label', default: 'Requestmap'), params.id])}"
                 redirect(action: "list")
             }

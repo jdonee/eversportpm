@@ -12,6 +12,7 @@ import com.jdonee.PersonalPerformance
 import com.jdonee.SystemTemplate
 import com.jdonee.utils.TemplateType
 import com.jdonee.ScoreLevel
+import com.jdonee.Requestmap
 class BootStrap {
 	def springSecurityService
 	/**
@@ -44,7 +45,16 @@ class BootStrap {
 				UserRole.create testUser5, userRole, true
 				UserRole.create testUser6, userRole, true
 				UserRole.create testUser7, userRole, true
-				UserRole.create testUser8, userRole, true				
+				UserRole.create testUser8, userRole, true
+				new Requestmap(description:'JS目录',url: '/js/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
+				new Requestmap(description:'CSS目录',url: '/css/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
+				new Requestmap(description:'Image目录',url: '/images/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
+				new Requestmap(description:'系统登入',url: '/login/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
+				new Requestmap(description:'系统登出',url: '/logout/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
+				new Requestmap(description:'根目录',url: '/*', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
+				//new Requestmap(url: '/profile/**', configAttribute: 'ROLE_USER').save()
+				new Requestmap(description:'安全测试',url: '/secure/**', configAttribute: 'ROLE_ADMIN',customed:false).save()
+				//new Requestmap(url: '/admin/user/**', configAttribute: 'ROLE_SUPERVISOR').save()
 				def company1=new Company(name:'艾实实业上海总公司',code:'01')
 				company1.save(flush: true)
 				def company2=new Company(name:'艾实实业北京分公司',code:'02')

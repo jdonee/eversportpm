@@ -70,11 +70,12 @@
                         <li><g:link controller="company">${message(code: 'menu.company.label', default: 'Company Management')}</g:link></li>
                         <li><g:link controller="department">${message(code: 'menu.department.label', default: 'Department Management')}</g:link></li>
                         <li><g:link controller="role">${message(code: 'menu.role.label', default: 'Role Management')}</g:link></li>
+                        <li><g:link controller="requestmap">${message(code: 'menu.requestmap.label', default: 'Requestmap Management')}</g:link></li>
                         <li><g:link controller="user">${message(code: 'menu.user.label', default: 'User Management')}</g:link></li>
-                        <li><g:link controller="job">${message(code: 'menu.job.label', default: 'Job Management')}</g:link></li>
                     </ul>
 					<h3><a href="javascript:void(0);">${message(code: 'menu.performance.label', default: 'Performance Management')}</a></h3>
 					<ul>
+						<li><g:link controller="job">${message(code: 'menu.job.label', default: 'Job Management')}</g:link></li>
                        	<li><g:link controller="performance">${message(code: 'menu.newPerformance.label', default: 'New Performance Management')}</g:link></li>
                         <li><g:link controller="report">${message(code: 'menu.report.label', default: 'Report Management')}</g:link></li>
                         <li><g:link controller="systemTemplate">${message(code: 'menu.systemTemplate.label', default: 'System Template Management')}</g:link></li>
