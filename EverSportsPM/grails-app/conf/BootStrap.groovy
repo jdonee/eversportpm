@@ -40,6 +40,7 @@ class BootStrap {
 				def testUser8 = new User(username: 'lori',firstName:'梦琪',lastName:'沈', enabled: true, password: springSecurityService.encodePassword('lori'))
 				testUser8.save(flush: true)
 				UserRole.create testUser1, adminRole, true
+				UserRole.create testUser2, userRole, true
 				UserRole.create testUser3, userRole, true
 				UserRole.create testUser4, userRole, true
 				UserRole.create testUser5, userRole, true
@@ -52,9 +53,19 @@ class BootStrap {
 				new Requestmap(description:'系统登入',url: '/login/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
 				new Requestmap(description:'系统登出',url: '/logout/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
 				new Requestmap(description:'根目录',url: '/*', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
-				//new Requestmap(url: '/profile/**', configAttribute: 'ROLE_USER').save()
-				new Requestmap(description:'安全测试',url: '/secure/**', configAttribute: 'ROLE_ADMIN',customed:false).save()
-				//new Requestmap(url: '/admin/user/**', configAttribute: 'ROLE_SUPERVISOR').save()
+				new Requestmap(description:'安全测试',url: '/secure/**', configAttribute: 'ROLE_ADMIN,ROLE_USER',customed:true).save()
+				new Requestmap(description:'公司管理',url: '/company/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'部门管理',url: '/department/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'角色管理',url: '/role/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'权限管理',url: '/requestmap/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'用户管理',url: '/user/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'岗位管理',url: '/job/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'系统考核管理',url: '/performance/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'考核报表管理',url: '/report/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'考核模板管理',url: '/systemTemplate/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'考核规则管理',url: '/scoreLevel/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
+				new Requestmap(description:'个人信息管理',url: '/personInfo/**', configAttribute: 'ROLE_ADMIN,ROLE_USER',customed:true).save()
+				new Requestmap(description:'新建个人考核',url: '/personalPerformance/**', configAttribute: 'ROLE_ADMIN,ROLE_USER',customed:true).save()				
 				def company1=new Company(name:'艾实实业上海总公司',code:'01')
 				company1.save(flush: true)
 				def company2=new Company(name:'艾实实业北京分公司',code:'02')
@@ -125,7 +136,7 @@ class BootStrap {
 				ScoreLevelE.save(flush:true)
 				assert User.count() == 8
 				assert Role.count() == 2
-				assert UserRole.count() == 7
+				assert UserRole.count() == 8
 				assert Company.count() == 2
 				assert Department.count() == 5
 				assert JobType.count() == 7

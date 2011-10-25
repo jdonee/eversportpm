@@ -2,6 +2,7 @@
 <g:javascript src="select-autocomplete/jquery.autocomplete.js"/>
 <g:javascript src="select-autocomplete/jquery.select-autocomplete.js"/>
 <jq:jquery>
+	$("#jobList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
 	getDepartments($("select[id^='company']").val());
 	$('select.autocomplete').select_autocomplete({width:'145px'});
     $('select.autocomplete').show();

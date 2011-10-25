@@ -1,3 +1,6 @@
+<jq:jquery>
+        	$("#roleList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
+</jq:jquery>
 <div class="dialog">
 	<table>
 		<tbody>

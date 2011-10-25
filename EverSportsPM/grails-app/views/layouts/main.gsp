@@ -28,6 +28,14 @@
         	north__spacing_open: 0, 
         	south__spacing_open: 0
         	});
+        	$("h3+ul").filter(function(index){
+        		//alert( $(this).html().trim().length);
+        		return $(this).html().trim().length<=0;
+        	}).prev().remove();
+        	$("ul").filter(function(index){
+        		//alert( $(this).html().trim().length);
+        		return $(this).html().trim().length<=0;
+        	}).remove();
         	//addThemeSwitcher( 'body > .ui-layout-north', { top: '20px', right: '20px' });
         </jq:jquery>
         <g:javascript>
@@ -67,24 +75,48 @@
 	     	<div id="accordion">
 					<h3><a href="javascript:void(0);">${message(code: 'menu.system.label', default: 'System Management')}</a></h3>
 					<ul>
-                        <li><g:link controller="company">${message(code: 'menu.company.label', default: 'Company Management')}</g:link></li>
-                        <li><g:link controller="department">${message(code: 'menu.department.label', default: 'Department Management')}</g:link></li>
-                        <li><g:link controller="role">${message(code: 'menu.role.label', default: 'Role Management')}</g:link></li>
-                        <li><g:link controller="requestmap">${message(code: 'menu.requestmap.label', default: 'Requestmap Management')}</g:link></li>
-                        <li><g:link controller="user">${message(code: 'menu.user.label', default: 'User Management')}</g:link></li>
+						<sec:access url="/company/**">
+                        <li><g:link elementId="companyList" controller="company">${message(code: 'menu.company.label', default: 'Company Management')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/department/**">
+                        <li><g:link elementId="departmentList" controller="department">${message(code: 'menu.department.label', default: 'Department Management')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/role/**">
+                        <li><g:link elementId="roleList" controller="role">${message(code: 'menu.role.label', default: 'Role Management')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/requestmap/**">
+                        <li><g:link elementId="requestmapList" controller="requestmap">${message(code: 'menu.requestmap.label', default: 'Requestmap Management')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/user/**">
+                        <li><g:link elementId="userList" controller="user">${message(code: 'menu.user.label', default: 'User Management')}</g:link></li>
+                        </sec:access>
                     </ul>
 					<h3><a href="javascript:void(0);">${message(code: 'menu.performance.label', default: 'Performance Management')}</a></h3>
 					<ul>
-						<li><g:link controller="job">${message(code: 'menu.job.label', default: 'Job Management')}</g:link></li>
-                       	<li><g:link controller="performance">${message(code: 'menu.newPerformance.label', default: 'New Performance Management')}</g:link></li>
-                        <li><g:link controller="report">${message(code: 'menu.report.label', default: 'Report Management')}</g:link></li>
-                        <li><g:link controller="systemTemplate">${message(code: 'menu.systemTemplate.label', default: 'System Template Management')}</g:link></li>
-                        <li><g:link controller="scoreLevel">${message(code: 'menu.scoreLevel.label', default: 'Score Level Management')}</g:link></li>
+						<sec:access url="/job/**">
+						<li><g:link elementId="jobList" controller="job">${message(code: 'menu.job.label', default: 'Job Management')}</g:link></li>
+						</sec:access>
+						<sec:access url="/performance/**">
+                       	<li><g:link elementId="performanceList" controller="performance">${message(code: 'menu.newPerformance.label', default: 'New Performance Management')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/report/**">
+                        <li><g:link elementId="reportList" controller="report">${message(code: 'menu.report.label', default: 'Report Management')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/systemTemplate/**">
+                        <li><g:link elementId="systemTemplateList" controller="systemTemplate">${message(code: 'menu.systemTemplate.label', default: 'System Template Management')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/scoreLevel/**">
+                        <li><g:link elementId="scoreLevelList" controller="scoreLevel">${message(code: 'menu.scoreLevel.label', default: 'Score Level Management')}</g:link></li>
+                    	</sec:access>
                     </ul>
 					<h3><a href="javascript:void(0);">${message(code: 'menu.person.label', default: 'Person Management')}</a></h3>
 					<ul>
-                    	<li><g:link controller="personInfo">${message(code: 'menu.personInfo.label', default: 'Person Info')}</g:link></li>
-                        <li><g:link controller="personalPerformance">${message(code: 'menu.personPerformance.label', default: 'Person Performance')}</g:link></li>
+						<sec:access url="/personInfo/**">
+                    	<li><g:link elementId="personInfoList" controller="personInfo">${message(code: 'menu.personInfo.label', default: 'Person Info')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/personalPerformance/**">
+                        <li><g:link elementId="personalPerformanceList" controller="personalPerformance">${message(code: 'menu.personPerformance.label', default: 'Person Performance')}</g:link></li>
+                        </sec:access>
                         <li><g:link controller="/">${message(code: 'menu.queryPersonPerformance.label', default: 'Query Person Performance')}</g:link></li>
                         <li><g:link controller="/">${message(code: 'menu.peripheralPersonPerformance.label', default: 'Peripheral Person Performance')}</g:link></li>
                         <li><g:link controller="/">${message(code: 'menu.superiorPersonPerformance.label', default: 'Superior Person Performance')}</g:link></li>
@@ -94,7 +126,7 @@
                         id="accordion"
                         namespace="grails.jqueryui.components"
                         renderMarkup="false"
-                        config="${[header:'h3',autoHeight:'false',navigation:'true',icons:[header:'ui-icon-plus',headerSelected:'ui-icon-minus']]}"/> 
+                        config="${[header:'h3',autoHeight:false,navigation:true,icons:[header:'ui-icon-plus',headerSelected:'ui-icon-minus']]}"/> 
         </div>
         <div class="ui-layout-center hidden">
         	<sec:ifNotLoggedIn>

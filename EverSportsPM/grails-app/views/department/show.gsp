@@ -1,4 +1,6 @@
-
+<jq:jquery>
+        	$("#departmentList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
+</jq:jquery>
 <%@ page import="com.jdonee.Department" %>
 <html>
     <head>

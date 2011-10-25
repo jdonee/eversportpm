@@ -7,6 +7,9 @@
         <export:resource />
         <filterpane:includes />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <jq:jquery>
+        	$("#jobList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
+        </jq:jquery>
     </head>
     <body>
     <h3 class="ui-widget-header"><g:message code="default.list.label" args="[entityName]" /></h3>

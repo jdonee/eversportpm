@@ -1,4 +1,5 @@
 <jq:jquery>
+    $("#requestmapList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
 	function split( val ) {
 			return val.split( /,\s*/ );
 		}
@@ -73,19 +74,7 @@
                                     <label for="configAttribute"><g:message code="requestmap.configAttribute.label" default="Config Attribute" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: requestmapInstance, field: 'configAttribute', 'errors')}">
-                                    <g:textArea name="configAttribute" value="${requestmapInstance?.configAttribute}" style="width: 500px; height: 50px;"/>
-                                    <%-- <jqueryui:jquiAutoComplete
-			                        id="configAttribute"
-			                        namespace="grails.jqueryui.components"
-			                        renderMarkup="false"
-			                        config="${[
-			                            minLength : 1,
-			                            source : function( request, response ) {
-					$.getJSON( "createLink(controller: 'requestmap', action: 'searchRoleByAuthorityJSON').toString()", {
-						term: extractLast( request.term )
-							}, response );
-						}
-			                        ]}"/>--%>
+                                    <g:textArea name="configAttribute" value="${requestmapInstance?.configAttribute}" style="width: 500px; height: 150px;"/>
                                 </td>
                                 <td>&nbsp;
 								<g:if

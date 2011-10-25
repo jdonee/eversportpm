@@ -6,6 +6,9 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'job.label', default: 'Job')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <jq:jquery>
+        	$("#jobList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
+        </jq:jquery>
     </head>
     <body>
         <h3 class="ui-widget-header"><g:message code="default.show.label" args="[entityName]" /></h3>
