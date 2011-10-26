@@ -25,7 +25,7 @@ class UserController {
 
     def create = {
         def userInstance = new User()
-		def roleInstanceList = Role.getAll() 
+		def roleInstanceList = Role.getAll()
         userInstance.properties = params
         return [userInstance: userInstance,roleInstanceList:roleInstanceList]
     }
@@ -34,6 +34,10 @@ class UserController {
         def userInstance = new User(params)
 		userInstance.password = springSecurityService.encodePassword(params.password)
         if (userInstance.save(flush: true)) {
+			for (roleId in params.list('roles')) {
+				def roleInstance=Role.get(roleId.toLong())
+				UserRole.create(userInstance,roleInstance, true)
+			}
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
             redirect(action: "show", id: userInstance.id)
         }
@@ -71,7 +75,6 @@ class UserController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (userInstance.version > version) {
-                    
                     userInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'user.label', default: 'User')] as Object[], "Another user has updated this User while you were editing")
                     render(view: "edit", model: [userInstance: userInstance])
                     return
@@ -80,6 +83,11 @@ class UserController {
             userInstance.properties = params
 			userInstance.password = springSecurityService.encodePassword(params.password)
             if (!userInstance.hasErrors() && userInstance.save(flush: true)) {
+				UserRole.removeAll(userInstance)//同步删除中间表数据
+				for (roleId in params.list('roles')) {
+					def roleInstance=Role.get(roleId.toLong())
+					UserRole.create(userInstance,roleInstance , true)
+				}
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
                 redirect(action: "show", id: userInstance.id)
             }

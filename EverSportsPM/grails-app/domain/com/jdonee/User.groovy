@@ -50,6 +50,6 @@ class User {
 	}
 	
 	String toString(){
-		"${username}[${firstName},${lastName}]"
+		"${username}[${lastName},${firstName}]"
 	}
 }

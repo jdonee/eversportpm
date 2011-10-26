@@ -110,7 +110,12 @@
 				</label></td>
 				<td valign="top" class="value ${hasErrors(bean: userInstance, field: 'roles', 'errors')}">
 					<g:each in="${roleInstanceList}" var="vr">
-							<g:checkBox name="roles" var="${vr.id}" value="${vr.id}"/>&nbsp;<span>${vr?.encodeAsHTML()}</span>
+					<g:if test="${userInstance?.id!=null}">
+						<g:checkBox name="roles" value="${vr.id}" checked="${userInstance.authorities.contains(vr)}"/>&nbsp;<span>${vr?.encodeAsHTML()}</span>
+					</g:if>
+					<g:else>
+						<g:checkBox name="roles" value="${vr.id}"/>&nbsp;<span>${vr?.encodeAsHTML()}</span>
+					</g:else>	
 					</g:each>
 				<td>&nbsp;</td>
 			</tr>
