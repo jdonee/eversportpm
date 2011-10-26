@@ -19,6 +19,12 @@ class User {
 	Date dateCreated
 	Date lastUpdated
 	
+	static transients=['employeeName']
+	
+	String getEmployeeName(){
+		return lastName+","+firstName
+	}
+	
 	static hasMany =[jobs: Job]
 	static constraints = {
 		username(blank: false, unique: true)
@@ -44,6 +50,6 @@ class User {
 	}
 	
 	String toString(){
-		"${username}[${firstName},${lastName}]"
+		"${username}[${lastName},${firstName}]"
 	}
 }

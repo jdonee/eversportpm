@@ -60,10 +60,10 @@ class JobController {
 			response.setHeader("Content-disposition", "attachment; filename=jobs.${params.extension}")
 
 			List fields = [
-				"id",
+				"user.employeeName",
+				"user.username",
 				"name",
 				"code",
-				"user.username",
 				"jobType.name",
 				"parentCode",
 				"company.name",
@@ -72,17 +72,17 @@ class JobController {
 				"closed",
 				"dateCreated"
 			]
-			Map labels =  ["id":"${message(code: 'job.id.label',default: 'Id')}",
+			Map labels =  ["user.employeeName":"${message(code: 'user.employeeName.label', default: 'Employee Name')}",
+				"user.username":"${message(code: 'user.username.label', default: 'User Name')}",
 				"name":"${message(code: 'job.name.label', default: 'Name')}", 
 				"code":"${message(code: 'job.code.label', default: 'Code')}",
-				"user.username":"${message(code: 'user.username.label', default: 'User Name')}",
 				"jobType.name":"${message(code: 'job.jobType.label', default: 'Job Type')}",
 				"parentCode":"${message(code: 'job.parentCode.label', default: 'Parent Code')}",
 				"company.name":"${message(code: 'company.name.label', default: 'Company')}",
 				"department.name":"${message(code: 'department.name.label', default: 'Department')}",
 				"companyResponsible":"${message(code: 'job.companyResponsible.label', default: 'Company Responsible')}",
 				"closed":"${message(code: 'job.closed.label', default: 'Closed')}",
-				"dateCreated":"${message(code: 'job.code.label', default: 'Date Created')}"]
+				"dateCreated":"${message(code: 'job.dateCreated.label', default: 'Date Created')}"]
 
 			/* Formatter closure in previous releases
 			 * def upperCase = { value -> return value.toUpperCase() }

@@ -62,8 +62,8 @@
 	         <div id="grailsLogo"><a href="${createLink(uri: '/')}"><img src="${resource(dir:'images',file:'everSport-logo.jpg')}" alt="上海艾动实业有限公司" border="0" /></a></div>
         	 <sec:ifLoggedIn>
         	 	<div>
-        	 		<span style="float:left;color:#48802c;"><sec:username/>.${message(code: 'main.title.label')}.</span>
-        	 		<span style="float:right;margin-right:5px;font-size:15px;"><g:link controller="logout" style="color:#48802c;">${message(code: 'main.logout.label')}</g:link></span>
+        	 		<span style="float:left;color:#48802c;"><sec:username/>.${message(code: 'main.title.label',default:'Welcome to Ever Sports System')}.</span>
+        	 		<span style="float:right;margin-right:5px;font-size:15px;"><g:link controller="logout" style="color:#48802c;">${message(code: 'main.logout.label',default:'Log Out')}</g:link></span>
         	 	</div>
         	 </sec:ifLoggedIn>
         </div>
