@@ -1,6 +1,6 @@
 package com.jdonee
 
-
+//import com.jdonee.utils.LogSql
 class CompanyController {
 	
 	def filterPaneService
@@ -55,6 +55,9 @@ class CompanyController {
 
     def edit = {
         def companyInstance = Company.get(params.id)
+//		LogSql.execute{
+//			println Company.get(params.id)
+//		}
         if (!companyInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'company.label', default: 'Company'), params.id])}"
             redirect(action: "list")
