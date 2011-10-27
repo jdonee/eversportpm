@@ -1,4 +1,4 @@
-#Thu Sep 01 16:04:59 CST 2011
+#Thu Oct 27 10:57:54 CST 2011
 com.springsource.sts.grails.core.com.springsource.sts.grails.core.install.name=Grails 1.3.7
-com.springsource.sts.grails.core.use.default.install=true
+com.springsource.sts.grails.core.use.default.install=false
 eclipse.preferences.version=1
