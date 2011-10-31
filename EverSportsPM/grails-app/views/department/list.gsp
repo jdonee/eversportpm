@@ -27,9 +27,7 @@
             <div class="list">
                 <table>
                     <thead>
-                        <tr>
-                            <th class="sortable" style="font-size:10px;">${message(code: 'department.id.label', default: 'id')}</th>
-                        
+                        <tr>                        
                             <th class="sortable" style="font-size:10px;"><g:message code="department.company.label" default="company" /></th>
                         
                             <g:sortableColumn property="name" title="${message(code: 'department.name.label', default: 'name')}" params="${filterParams}"/>
@@ -47,8 +45,6 @@
                     <tbody>
                     <g:each in="${departmentInstanceList}" status="i" var="departmentInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                            <td>${fieldValue(bean: departmentInstance, field: "id")}</td>
                         
                             <td>${fieldValue(bean: departmentInstance, field: "company")}</td>
                         

@@ -3,6 +3,9 @@ package com.jdonee
 class PersonalPerformanceController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	
+	def springSecurityService
+	def personalPerformanceService
 
     def index = {
         redirect(action: "list", params: params)
@@ -10,7 +13,8 @@ class PersonalPerformanceController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [personalPerformanceInstanceList: PersonalPerformance.list(params), personalPerformanceInstanceTotal: PersonalPerformance.count()]
+		def user = currentUser
+        [personalPerformanceInstanceList: personalPerformanceService.findAllPersonalPerformanceByUser(user,params), personalPerformanceInstanceTotal: PersonalPerformance.count()]
     }
 
     def create = {
@@ -97,4 +101,8 @@ class PersonalPerformanceController {
             redirect(action: "list")
         }
     }
+	
+	private getCurrentUser() {
+		return User.get(springSecurityService.principal.id)
+	}
 }

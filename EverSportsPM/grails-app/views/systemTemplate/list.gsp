@@ -25,10 +25,7 @@
                 <table>
                     <thead>
                         <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'systemTemplate.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="templateType" title="${message(code: 'systemTemplate.templateType.label', default: 'Template Type')}" />
+                        	<g:sortableColumn property="templateType" title="${message(code: 'systemTemplate.templateType.label', default: 'Template Type')}" />
                         
                             <g:sortableColumn property="templateContent" title="${message(code: 'systemTemplate.templateContent.label', default: 'Template Content')}" />
                         
@@ -43,10 +40,7 @@
                     <tbody>
                     <g:each in="${systemTemplateInstanceList}" status="i" var="systemTemplateInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                            <td>${fieldValue(bean: systemTemplateInstance, field: "id")}</td>
-                        
-                            <td>${fieldValue(bean: systemTemplateInstance, field: "templateType")}</td>
+                        	<td>${fieldValue(bean: systemTemplateInstance, field: "templateType")}</td>
                         
                             <td class="contents">${systemTemplateInstance?.templateContentBy?.encodeAsHTML()}</td>
                         
