@@ -27,7 +27,6 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="sortable" style="font-size:10px;">${message(code: 'company.id.label', default: 'Id')}</th>
                         
                             <g:sortableColumn property="name" title="${message(code: 'company.name.label', default: 'Name')}" params="${filterParams}"/>
                         
@@ -44,8 +43,6 @@
                     <tbody>
                     <g:each in="${companyInstanceList}" status="i" var="companyInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                            <td>${fieldValue(bean: companyInstance, field: "id")}</td>
                         
                             <td>${fieldValue(bean: companyInstance, field: "name")}</td>
                         

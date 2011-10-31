@@ -57,9 +57,6 @@
                 <table>
                     <thead>
                         <tr>
-                            
-                            <th class="sortable" style="font-size:10px;">${message(code: 'job.id.label', default: 'Id')}</th>
-                            
                             <th class="sortable" style="font-size:10px;"><g:message code="job.company.label" default="Company" /></th>
                         
                             <th class="sortable" style="font-size:10px;"><g:message code="job.department.label" default="Department" /></th>
@@ -86,9 +83,6 @@
                     <tbody>
                     <g:each in="${jobInstanceList}" status="i" var="jobInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                            <td>${fieldValue(bean: jobInstance, field: "id")}</td>
-                            
                              <td>${fieldValue(bean: jobInstance, field: "company")}</td>
                         
                             <td>${fieldValue(bean: jobInstance, field: "department")}</td>

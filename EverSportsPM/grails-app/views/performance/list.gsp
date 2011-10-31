@@ -27,9 +27,7 @@
             <div class="list">
                 <table>
                     <thead>
-                        <tr>
-                        	<th class="sortable" style="font-size:10px;">${message(code: 'performance.id.label', default: 'Id')}</th>
-                        
+                        <tr>                        
                             <g:sortableColumn property="name" title="${message(code: 'performance.name.label', default: 'Name')}" params="${filterParams}" />
                         
                             <g:sortableColumn property="startDate" title="${message(code: 'performance.startDate.label', default: 'Start Date')}" params="${filterParams}" />
@@ -51,8 +49,6 @@
                     <tbody>
                     <g:each in="${performanceInstanceList}" status="i" var="performanceInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                            <td>${fieldValue(bean: performanceInstance, field: "id")}</td>
                         
                             <td>${fieldValue(bean: performanceInstance, field: "name")}</td>
                         

@@ -120,8 +120,12 @@ class BootStrap {
 				job12.save(flush:true)
 				def testPerformance=new Performance(name:'第三季度考核',startDate:new Date()+1,endDate:new Date()+2,mainWeight:60,auxiliaryWeight:40,peripheralWeight:50)
 				testPerformance.save(flush:true)
-				def testPersonalPerformance=new PersonalPerformance(performance:testPerformance,job:job2)
-				testPersonalPerformance.save(flush:true)
+				def testPersonalPerformance1=new PersonalPerformance(performance:testPerformance,job:job1)
+				testPersonalPerformance1.save(flush:true)
+				def testPersonalPerformance2=new PersonalPerformance(performance:testPerformance,job:job2)
+				testPersonalPerformance2.save(flush:true)
+				def testPersonalPerformance3=new PersonalPerformance(performance:testPerformance,job:job3)
+				testPersonalPerformance3.save(flush:true)
 				def jobSystemTemplate=new SystemTemplate(templateType:TemplateType.JOB,templateContent:'严格按照公司的经营方针、管理流程、规章制度等履行岗位职能；||保质、保量、按时完成工作目标和工作任务；||及时、准确、全面地向上级汇报岗位所辖工作情况或业务完成情况；||严格遵守员工职业道德和行为规范，无违纪违法或有损集团和公司声誉的事。',enabled:true)
 				jobSystemTemplate.save(flush:true)
 				def ScoreLevelA=new ScoreLevel(level:"A",minValue:90,maxValue:100)
@@ -142,7 +146,7 @@ class BootStrap {
 				assert JobType.count() == 7
 				assert Job.count() == 12
 				assert Performance.count() == 1
-				assert PersonalPerformance.count() == 1
+				assert PersonalPerformance.count() == 3
 				assert SystemTemplate.count() == 1
 				assert ScoreLevel.count() == 5
 				break

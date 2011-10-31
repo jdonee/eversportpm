@@ -25,10 +25,7 @@
                 <table>
                     <thead>
                         <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'scoreLevel.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="level" title="${message(code: 'scoreLevel.level.label', default: 'Level')}" />
+                        	<g:sortableColumn property="level" title="${message(code: 'scoreLevel.level.label', default: 'Level')}" />
                         
                             <g:sortableColumn property="minValue" title="${message(code: 'scoreLevel.minValue.label', default: 'Min Value')}" />
                         
@@ -43,10 +40,7 @@
                     <tbody>
                     <g:each in="${scoreLevelInstanceList}" status="i" var="scoreLevelInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                            <td>${fieldValue(bean: scoreLevelInstance, field: "id")}</td>
-                        
-                            <td>${fieldValue(bean: scoreLevelInstance, field: "level")}</td>
+                        	<td>${fieldValue(bean: scoreLevelInstance, field: "level")}</td>
                         
                             <td>${fieldValue(bean: scoreLevelInstance, field: "minValue")}</td>
                         

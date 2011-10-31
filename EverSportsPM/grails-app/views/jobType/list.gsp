@@ -25,10 +25,7 @@
                 <table>
                     <thead>
                         <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'jobType.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="name" title="${message(code: 'jobType.name.label', default: 'Name')}" />
+                        	<g:sortableColumn property="name" title="${message(code: 'jobType.name.label', default: 'Name')}" />
                         
                             <g:sortableColumn property="dateCreated" title="${message(code: 'jobType.dateCreated.label', default: 'Date Created')}" />
                             
@@ -39,10 +36,7 @@
                     <tbody>
                     <g:each in="${jobTypeInstanceList}" status="i" var="jobTypeInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                            <td>${fieldValue(bean: jobTypeInstance, field: "id")}</td>
-                        
-                            <td>${fieldValue(bean: jobTypeInstance, field: "name")}</td>
+                        	<td>${fieldValue(bean: jobTypeInstance, field: "name")}</td>
                         
                             <td><g:formatDate date="${jobTypeInstance.dateCreated}" /></td>
                             

@@ -26,8 +26,6 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'requestmap.id.label', default: 'Id')}" />
-                        
                             <g:sortableColumn property="url" title="${message(code: 'requestmap.url.label', default: 'Url')}" />
                         
                             <g:sortableColumn property="configAttribute" title="${message(code: 'requestmap.configAttribute.label', default: 'Config Attribute')}" />
@@ -45,8 +43,6 @@
                     <tbody>
                     <g:each in="${requestmapInstanceList}" status="i" var="requestmapInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                        	<td>${fieldValue(bean: requestmapInstance, field: "id")}</td>
                         
                             <td>${fieldValue(bean: requestmapInstance, field: "url")}</td>
                         

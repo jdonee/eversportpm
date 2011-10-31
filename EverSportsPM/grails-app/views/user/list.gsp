@@ -28,9 +28,7 @@
                 <table>
                     <thead>
                         <tr>
-                        	<th class="sortable" style="font-size:10px;">${message(code: 'user.id.label', default: 'Id')}</th>
-                        
-                            <g:sortableColumn property="username" title="${message(code: 'user.username.label', default: 'Username')}" params="${filterParams}" />
+                        	<g:sortableColumn property="username" title="${message(code: 'user.username.label', default: 'Username')}" params="${filterParams}" />
                         
                             <g:sortableColumn property="firstName" title="${message(code: 'user.firstName.label', default: 'First Name')}"  params="${filterParams}"/>
                         
@@ -55,10 +53,7 @@
                     <tbody>
                     <g:each in="${userInstanceList}" status="i" var="userInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                            <td>${fieldValue(bean: userInstance, field: "id")}</td>
-                        
-                            <td>${fieldValue(bean: userInstance, field: "username")}</td>
+                        	<td>${fieldValue(bean: userInstance, field: "username")}</td>
                         
                             <td>${fieldValue(bean: userInstance, field: "firstName")}</td>
                         

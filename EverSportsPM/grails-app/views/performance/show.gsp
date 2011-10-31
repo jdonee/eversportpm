@@ -81,6 +81,13 @@
                             <td valign="top" class="value">${fieldValue(bean: performanceInstance, field: "description")}</td>
                             
                         </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="performance.useTemplate.label" default="Use Template" /></td>
+                            
+                            <td valign="top" class="value"><g:formatBoolean boolean="${performanceInstance?.useTemplate}" /></td>
+                            
+                        </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="performance.closed.label" default="Closed" /></td>

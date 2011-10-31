@@ -25,10 +25,7 @@
                 <table>
                     <thead>
                         <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'role.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="authority" title="${message(code: 'role.authority.label', default: 'Authority')}" />
+                        	<g:sortableColumn property="authority" title="${message(code: 'role.authority.label', default: 'Authority')}" />
                             
                             <g:sortableColumn property="alias" title="${message(code: 'role.alias.label', default: 'Alias')}" />
                             
@@ -41,8 +38,6 @@
                     <tbody>
                     <g:each in="${roleInstanceList}" status="i" var="roleInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                        
-                            <td>${fieldValue(bean: roleInstance, field: "id")}</td>
                         
                             <td>${fieldValue(bean: roleInstance, field: "authority")}</td>
                             
