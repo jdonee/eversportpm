@@ -1,15 +1,23 @@
 package com.jdonee
 
+import grails.converters.JSON
 class PersonalPerformanceController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
 	def springSecurityService
 	def personalPerformanceService
+	def jobService
 
     def index = {
         redirect(action: "list", params: params)
     }
+	
+	def searchJobByCodeJSON = {
+		String code = params.remove('term');
+		List jobs = jobService.searchJobByCode(code)
+		render jobs as JSON
+	}
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)

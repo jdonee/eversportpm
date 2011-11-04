@@ -122,22 +122,9 @@ log4j = {
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.jdonee.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.jdonee.UserRole'
 grails.plugins.springsecurity.authority.className = 'com.jdonee.Role'
-
 grails.plugins.springsecurity.logout.afterLogoutUrl="/login/auth"
-//grails.plugins.springsecurity.securityConfigType = 'InterceptUrlMap'
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.Requestmap
 grails.plugins.springsecurity.requestMap.className = 'com.jdonee.Requestmap'
-//grails.plugins.springsecurity.rejectIfNoRule = true
-//grails.plugins.springsecurity.interceptUrlMap = [
-//	'/js/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-//	'/css/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-//	'/images/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-//	'/*': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-//	'/login/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-//	'/logout/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-//	'/secure/**': ['ROLE_ADMIN']	
-//	]
-
 grails.plugins.springsecurity.password.algorithm='SHA-512'
 
 //jqueryUi.cdn = 'googlecode'

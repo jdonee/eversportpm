@@ -12,9 +12,20 @@ class JobService {
 			            }
 			            ilike("code",code + "%")
 						eq("closed",Boolean.FALSE)
-			            maxResults(10)
+			            maxResults(20)
 			            order("code", "asc")
 			        }
 		return result
-     }  
+     }
+	
+	def searchJobByCode(code){
+		return Job.findAllByCodeLike(code + '%').collect() {
+			return [
+					id: it.id,
+					label: it.code+"["+it.name+"("+it.user.username+")]",
+					//label: it.code+"["+it.name+"]",
+					value: it.code
+			]
+		}
+	 }
 }
