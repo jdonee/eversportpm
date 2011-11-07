@@ -9,7 +9,7 @@ class UrlMappings {
 			}
 		}
 		
-		"/login/$action?"(controller: "login",action:"auth")
+		"/login/$action?"(controller: "login")
 		"/logout"(controller: "logout")
 		"/"(controller:"system",action:"index")
 		"403"(controller: "errors", action: "error403")
