@@ -118,7 +118,7 @@ class BootStrap {
 				job11.save(flush:true)
 				def job12=new Job(name:'人事部专员',code:'010203',user:testUser6,company:company1,department:department2,jobType:jobType1)
 				job12.save(flush:true)
-				def testPerformance=new Performance(name:'第三季度考核',startDate:new Date()+1,endDate:new Date()+2,mainWeight:60,auxiliaryWeight:40,peripheralWeight:50)
+				def testPerformance=new Performance(name:'第三季度考核',startDate:new Date()+1,endDate:new Date()+2,mainWeight:60,auxiliaryWeight:40,peripheralWeight:50,useTemplate:true)
 				testPerformance.save(flush:true)
 				def testPersonalPerformance1=new PersonalPerformance(performance:testPerformance,job:job1)
 				testPersonalPerformance1.save(flush:true)

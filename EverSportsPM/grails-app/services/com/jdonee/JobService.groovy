@@ -28,4 +28,24 @@ class JobService {
 			]
 		}
 	 }
+	
+	def findAllJobByUser(user){
+		def results=[]
+		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
+		if(jobs){
+			results=Job.list()
+		}else{
+			def codes=Job.withCriteria{
+				projections{ property("code") }
+				eq "user",user
+			}.join(",")
+			results=Job.withCriteria{
+				or{
+					'in'("code",codes)
+					'in'("parentCode",codes)
+				}
+			}
+		}
+		return results
+	}
 }

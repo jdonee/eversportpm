@@ -123,46 +123,50 @@
                             <td valign="top" class="value"><g:formatDate date="${personalPerformanceInstance?.lastUpdated}" /></td>
                             
                         </tr>
-                    
+                        
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personalPerformance.companyRules.label" default="Company Rules" /></td>
-                            
-                            <td valign="top" style="text-align: left;" class="value">
-                                <ul>
-                                <g:each in="${personalPerformanceInstance.companyRules}" var="c">
-                                    <li><g:link controller="companyRule" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
-                                </g:each>
-                                </ul>
-                            </td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personalPerformance.jobRules.label" default="Job Rules" /></td>
-                            
-                            <td valign="top" style="text-align: left;" class="value">
-                                <ul>
-                                <g:each in="${personalPerformanceInstance.jobRules}" var="j">
-                                    <li><g:link controller="jobRule" action="show" id="${j.id}">${j?.encodeAsHTML()}</g:link></li>
-                                </g:each>
-                                </ul>
-                            </td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personalPerformance.kpiRules.label" default="Kpi Rules" /></td>
-                            
-                            <td valign="top" style="text-align: left;" class="value">
-                                <ul>
-                                <g:each in="${personalPerformanceInstance.kpiRules}" var="k">
-                                    <li><g:link controller="kpiRule" action="show" id="${k.id}">${k?.encodeAsHTML()}</g:link></li>
-                                </g:each>
-                                </ul>
-                            </td>
-                            
-                        </tr>
-                    
+                                <td valign="top" class="name">
+                                  <label for="companyRules"><g:message code="personalPerformance.companyRules.label" default="Company Rules" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: personalPerformanceInstance, field: 'companyRules', 'errors')}">
+                                    
+									<ul>
+									<g:each in="${personalPerformanceInstance?.companyRules?}" var="c">
+									    <li>${c?.encodeAsHTML()}</li>
+									</g:each>
+									</ul>
+									<g:link controller="companyRule" action="create" params="['personalPerformance.id': personalPerformanceInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'companyRule.label', default: 'CompanyRule')])}</g:link>
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="jobRules"><g:message code="personalPerformance.jobRules.label" default="Job Rules" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: personalPerformanceInstance, field: 'jobRules', 'errors')}">                                    
+								<ul>
+								<g:each in="${personalPerformanceInstance?.jobRules?}" var="j">
+								    <li>${j?.encodeAsHTML()}</li>
+								</g:each>
+								</ul>
+								<g:link controller="jobRule" action="create" params="['personalPerformance.id': personalPerformanceInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'jobRule.label', default: 'JobRule')])}</g:link>
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="kpiRules"><g:message code="personalPerformance.kpiRules.label" default="Kpi Rules" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: personalPerformanceInstance, field: 'kpiRules', 'errors')}"> 
+								<ul>
+								<g:each in="${personalPerformanceInstance?.kpiRules?}" var="k">
+								    <li>${k?.encodeAsHTML()}</li>
+								</g:each>
+								</ul>
+								<g:link controller="kpiRule" action="create" params="['personalPerformance.id': personalPerformanceInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'kpiRule.label', default: 'KpiRule')])}</g:link>
+
+                                </td>
+                            </tr>                    
                     </tbody>
                 </table>
             </div>

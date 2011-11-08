@@ -21,24 +21,29 @@ class PersonalPerformanceController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		def user = currentUser
-        [personalPerformanceInstanceList: personalPerformanceService.findAllPersonalPerformanceByUser(user,params), personalPerformanceInstanceTotal: PersonalPerformance.count()]
+        [personalPerformanceInstanceList: personalPerformanceService.findAllPersonalPerformanceByUser(currentUser,params), personalPerformanceInstanceTotal: PersonalPerformance.count()]
     }
 
     def create = {
         def personalPerformanceInstance = new PersonalPerformance()
         personalPerformanceInstance.properties = params
-        return [personalPerformanceInstance: personalPerformanceInstance]
+        return [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)]
     }
 
     def save = {
         def personalPerformanceInstance = new PersonalPerformance(params)
+		if(checkUnique(params)!=null){
+			flash.message = "${message(code: 'personalPerformance.unique.failure', default:'This performance can only exist in one of the available record.')}"
+			render(view: "create", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
+			return
+		}
         if (personalPerformanceInstance.save(flush: true)) {
+			personalPerformanceService.initPersonalPerformance(personalPerformanceInstance)
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
             redirect(action: "show", id: personalPerformanceInstance.id)
         }
         else {
-            render(view: "create", model: [personalPerformanceInstance: personalPerformanceInstance])
+            render(view: "create", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
         }
     }
 
@@ -60,19 +65,24 @@ class PersonalPerformanceController {
             redirect(action: "list")
         }
         else {
-            return [personalPerformanceInstance: personalPerformanceInstance]
+            return [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)]
         }
     }
 
     def update = {
         def personalPerformanceInstance = PersonalPerformance.get(params.id)
         if (personalPerformanceInstance) {
+			if(checkUnique(params)!=null){
+				flash.message = "${message(code: 'personalPerformance.unique.failure', default:'This performance can only exist in one of the available record.')}"
+				render(view: "edit", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
+				return
+			}
             if (params.version) {
                 def version = params.version.toLong()
                 if (personalPerformanceInstance.version > version) {
                     
                     personalPerformanceInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'personalPerformance.label', default: 'PersonalPerformance')] as Object[], "Another user has updated this PersonalPerformance while you were editing")
-                    render(view: "edit", model: [personalPerformanceInstance: personalPerformanceInstance])
+                    render(view: "edit", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
                     return
                 }
             }
@@ -82,7 +92,7 @@ class PersonalPerformanceController {
                 redirect(action: "show", id: personalPerformanceInstance.id)
             }
             else {
-                render(view: "edit", model: [personalPerformanceInstance: personalPerformanceInstance])
+                render(view: "edit", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
             }
         }
         else {
@@ -112,5 +122,9 @@ class PersonalPerformanceController {
 	
 	private getCurrentUser() {
 		return User.get(springSecurityService.principal.id)
+	}
+	
+	def checkUnique(def params){
+		return PersonalPerformance.findByPerformanceAndJob(Performance.get(params.long('performance.id')),Job.get(params.long('job.id')))
 	}
 }

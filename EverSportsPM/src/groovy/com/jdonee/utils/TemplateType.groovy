@@ -8,7 +8,7 @@ package com.jdonee.utils
  *
  */
 enum TemplateType {
-	KPI('KPI指标项'),
+	//KPI('KPI指标项'),
 	JOB('岗位尽职要项'),
 	COMPANY('工作行为态度与价值观')
 	
@@ -17,8 +17,8 @@ enum TemplateType {
 		this.label = label
 	}
 	String  label()  { return label }
-	static list(){[KPI,JOB,COMPANY]}
-	
+	//static list(){[KPI,JOB,COMPANY]}
+	static list(){[JOB,COMPANY]}
 	String toString(){
 		"${label}"
 	}

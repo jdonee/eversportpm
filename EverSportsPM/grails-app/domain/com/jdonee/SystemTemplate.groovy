@@ -1,7 +1,8 @@
 package com.jdonee
 
 import com.jdonee.utils.TemplateType
-import java.util.Date;
+import java.util.Date
+import com.jdonee.utils.Constants
 
 /**
  * 系统模板定义
@@ -25,7 +26,7 @@ class SystemTemplate {
     }
 	
 	String getTemplateContentBy(){
-		def temps="${templateContent}".split("||")
+		def temps="${templateContent}".tokenize(Constants.DEFAULT_SEPARATOR)
 		StringBuilder sb=new StringBuilder();
 		if(temps.length>0){
 			temps.each{ value -> sb.append(value).append(System.getProperty("line.separator"))}
