@@ -12,16 +12,10 @@
         	// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
 			$( "#dialog:ui-dialog" ).dialog( "destroy" );
 		
-			var name = $( "#name" ),
-				email = $( "#email" ),
-				password = $( "#password" ),
-				allFields = $( [] ).add( name ).add( email ).add( password ),
-				tips = $( ".validateTips" );
+			var name = $( "#name" ),email = $( "#email" ),password = $( "#password" ),allFields = $( [] ).add( name ).add( email ).add( password ),tips = $( ".validateTips" );
 
 			function updateTips( t ) {
-				tips
-					.text( t )
-					.addClass( "ui-state-highlight" );
+				tips.text( t ).addClass( "ui-state-highlight" );
 				setTimeout(function() {
 					tips.removeClass( "ui-state-highlight", 1500 );
 				}, 500 );
@@ -31,7 +25,7 @@
 				if ( o.val().length > max || o.val().length < min ) {
 					o.addClass( "ui-state-error" );
 					updateTips( "Length of " + n + " must be between " +
-						min + " and " + max + "." );
+						min + " and " + max + ".0." );
 					return false;
 				} else {
 					return true;
@@ -48,7 +42,7 @@
 				}
 			}
 		
-				$( "#dialog-form" ).dialog({
+			$( "#kpi-form" ).dialog({
 					autoOpen: false,
 					height: 300,
 					width: 350,
@@ -56,50 +50,106 @@
 					buttons: {
 						"Create an account": function() {
 							var bValid = true;
-							allFields.removeClass( "ui-state-error" );
-		
+							allFields.removeClass( "ui-state-error" );		
 							bValid = bValid && checkLength( name, "username", 3, 16 );
 							bValid = bValid && checkLength( email, "email", 6, 80 );
-							bValid = bValid && checkLength( password, "password", 5, 16 );
-		
+							bValid = bValid && checkLength( password, "password", 5, 16 );		
 							bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
 							// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
 							bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-							bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-		
+							bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );		
 							if ( bValid ) {
-								$( "#users tbody" ).append( "<tr>" +
+								$( "#kpi tbody" ).append( "<tr>" +
 									"<td>" + name.val() + "</td>" + 
 									"<td>" + email.val() + "</td>" + 
 									"<td>" + password.val() + "</td>" +
 								"</tr>" ); 
-								$( this ).dialog( "close" );
+								$(this).dialog( "close" );
 							}
 						},
 						Cancel: function() {
-							$( this ).dialog( "close" );
+							$(this).dialog( "close" );
 						}
 					},
 					close: function() {
-						allFields.val( "" ).removeClass( "ui-state-error" );
+						allFields.val("").removeClass( "ui-state-error" );
 					}
 				});
-		
-				$( "#create-CompanyRule" )
-					.button()
-					.click(function() {
-						$( "#dialog-form" ).dialog( "open" );
-					});
-				$( "#create-jobRule" )
-					.button()
-					.click(function() {
-						$( "#dialog-form" ).dialog( "open" );
-					});
-				$( "#create-kpiRule" )
-					.button()
-					.click(function() {
-						$( "#dialog-form" ).dialog( "open" );
-					});
+				$( "#job-form" ).dialog({
+					autoOpen: false,
+					height: 300,
+					width: 350,
+					modal: true,
+					buttons: {
+						"Create an account": function() {
+							var bValid = true;
+							allFields.removeClass( "ui-state-error" );		
+							bValid = bValid && checkLength( name, "username", 3, 16 );
+							bValid = bValid && checkLength( email, "email", 6, 80 );
+							bValid = bValid && checkLength( password, "password", 5, 16 );		
+							bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
+							// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
+							bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
+							bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );		
+							if ( bValid ) {
+								$( "#kpi tbody" ).append( "<tr>" +
+									"<td>" + name.val() + "</td>" + 
+									"<td>" + email.val() + "</td>" + 
+									"<td>" + password.val() + "</td>" +
+								"</tr>" ); 
+								$(this).dialog( "close" );
+							}
+						},
+						Cancel: function() {
+							$(this).dialog( "close" );
+						}
+					},
+					close: function() {
+						allFields.val("").removeClass( "ui-state-error" );
+					}
+				});	
+				$( "#company-form" ).dialog({
+					autoOpen: false,
+					height: 300,
+					width: 350,
+					modal: true,
+					buttons: {
+						"Create an account": function() {
+							var bValid = true;
+							allFields.removeClass( "ui-state-error" );		
+							bValid = bValid && checkLength( name, "username", 3, 16 );
+							bValid = bValid && checkLength( email, "email", 6, 80 );
+							bValid = bValid && checkLength( password, "password", 5, 16 );		
+							bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
+							// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
+							bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
+							bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );		
+							if ( bValid ) {
+								$( "#kpi tbody" ).append( "<tr>" +
+									"<td>" + name.val() + "</td>" + 
+									"<td>" + email.val() + "</td>" + 
+									"<td>" + password.val() + "</td>" +
+								"</tr>" ); 
+								$(this).dialog( "close" );
+							}
+						},
+						Cancel: function() {
+							$(this).dialog( "close" );
+						}
+					},
+					close: function() {
+						allFields.val("").removeClass( "ui-state-error" );
+					}
+				});			
+				$("#create-CompanyRule" ).button().click(function() {
+						$( "#company-form" ).dialog( "open" );
+				});
+				$("#create-jobRule" ).button().click(function() {
+						$( "#job-form" ).dialog( "open" );
+				});
+				$( "#create-kpiRule" ).button().click(function() {
+						$( "#kpi-form" ).dialog( "open" );
+				});
 		</jq:jquery>
     </head>
     <body>
@@ -114,10 +164,9 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <div class="dialog" style="width: 100%;">
+            <div class="dialog">
                 <table>
-                    <tbody>
-                    
+                    <tbody style="width: 100%;">
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personalPerformance.id.label" default="Id" /></td>
                             
@@ -222,20 +271,26 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personalPerformanceInstance, field: 'kpiRules', 'errors')}"> 
 								<div id="kpi-contain" class="ui-widget">
-										<table id="kpis" class="ui-widget ui-widget-content">
+										<table id="kpi" class="ui-widget ui-widget-content">
 											<thead>
 												<tr class="ui-widget-header ">
-													<th>Name</th>
-													<th>Email</th>
-													<th>Password</th>
+													<th><g:message code="kpiRule.desiredItem.label" default="Desired Item" /></th>
+													<th><g:message code="kpiRule.targetValue.label" default="Target Value" /></th>
+													<th><g:message code="kpiRule.description.label" default="Description" /></th>
+													<th><g:message code="kpiRule.weight.label" default="Weight" /></th>
+													<th><g:message code="kpiRule.actualValue.label" default="Actual Value" /></th>
+													<th><g:message code="kpiRule.score.label" default="Score" /></th>													
 												</tr>
 											</thead>
 											<tbody>
 												<g:each in="${personalPerformanceInstance?.kpiRules?}" var="k">
 												<tr>
-													<td>${k?.encodeAsHTML()}</td>
-													<td>${k?.encodeAsHTML()}</td>
-													<td>${k?.encodeAsHTML()}</td>
+													<td>${k.desiredItem?.encodeAsHTML()}</td>
+													<td>${k.targetValue?.encodeAsHTML()}</td>
+													<td>${k.description?.encodeAsHTML()}</td>
+													<td>${k.weight?.encodeAsHTML()}</td>
+													<td>${k.actualValue?.encodeAsHTML()}</td>
+													<td>${k.score?.encodeAsHTML()}</td>
 												</tr>
 												</g:each>
 											</tbody>
@@ -252,20 +307,26 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personalPerformanceInstance, field: 'jobRules', 'errors')}">
                                 <div id="job-contain" class="ui-widget">
-										<table id="jobs" class="ui-widget ui-widget-content">
+										<table id="job" class="ui-widget ui-widget-content">
 											<thead>
 												<tr class="ui-widget-header ">
-													<th>Name</th>
-													<th>Email</th>
-													<th>Password</th>
+													<th><g:message code="jobRule.jobItem.label" default="Job Item" /></th>
+													<th><g:message code="jobRule.customed.label" default="Customed" /></th>
+													<th><g:message code="jobRule.personSummary.label" default="Person Summary" /></th>
+													<th><g:message code="jobRule.peripheralScore.label" default="Peripheral Score" /></th>
+													<th><g:message code="jobRule.score.label" default="Score" /></th>
+													<th><g:message code="jobRule.expectation.label" default="Expectation" /></th>
 												</tr>
 											</thead>
 											<tbody>
 												<g:each in="${personalPerformanceInstance?.jobRules?}" var="j">
 												<tr>
-													<td>${j?.encodeAsHTML()}</td>
-													<td>${j?.encodeAsHTML()}</td>
-													<td>${j?.encodeAsHTML()}</td>
+													<td>${j.jobItem?.encodeAsHTML()}</td>
+													<td><g:formatBoolean boolean="${j?.customed}" /></td>
+													<td>${j.personSummary?.encodeAsHTML()}</td>
+													<td>${j.peripheralScore?.encodeAsHTML()}</td>
+													<td>${j.score?.encodeAsHTML()}</td>
+													<td>${j.expectation?.encodeAsHTML()}</td>								
 												</tr>
 												</g:each>
 											</tbody>
@@ -282,20 +343,22 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personalPerformanceInstance, field: 'companyRules', 'errors')}">
 									<div id="company-contain" class="ui-widget">
-										<table id="companys" class="ui-widget ui-widget-content">
+										<table id="company" class="ui-widget ui-widget-content">
 											<thead>
 												<tr class="ui-widget-header ">
-													<th>Name</th>
-													<th>Email</th>
-													<th>Password</th>
+													<th><g:message code="companyRule.content.label" default="Content" /></th>
+													<th><g:message code="companyRule.personSummary.label" default="Person Summary" /></th>
+													<th><g:message code="companyRule.appraise.label" default="Appraise" /></th>
+													<th><g:message code="companyRule.expectation.label" default="Expectation" /></th>
 												</tr>
 											</thead>
 											<tbody>
 												<g:each in="${personalPerformanceInstance?.companyRules?}" var="c">
 												<tr>
-													<td>${c?.encodeAsHTML()}</td>
-													<td>${c?.encodeAsHTML()}</td>
-													<td>${c?.encodeAsHTML()}</td>
+													<td>${c.content?.encodeAsHTML()}</td>
+													<td>${c.personSummary?.encodeAsHTML()}</td>
+													<td>${c.appraise?.encodeAsHTML()}</td>
+													<td>${c.expectation?.encodeAsHTML()}</td>
 												</tr>
 												</g:each>
 											</tbody>
@@ -305,7 +368,6 @@
 									<button id="create-CompanyRule">${message(code: 'default.add.label', args: [message(code: 'companyRule.label', default: 'CompanyRule')])}</button>
                                 </td>
                             </tr>
-               
                     </tbody>
                 </table>
             </div>
@@ -316,10 +378,12 @@
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </g:form>
             </div>
-            <div class="demo">
-            <div id="dialog-form" title="Create new user">
+               
+        </div>
+        </div>
+        <div class="hiddenForms">
+            <div id="kpi-form" title="Create new user">
 				<p class="validateTips">All form fields are required.</p>
-			
 				<form>
 				<fieldset>
 					<label for="name">Name</label>
@@ -331,8 +395,32 @@
 				</fieldset>
 				</form>
 			</div>
-			</div><!-- End demo -->      
-        </div>
-        </div>
+			<div id="job-form" title="Create new user">
+				<p class="validateTips">All form fields are required.</p>
+				<form>
+				<fieldset>
+					<label for="name">Name</label>
+					<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+					<label for="email">Email</label>
+					<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
+					<label for="password">Password</label>
+					<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
+				</fieldset>
+				</form>
+			</div>
+			<div id="company-form" title="Create new user">
+				<p class="validateTips">All form fields are required.</p>
+				<form>
+				<fieldset>
+					<label for="name">Name</label>
+					<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+					<label for="email">Email</label>
+					<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
+					<label for="password">Password</label>
+					<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
+				</fieldset>
+				</form>
+			</div>
+			</div><!-- End demo -->   
     </body>
 </html>
