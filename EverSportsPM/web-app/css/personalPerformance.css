@@ -1,26 +1,27 @@
-div#dialog-form label,div#dialog-form input {
+div#kpi-form label,div#job-form label,div#company-form label,div#kpi-form input,div#job-form input,div#company-form input
+	{
 	display: block;
 }
 
-div#dialog-form input.text {
+div#kpi-form input.text,div#job-form input.text,div#company-form input.text
+	{
 	margin-bottom: 12px;
 	width: 95%;
 	padding: .4em;
 }
 
-div#dialog-form fieldset {
+div#kpi-form fieldset,div#job-form fieldset,div#company-form fieldset {
 	padding: 0;
 	border: 0;
 	margin-top: 25px;
 }
 
-div#dialog-form h1 {
+div#kpi-form h1,div#job-form h1,div#company-form h1 {
 	font-size: 1.2em;
 	margin: .6em 0;
 }
 
 div#company-contain,div#job-contain,div#kpi-contain {
-	//width: 350px;
 	margin: 20px 0;
 }
 
@@ -30,9 +31,8 @@ div#company-contain table,div#job-contain table,div#kpi-contain table {
 	width: 100%;
 }
 
-div#company-contain table td,div#company-contain table th,
-div#job-contain table td,div#job-contain table th,
-div#kpi-contain table td,div#kpi-contain table th {
+div#company-contain table td,div#company-contain table th,div#job-contain table td,div#job-contain table th,div#kpi-contain table td,div#kpi-contain table th
+	{
 	border: 1px solid #eee;
 	padding: .6em 10px;
 	text-align: left;
