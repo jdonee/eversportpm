@@ -41,7 +41,20 @@
 					return true;
 				}
 			}
-		
+			
+			$("#kpi .del").click(function() {
+					var delItem=$(this);
+					var id=delItem.parent().parent().attr("id").replace("kpi-","");
+					$.getJSON("${createLink(controller:'personalPerformance', action: 'deleteKpiRuleById')}", { id: id }, 
+						function(json){
+						if(json.message.length>0){
+						  	alert(json.message);
+						  	delItem.parents(".repeat").remove();  
+					  	}else{
+					  		alert(json.error);
+					  	}
+					});
+		     });
 			$( "#kpi-form" ).dialog({
 					autoOpen: false,
 					height: 300,
@@ -75,6 +88,19 @@
 						allFields.val("").removeClass( "ui-state-error" );
 					}
 				});
+				$("#job .del").click(function() {
+					var delItem=$(this);
+					var id=delItem.parent().parent().attr("id").replace("job-","");
+					$.getJSON("${createLink(controller:'personalPerformance', action: 'deleteJobRuleById')}", { id: id }, 
+						function(json){
+						if(json.message.length>0){
+						  	alert(json.message);
+						  	delItem.parents(".repeat").remove();  
+					  	}else{
+					  		alert(json.error);
+					  	}
+					});
+		        });
 				$( "#job-form" ).dialog({
 					autoOpen: false,
 					height: 300,
@@ -92,7 +118,7 @@
 							bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
 							bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );		
 							if ( bValid ) {
-								$( "#kpi tbody" ).append( "<tr>" +
+								$( "#job tbody" ).append( "<tr>" +
 									"<td>" + name.val() + "</td>" + 
 									"<td>" + email.val() + "</td>" + 
 									"<td>" + password.val() + "</td>" +
@@ -107,7 +133,20 @@
 					close: function() {
 						allFields.val("").removeClass( "ui-state-error" );
 					}
-				});	
+				});
+				$("#company .del").click(function() {
+					var delItem=$(this);
+					var id=delItem.parent().parent().attr("id").replace("company-","");
+					$.getJSON("${createLink(controller:'personalPerformance', action: 'deleteCompanyRuleById')}", { id: id }, 
+						function(json){
+						if(json.message.length>0){
+						  	alert(json.message);
+						  	delItem.parents(".repeat").remove();  
+					  	}else{
+					  		alert(json.error);
+					  	}
+					});
+		     	});	
 				$( "#company-form" ).dialog({
 					autoOpen: false,
 					height: 300,
@@ -125,7 +164,7 @@
 							bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
 							bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );		
 							if ( bValid ) {
-								$( "#kpi tbody" ).append( "<tr>" +
+								$( "#company tbody" ).append( "<tr>" +
 									"<td>" + name.val() + "</td>" + 
 									"<td>" + email.val() + "</td>" + 
 									"<td>" + password.val() + "</td>" +
@@ -278,19 +317,19 @@
 													<th><g:message code="kpiRule.targetValue.label" default="Target Value" /></th>
 													<th><g:message code="kpiRule.description.label" default="Description" /></th>
 													<th><g:message code="kpiRule.weight.label" default="Weight" /></th>
-													<th><g:message code="kpiRule.actualValue.label" default="Actual Value" /></th>
-													<th><g:message code="kpiRule.score.label" default="Score" /></th>													
+													<%--<th><g:message code="kpiRule.actualValue.label" default="Actual Value" /></th>
+													<th><g:message code="kpiRule.score.label" default="Score" /></th>--%>													
 												</tr>
 											</thead>
 											<tbody>
 												<g:each in="${personalPerformanceInstance?.kpiRules?}" var="k">
-												<tr>
+												<tr id="kpi-${k.id}" class="repeat">
 													<td>${k.desiredItem?.encodeAsHTML()}</td>
 													<td>${k.targetValue?.encodeAsHTML()}</td>
 													<td>${k.description?.encodeAsHTML()}</td>
-													<td>${k.weight?.encodeAsHTML()}</td>
-													<td>${k.actualValue?.encodeAsHTML()}</td>
-													<td>${k.score?.encodeAsHTML()}</td>
+													<td>${k.weight?.encodeAsHTML()}</td>													
+													<%--<td>${k.actualValue?.encodeAsHTML()}</td>
+													<td>${k.score?.encodeAsHTML()}</td>--%>
 												</tr>
 												</g:each>
 											</tbody>
@@ -312,21 +351,23 @@
 												<tr class="ui-widget-header ">
 													<th><g:message code="jobRule.jobItem.label" default="Job Item" /></th>
 													<th><g:message code="jobRule.customed.label" default="Customed" /></th>
-													<th><g:message code="jobRule.personSummary.label" default="Person Summary" /></th>
+													<th><g:message code="default.operater.label"  default="Operater"/></th>
+													<%--<th><g:message code="jobRule.personSummary.label" default="Person Summary" /></th>
 													<th><g:message code="jobRule.peripheralScore.label" default="Peripheral Score" /></th>
 													<th><g:message code="jobRule.score.label" default="Score" /></th>
-													<th><g:message code="jobRule.expectation.label" default="Expectation" /></th>
+													<th><g:message code="jobRule.expectation.label" default="Expectation" /></th> --%>
 												</tr>
 											</thead>
 											<tbody>
 												<g:each in="${personalPerformanceInstance?.jobRules?}" var="j">
-												<tr>
+												<tr id="job-${j.id}" class="repeat">
 													<td>${j.jobItem?.encodeAsHTML()}</td>
 													<td><g:formatBoolean boolean="${j?.customed}" /></td>
-													<td>${j.personSummary?.encodeAsHTML()}</td>
+													<td><button class="del">删除</button></td>
+													<%--<td>${j.personSummary?.encodeAsHTML()}</td>
 													<td>${j.peripheralScore?.encodeAsHTML()}</td>
 													<td>${j.score?.encodeAsHTML()}</td>
-													<td>${j.expectation?.encodeAsHTML()}</td>								
+													<td>${j.expectation?.encodeAsHTML()}</td>--%>								
 												</tr>
 												</g:each>
 											</tbody>
@@ -347,18 +388,18 @@
 											<thead>
 												<tr class="ui-widget-header ">
 													<th><g:message code="companyRule.content.label" default="Content" /></th>
-													<th><g:message code="companyRule.personSummary.label" default="Person Summary" /></th>
+													<%--<th><g:message code="companyRule.personSummary.label" default="Person Summary" /></th>
 													<th><g:message code="companyRule.appraise.label" default="Appraise" /></th>
-													<th><g:message code="companyRule.expectation.label" default="Expectation" /></th>
+													<th><g:message code="companyRule.expectation.label" default="Expectation" /></th> --%>
 												</tr>
 											</thead>
 											<tbody>
 												<g:each in="${personalPerformanceInstance?.companyRules?}" var="c">
-												<tr>
+												<tr id="company-${c.id}">
 													<td>${c.content?.encodeAsHTML()}</td>
-													<td>${c.personSummary?.encodeAsHTML()}</td>
+													<%--<td>${c.personSummary?.encodeAsHTML()}</td>
 													<td>${c.appraise?.encodeAsHTML()}</td>
-													<td>${c.expectation?.encodeAsHTML()}</td>
+													<td>${c.expectation?.encodeAsHTML()}</td> --%>
 												</tr>
 												</g:each>
 											</tbody>

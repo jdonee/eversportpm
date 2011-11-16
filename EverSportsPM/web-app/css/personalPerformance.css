@@ -34,7 +34,6 @@ div#company-contain table,div#job-contain table,div#kpi-contain table {
 div#company-contain table td,div#company-contain table th,div#job-contain table td,div#job-contain table th,div#kpi-contain table td,div#kpi-contain table th
 	{
 	border: 1px solid #eee;
-	padding: .6em 10px;
 	text-align: left;
 }
 

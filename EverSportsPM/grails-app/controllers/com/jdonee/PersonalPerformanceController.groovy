@@ -100,6 +100,60 @@ class PersonalPerformanceController {
             redirect(action: "list")
         }
     }
+	
+	def deleteJobRuleById={
+		def jobRuleInstance = JobRule.get(params.id)
+		def messageMap=[:]
+		if (jobRuleInstance) {
+			try {
+				jobRuleInstance.delete(flush: true)
+				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'jobRule.label', default: 'JobRule'), params.id])}")
+			}
+			catch (org.springframework.dao.DataIntegrityViolationException e) {
+				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'jobRule.label', default: 'JobRule'), params.id])}")
+			}
+		}
+		else {
+			messageMap.put("error", "${message(code: 'default.not.found.message', args: [message(code: 'jobRule.label', default: 'JobRule'), params.id])}")
+		}
+		render messageMap as JSON
+	}
+	
+	def deleteKpiRuleById={
+		def kpiRoleInstance = KpiRole.get(params.id)
+		def messageMap=[:]
+		if (kpiRoleInstance) {
+			try {
+				kpiRoleInstance.delete(flush: true)
+				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'kpiRole.label', default: 'KpiRole'), params.id])}")
+			}
+			catch (org.springframework.dao.DataIntegrityViolationException e) {
+				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'kpiRole.label', default: 'KpiRole'), params.id])}")
+			}
+		}
+		else {
+			messageMap.put("error", "${message(code: 'default.not.found.message', args: [message(code: 'kpiRole.label', default: 'KpiRole'), params.id])}")
+		}
+		render messageMap as JSON
+	}
+	
+	def deleteCompanyRuleById={
+		def companyRuleInstance = CompanyRule.get(params.id)
+		def messageMap=[:]
+		if (companyRuleInstance) {
+			try {
+				companyRuleInstance.delete(flush: true)
+				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'companyRule.label', default: 'CompanyRule'), params.id])}")
+			}
+			catch (org.springframework.dao.DataIntegrityViolationException e) {
+				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'companyRule.label', default: 'CompanyRule'), params.id])}")
+			}
+		}
+		else {
+			messageMap.put("error", "${message(code: 'default.not.found.message', args: [message(code: 'companyRule.label', default: 'CompanyRule'), params.id])}")
+		}
+		render messageMap as JSON
+	}
 
     def delete = {
         def personalPerformanceInstance = PersonalPerformance.get(params.id)
