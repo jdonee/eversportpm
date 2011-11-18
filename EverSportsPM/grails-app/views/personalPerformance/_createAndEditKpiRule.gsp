@@ -1,4 +1,6 @@
 <jq:jquery>
+	var name = $( "#name" ),email = $( "#email" ),password = $( "#password" ),
+	allFields = $( [] ).add( name ).add( email ).add( password ),tips = $( ".validateTips" );
        $("#kpi .del").click(function() {
 					var delItem=$(this);
 					var id=delItem.parent().parent().attr("id").replace("kpi-","");

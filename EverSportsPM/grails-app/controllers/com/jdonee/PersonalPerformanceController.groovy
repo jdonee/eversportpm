@@ -46,6 +46,21 @@ class PersonalPerformanceController {
             render(view: "create", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
         }
     }
+	
+	def saveJobRule = {
+		def jobRuleInstance = new JobRule(jobItem:params.jobItem,personalPerformance:PersonalPerformance.get(params.personalPerformanceId))
+		def objectMap=[:]
+		if (jobRuleInstance.save(flush: true)) {
+			objectMap.put("id",jobRuleInstance.id)
+			objectMap.put("jobItem",jobRuleInstance.jobItem)
+			if(jobRuleInstance.customed==Boolean.TRUE){
+				objectMap.put("customed", "${message(code: 'default.boolean.true')}")
+			}else{
+				objectMap.put("customed", "${message(code: 'default.boolean.false')}")
+			}
+		}
+		render objectMap as JSON
+	}
 
     def show = {
         def personalPerformanceInstance = PersonalPerformance.get(params.id)
