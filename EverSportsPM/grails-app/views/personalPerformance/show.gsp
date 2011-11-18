@@ -7,31 +7,7 @@
         <g:set var="entityName" value="${message(code: 'personalPerformance.label', default: 'PersonalPerformance')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
         <link rel="stylesheet" href="${resource(dir:'css',file:'personalPerformance.css')}" />
-        <jq:jquery>
-        	$("#personalPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
-        	// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
-			$( "#dialog:ui-dialog" ).dialog( "destroy" );
-		
-			var name = $( "#name" ),email = $( "#email" ),password = $( "#password" ),allFields = $( [] ).add( name ).add( email ).add( password ),tips = $( ".validateTips" );
-
-			function updateTips( t ) {
-				tips.text( t ).addClass( "ui-state-highlight" );
-				setTimeout(function() {
-					tips.removeClass( "ui-state-highlight", 1500 );
-				}, 500 );
-			}
-
-			function checkLength( o, n, min, max ) {
-				if ( o.val().length > max || o.val().length < min ) {
-					o.addClass( "ui-state-error" );
-					updateTips( "Length of " + n + " must be between " +
-						min + " and " + max + ".0." );
-					return false;
-				} else {
-					return true;
-				}
-			}
-
+        <g:javascript>
 			function checkRegexp( o, regexp, n ) {
 				if ( !( regexp.test( o.val() ) ) ) {
 					o.addClass( "ui-state-error" );
@@ -41,7 +17,11 @@
 					return true;
 				}
 			}
-				
+        </g:javascript>
+        <jq:jquery>
+        	$("#personalPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
+        	// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+			$( "#dialog:ui-dialog" ).dialog( "destroy" );
 				$("#create-CompanyRule" ).button().click(function() {
 						$( "#company-form" ).dialog( "open" );
 				});
@@ -71,7 +51,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personalPerformance.id.label" default="Id" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "id")}</td>
+                            <td valign="top" class="value"><g:hiddenField name="personalPerformanceId" value="${personalPerformanceInstance?.id}" />${fieldValue(bean: personalPerformanceInstance, field: "id")}</td>
                             
                         </tr>
                     
@@ -225,7 +205,10 @@
 												<tr id="job-${j.id}" class="repeat">
 													<td>${j.jobItem?.encodeAsHTML()}</td>
 													<td><g:formatBoolean boolean="${j?.customed}" /></td>
-													<td><button class="del">删除</button></td>
+													<td>
+													<g:if test="${j?.customed==true}">
+														<button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>
+													</g:if>&nbsp;
 													<%--<td>${j.personSummary?.encodeAsHTML()}</td>
 													<td>${j.peripheralScore?.encodeAsHTML()}</td>
 													<td>${j.score?.encodeAsHTML()}</td>

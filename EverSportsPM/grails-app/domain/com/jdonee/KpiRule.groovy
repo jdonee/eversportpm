@@ -21,12 +21,12 @@ class KpiRule  {
 	static belongsTo=[personalPerformance:PersonalPerformance]
     static constraints = {
 		personalPerformance()
-		desiredItem(blank:false,maxSize:150)
+		desiredItem(blank:false)
 		targetValue(min:0,max:100)
 		actualValue(nullable: true,min:0,max:100)
 		weight(nullable: true,min:0,max:100)
 		score(nullable: true,min:0,max:100)
-		description(nullable: true,maxSize:250)
+		description(nullable: true)
 		dateCreated()
 		lastUpdated()
     }

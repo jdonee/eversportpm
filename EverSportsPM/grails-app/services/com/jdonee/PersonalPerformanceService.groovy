@@ -43,7 +43,7 @@ class PersonalPerformanceService {
 				def temps=jobContent.tokenize(Constants.DEFAULT_SEPARATOR)
 				if(temps){
 					temps.each{ value ->
-						 def jobRule=new JobRule(jobItem:value,personalPerformance:personalPerformanceInstance)
+						 def jobRule=new JobRule(jobItem:value,customed:Boolean.FALSE,personalPerformance:personalPerformanceInstance)
 						 jobRule.save(flush:true)
 				}
 				}

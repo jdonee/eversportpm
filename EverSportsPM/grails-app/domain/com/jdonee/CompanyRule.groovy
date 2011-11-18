@@ -18,10 +18,10 @@ class CompanyRule {
     static belongsTo=[personalPerformance:PersonalPerformance]
     static constraints = {
 		personalPerformance()
-		content(blank:false,maxSize:150)
-		personSummary(nullable: true,maxSize:150)
-		appraise(nullable: true,maxSize:150)
-		expectation(nullable: true,maxSize:150)
+		content(blank:false)
+		personSummary(nullable: true)
+		appraise(nullable: true)
+		expectation(nullable: true)
 		dateCreated()
 		lastUpdated()
     }
