@@ -9,6 +9,7 @@ import java.util.Date;
 class CompanyRule {
 
 	String content  //内容
+	Boolean customed=true //是否自定义
 	String personSummary //自我总结
 	PersonalPerformance personalPerformance
 	String appraise //评价
@@ -22,6 +23,7 @@ class CompanyRule {
 		personSummary(nullable: true)
 		appraise(nullable: true)
 		expectation(nullable: true)
+		customed()
 		dateCreated()
 		lastUpdated()
     }

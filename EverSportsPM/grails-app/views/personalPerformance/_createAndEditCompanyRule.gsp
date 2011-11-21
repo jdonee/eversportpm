@@ -1,44 +1,59 @@
+<g:set var="entityName" value="${message(code: 'companyRule.label', default: 'CompanyRule')}" />
 <jq:jquery>
-	var name = $( "#name" ),email = $( "#email" ),password = $( "#password" ),allFields = $( [] ).add( name ).add( email ).add( password ),tips = $( ".validateTips" );
-       				$("#company .del").click(function() {
+				var content = $( "#content" ),allFields = $( [] ).add( content ),tips = $( ".validateTips" );
+				function updateTips( t ) {
+					tips.text( t ).addClass( "ui-state-highlight" );
+					setTimeout(function() {
+						tips.removeClass( "ui-state-highlight", 1500 );
+					}, 500 );
+				}
+	
+				function checkLength( o, n, min ) {
+					if (o.val().length < min ) {
+						o.addClass( "ui-state-error" );
+						updateTips( n + "${message(code: 'default.js.null.message', default: 'cannot be null!')}" );
+						return false;
+					} else {
+						return true;
+					}
+				}
+				
+       			$("#company .del").live('click',function() {
 					var delItem=$(this);
 					var id=delItem.parent().parent().attr("id").replace("company-","");
 					$.getJSON("${createLink(controller:'personalPerformance', action: 'deleteCompanyRuleById')}", { id: id }, 
 						function(json){
-						if(json.message.length>0){
-						  	alert(json.message);
+						if(jQuery.isEmptyObject(json.message)){
+							alert(json.error);
+						}else{
+							alert(json.message);
 						  	delItem.parents(".repeat").remove();  
-					  	}else{
-					  		alert(json.error);
-					  	}
+						};
 					});
 		     	});	
+		     	
 				$( "#company-form" ).dialog({
 					autoOpen: false,
+					resizable: false,
 					height: 300,
-					width: 350,
+					width: 550,
 					modal: true,
 					buttons: {
-						"Create an account": function() {
+						"${message(code: 'default.button.create.label', default: 'Create')}": function() {
 							var bValid = true;
+							var companyForm=$(this);
 							allFields.removeClass( "ui-state-error" );		
-							bValid = bValid && checkLength( name, "username", 3, 16 );
-							bValid = bValid && checkLength( email, "email", 6, 80 );
-							bValid = bValid && checkLength( password, "password", 5, 16 );		
-							bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-							// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-							bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-							bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );		
+							bValid = bValid && checkLength(content, "${message(code: 'companyRule.content.label', default: 'Content')}", 1);	
 							if ( bValid ) {
-								$( "#company tbody" ).append( "<tr>" +
-									"<td>" + name.val() + "</td>" + 
-									"<td>" + email.val() + "</td>" + 
-									"<td>" + password.val() + "</td>" +
-								"</tr>" ); 
-								$(this).dialog( "close" );
+								$.getJSON("${createLink(controller:'personalPerformance', action: 'saveCompanyRule')}", { content:$("#content").val(),personalPerformanceId:$("#personalPerformanceId").val() },function(json){
+									if(!jQuery.isEmptyObject(json)){
+										$( "#company tbody" ).append("<tr id='company-" +json.id+"' class='repeat'><td>" + json.content + "</td><td>"+json.customed+"</td><td><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td></tr>" ); 
+										companyForm.dialog( "close" ); 
+										}
+									});	
 							}
 						},
-						Cancel: function() {
+						"${message(code: 'default.button.cancel.label', default: 'Cancel')}": function() {
 							$(this).dialog( "close" );
 						}
 					},
@@ -47,16 +62,12 @@
 					}
 				});	
 </jq:jquery>
-<div id="company-form" title="Create new user">
-				<p class="validateTips">All form fields are required.</p>
+<div id="company-form" title="<g:message code="default.create.label" args="[entityName]" />">
+				<p class="validateTips">${message(code: 'default.form.tips.label', default: 'All form fields are required.')}</p>
 				<form>
 				<fieldset>
-					<label for="name">Name</label>
-					<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
-					<label for="email">Email</label>
-					<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
-					<label for="password">Password</label>
-					<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
+					<label for="content"><g:message code="companyRule.content.label" default="Content" /></label>
+					<g:textArea name="content"  style="width: 500px; height: 100px;" class="text ui-widget-content ui-corner-all"/>
 				</fieldset>
 				</form>
 			</div>
