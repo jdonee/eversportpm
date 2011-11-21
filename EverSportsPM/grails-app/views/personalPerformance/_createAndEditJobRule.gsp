@@ -31,8 +31,9 @@
 						}; 
 					});
 		        });
-				$( "#job-form" ).dialog({
+			$( "#job-form" ).dialog({
 					autoOpen: false,
+					resizable: false,
 					height: 300,
 					width: 550,
 					modal: true,
@@ -62,11 +63,11 @@
 				
 </jq:jquery>
 		<div id="job-form" title="<g:message code="default.create.label" args="[entityName]" />">
-				<p class="validateTips">All form fields are required.</p>
+				<p class="validateTips">${message(code: 'default.form.tips.label', default: 'All form fields are required.')}</p>
 				<form>
 				<fieldset>
 					<label for="jobItem"><g:message code="jobRule.jobItem.label" default="Job Item" /></label>
-					<g:textArea name="jobItem" maxlength="150" style="width: 500px; height: 200px;" class="text ui-widget-content ui-corner-all"/>
+					<g:textArea name="jobItem" style="width: 500px; height: 100px;" class="text ui-widget-content ui-corner-all"/>
 				</fieldset>
 				</form>
 			</div>

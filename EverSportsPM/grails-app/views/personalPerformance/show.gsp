@@ -7,17 +7,6 @@
         <g:set var="entityName" value="${message(code: 'personalPerformance.label', default: 'PersonalPerformance')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
         <link rel="stylesheet" href="${resource(dir:'css',file:'personalPerformance.css')}" />
-        <g:javascript>
-			function checkRegexp( o, regexp, n ) {
-				if ( !( regexp.test( o.val() ) ) ) {
-					o.addClass( "ui-state-error" );
-					updateTips( n );
-					return false;
-				} else {
-					return true;
-				}
-			}
-        </g:javascript>
         <jq:jquery>
         	$("#personalPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
         	// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
@@ -159,6 +148,7 @@
 													<th><g:message code="kpiRule.targetValue.label" default="Target Value" /></th>
 													<th><g:message code="kpiRule.description.label" default="Description" /></th>
 													<th><g:message code="kpiRule.weight.label" default="Weight" /></th>
+													<th><g:message code="default.operater.label"  default="Operater"/></th>
 													<%--<th><g:message code="kpiRule.actualValue.label" default="Actual Value" /></th>
 													<th><g:message code="kpiRule.score.label" default="Score" /></th>--%>													
 												</tr>
@@ -169,7 +159,8 @@
 													<td>${k.desiredItem?.encodeAsHTML()}</td>
 													<td>${k.targetValue?.encodeAsHTML()}</td>
 													<td>${k.description?.encodeAsHTML()}</td>
-													<td>${k.weight?.encodeAsHTML()}</td>													
+													<td>${k.weight?.encodeAsHTML()}</td>	
+													<td><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>												
 													<%--<td>${k.actualValue?.encodeAsHTML()}</td>
 													<td>${k.score?.encodeAsHTML()}</td>--%>
 												</tr>
@@ -207,8 +198,9 @@
 													<td><g:formatBoolean boolean="${j?.customed}" /></td>
 													<td>
 													<g:if test="${j?.customed==true}">
-														<button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>
+														<button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
 													</g:if>&nbsp;
+													</td>
 													<%--<td>${j.personSummary?.encodeAsHTML()}</td>
 													<td>${j.peripheralScore?.encodeAsHTML()}</td>
 													<td>${j.score?.encodeAsHTML()}</td>
@@ -233,6 +225,8 @@
 											<thead>
 												<tr class="ui-widget-header ">
 													<th><g:message code="companyRule.content.label" default="Content" /></th>
+													<th><g:message code="companyRule.customed.label" default="Customed" /></th>
+													<th><g:message code="default.operater.label"  default="Operater"/></th>
 													<%--<th><g:message code="companyRule.personSummary.label" default="Person Summary" /></th>
 													<th><g:message code="companyRule.appraise.label" default="Appraise" /></th>
 													<th><g:message code="companyRule.expectation.label" default="Expectation" /></th> --%>
@@ -240,8 +234,13 @@
 											</thead>
 											<tbody>
 												<g:each in="${personalPerformanceInstance?.companyRules?}" var="c">
-												<tr id="company-${c.id}">
+												<tr id="company-${c.id}" class="repeat">
 													<td>${c.content?.encodeAsHTML()}</td>
+													<td><g:formatBoolean boolean="${c?.customed}" /></td>
+													<td>
+													<g:if test="${c?.customed==true}">
+														<button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
+													</g:if>&nbsp;</td>
 													<%--<td>${c.personSummary?.encodeAsHTML()}</td>
 													<td>${c.appraise?.encodeAsHTML()}</td>
 													<td>${c.expectation?.encodeAsHTML()}</td> --%>
