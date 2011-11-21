@@ -1,5 +1,5 @@
 
-<%@ page import="com.jdonee.PersonalPerformance" %>
+<%@ page import="com.jdonee.PersonalPerformance;java.util.regex.Pattern;" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -159,8 +159,10 @@
 													<td>${k.desiredItem?.encodeAsHTML()}</td>
 													<td>${k.targetValue?.encodeAsHTML()}</td>
 													<td>${k.description?.encodeAsHTML()}</td>
-													<td>${k.weight?.encodeAsHTML()}</td>	
-													<td><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>												
+													<td>${k.weight?.encodeAsHTML()}</td>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="${Pattern.compile('[0]')}">    	
+													<td><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>
+													</g:grep>												
 													<%--<td>${k.actualValue?.encodeAsHTML()}</td>
 													<td>${k.score?.encodeAsHTML()}</td>--%>
 												</tr>
@@ -168,8 +170,10 @@
 											</tbody>
 										</table>
 								</div>
-								<br/>    
-								<button id="create-kpiRule">${message(code: 'default.add.label', args: [message(code: 'kpiRule.label', default: 'KpiRule')])}</button>
+								<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="${Pattern.compile('[0]')}">
+									<br/>    
+									<button id="create-kpiRule">${message(code: 'default.add.label', args: [message(code: 'kpiRule.label', default: 'KpiRule')])}</button>
+								</g:grep>
                                 </td>
                             </tr> 
                             
@@ -197,9 +201,12 @@
 													<td>${j.jobItem?.encodeAsHTML()}</td>
 													<td><g:formatBoolean boolean="${j?.customed}" /></td>
 													<td>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="${Pattern.compile('[0]')}">    
 													<g:if test="${j?.customed==true}">
 														<button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
-													</g:if>&nbsp;
+													</g:if>
+													</g:grep>
+													&nbsp;
 													</td>
 													<%--<td>${j.personSummary?.encodeAsHTML()}</td>
 													<td>${j.peripheralScore?.encodeAsHTML()}</td>
@@ -210,8 +217,10 @@
 											</tbody>
 										</table>
 								</div>
+								<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="${Pattern.compile('[0]')}">    
 								<br/>                                    
 								<button id="create-jobRule">${message(code: 'default.add.label', args: [message(code: 'jobRule.label', default: 'JobRule')])}</button>
+                                </g:grep>
                                 </td>
                             </tr> 
                         
@@ -238,9 +247,12 @@
 													<td>${c.content?.encodeAsHTML()}</td>
 													<td><g:formatBoolean boolean="${c?.customed}" /></td>
 													<td>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="${Pattern.compile('[0]')}">    
 													<g:if test="${c?.customed==true}">
 														<button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
-													</g:if>&nbsp;</td>
+													</g:if>
+													</g:grep>
+													&nbsp;</td>
 													<%--<td>${c.personSummary?.encodeAsHTML()}</td>
 													<td>${c.appraise?.encodeAsHTML()}</td>
 													<td>${c.expectation?.encodeAsHTML()}</td> --%>
@@ -249,20 +261,27 @@
 											</tbody>
 										</table>
 									</div>
+									<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="${Pattern.compile('[0]')}">    
 									<br/>
 									<button id="create-CompanyRule">${message(code: 'default.add.label', args: [message(code: 'companyRule.label', default: 'CompanyRule')])}</button>
+                                	</g:grep>
                                 </td>
                             </tr>
                     </tbody>
                 </table>
             </div>
+            <g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="${Pattern.compile('[01]')}"><%--只有在初始化和已完成指标状态下可以在此编辑和删除 --%>
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${personalPerformanceInstance?.id}" />
-                    <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                    <g:hiddenField name="id" value="${personalPerformanceInstance?.id}" />                    
+                    	<span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
+                    	<span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                    	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="${Pattern.compile('[0]')}">    
+                    	<span class="button"><g:actionSubmit class="check" action="inputFinish" value="${message(code: 'default.button.inputFinish.label', default: 'Finish')}"/></span>
+                    	</g:grep>
                 </g:form>
             </div>
+            </g:grep>
                
         </div>
         </div>

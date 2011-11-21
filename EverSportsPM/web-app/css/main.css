@@ -356,6 +356,20 @@ th.desc a {
 	padding-left: 28px;
 }
 
+.buttons input.check {
+	background: transparent url(../images/skin/tick.png) 5px 50%
+		no-repeat;
+	padding-left: 28px;
+}
+
+.buttons input.uncheck {
+	background: transparent url(../images/skin/tick_grey.png) 5px 50%
+		no-repeat;
+	padding-left: 28px;
+}
+
+
+
 .contents {
 	word-break: break-all;
 	width: 400px;

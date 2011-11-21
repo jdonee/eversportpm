@@ -1,6 +1,7 @@
 package com.jdonee
 
 import grails.converters.JSON
+import com.jdonee.utils.PerformanceStatus
 class PersonalPerformanceController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -110,6 +111,22 @@ class PersonalPerformanceController {
         else {
             return [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)]
         }
+    }
+	
+	def inputFinish = {
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		if (personalPerformanceInstance) {
+			  if(!personalPerformanceService.isJusticeWeight(personalPerformanceInstance)){
+					flash.message = "${message(code: 'personalPerformance.not.updated.message', args: [message(code: 'performance.label', default: 'Performance')])}"
+					render(view: "show", model: [personalPerformanceInstance: personalPerformanceInstance])
+					return
+			   }
+			   personalPerformanceInstance.status=PerformanceStatus.INPUT_FINISHED
+               if( personalPerformanceInstance.save(flush: true)){
+                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+                 redirect(action: "show", id: personalPerformanceInstance.id)
+				}
+		}
     }
 
     def update = {

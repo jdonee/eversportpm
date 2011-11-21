@@ -66,4 +66,17 @@ class PersonalPerformanceService {
 			}
 			}
 	}
+	
+	def isJusticeWeight(personalPerformance) {
+		def c = KpiRule.createCriteria()
+		
+		def weights=c.get{
+			projections{ sum("weight") }
+			eq "personalPerformance",personalPerformance
+		}
+		if(weights==null){
+			weights=0
+		}
+		return weights== Constants.TOTAL_SCORE
+	}
 }
