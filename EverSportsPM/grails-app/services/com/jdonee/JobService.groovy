@@ -1,34 +1,39 @@
 package com.jdonee
 
+import com.jdonee.utils.Constants
+
 class JobService {
 
-    static transactional = true
+	static transactional = true
 
-    def findAllJobByCode(code) {
+	def findAllJobByCode(code) {
 		def result = Job.withCriteria{
-			            projections{
-			                property("code")
-							property("name")
-			            }
-			            ilike("code",code + "%")
-						eq("closed",Boolean.FALSE)
-			            maxResults(20)
-			            order("code", "asc")
-			        }
+			projections{
+				property("code")
+				property("name")
+			}
+			ilike("code",code + "%")
+			eq("closed",Boolean.FALSE)
+			maxResults(20)
+			order("code", "asc")
+		}
 		return result
-     }
-	
+	}
+
+	def findAllPeripheralPeopleByCodes(codes){
+		return Job.withCriteria{ 'in'("code",codes) }
+	}
+
 	def searchJobByCode(code){
 		return Job.findAllByCodeLike(code + '%').collect() {
 			return [
-					id: it.id,
-					label: it.code+"["+it.name+"("+it.user.username+")]",
-					//label: it.code+"["+it.name+"]",
-					value: it.code
+				id: it.id,
+				label: it.code+"["+it.name+"("+it.user.username+")]",
+				value: it.code
 			]
 		}
-	 }
-	
+	}
+
 	def findAllJobByUser(user){
 		def results=[]
 		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
@@ -38,7 +43,7 @@ class JobService {
 			def codes=Job.withCriteria{
 				projections{ property("code") }
 				eq "user",user
-			}.join(",")
+			}.join(Constants.COMMA_SEPARATOR)
 			results=Job.withCriteria{
 				or{
 					'in'("code",codes)

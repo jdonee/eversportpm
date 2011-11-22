@@ -83,7 +83,7 @@
                     <tbody>
                     <g:each in="${jobInstanceList}" status="i" var="jobInstance">
                         <tr class="${(i % 2) == 0 ? 'clickableOdd' : 'clickableEven'}">
-                             <td>${fieldValue(bean: jobInstance, field: "company")}</td>
+                            <td>${fieldValue(bean: jobInstance, field: "company")}</td>
                         
                             <td>${fieldValue(bean: jobInstance, field: "department")}</td>
                         

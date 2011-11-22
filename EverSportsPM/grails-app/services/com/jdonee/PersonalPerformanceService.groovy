@@ -16,7 +16,7 @@ class PersonalPerformanceService {
 			def codes=Job.withCriteria{
 				projections{ property("code") }
 				eq "user",user
-			}.join(",")
+			}.join(Constants.COMMA_SEPARATOR)
 			results = PersonalPerformance.withCriteria{
 				job{
 					or{
@@ -69,7 +69,6 @@ class PersonalPerformanceService {
 	
 	def isJusticeWeight(personalPerformance) {
 		def c = KpiRule.createCriteria()
-		
 		def weights=c.get{
 			projections{ sum("weight") }
 			eq "personalPerformance",personalPerformance

@@ -6,7 +6,7 @@
         <g:set var="entityName" value="${message(code: 'personalPerformance.label', default: 'PersonalPerformance')}" />
         <jqval:resources />
         <jqvalui:resources />
-        <jqvalui:renderValidationScript for="com.jdonee.PersonalPerformance" not="performance,job,feedback,feedbackPeople,dateCreated,lastUpdated" form="personalPerformanceForm" errorClass="invalid" validClass="success" onsubmit="false"  renderErrorsOnTop="true" />
+        <jqvalui:renderValidationScript for="com.jdonee.PersonalPerformance" not="performance,peripheralPeople,job,feedback,feedbackPeople,dateCreated,lastUpdated" form="personalPerformanceForm" errorClass="invalid" validClass="success" onsubmit="false"  renderErrorsOnTop="true" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>

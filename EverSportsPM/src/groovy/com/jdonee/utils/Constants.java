@@ -5,5 +5,7 @@ public interface Constants {
 	final static Integer TOTAL_SCORE=Integer.valueOf(100);
 	
 	final static String DEFAULT_SEPARATOR="||";
+	
+	final static String COMMA_SEPARATOR=",";
 
 }
