@@ -16,11 +16,9 @@
 		}
         </style>
         <g:javascript library="jquery" plugin="jquery"/>
-        <g:setProvider library="jquery"/>
         <!--<g:javascript src="themeroller/themeswitchertool.js"/>
         <jqui:resources theme="cupertino"/>-->
         <jqui:resources/> 
-        <jqueryui:javascript/>
         <g:javascript src="jquery-ui-layout/jquery.layout-latest.js"/>
         <g:layoutHead />
         <jq:jquery>     	
@@ -36,6 +34,15 @@
         		//alert( $(this).html().trim().length);
         		return $(this).html().trim().length<=0;
         	}).remove();
+        	$("#accordion").accordion({
+				header:'h3',
+				autoHeight:false,
+				navigation:true,
+				icons:{
+						header:'ui-icon-plus',
+						headerSelected:'ui-icon-minus'
+					  }
+			});
         	//addThemeSwitcher( 'body > .ui-layout-north', { top: '20px', right: '20px' });
         </jq:jquery>
         <g:javascript>
@@ -122,11 +129,6 @@
                         <li><g:link controller="/">${message(code: 'menu.superiorPersonPerformance.label', default: 'Superior Person Performance')}</g:link></li>
                     </ul> 
 			</div>
-			<jqueryui:jquiAccordion
-                        id="accordion"
-                        namespace="grails.jqueryui.components"
-                        renderMarkup="false"
-                        config="${[header:'h3',autoHeight:false,navigation:true,icons:[header:'ui-icon-plus',headerSelected:'ui-icon-minus']]}"/> 
         </div>
         <div class="ui-layout-center hidden">
         	<sec:ifNotLoggedIn>
