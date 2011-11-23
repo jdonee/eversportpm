@@ -21,18 +21,38 @@
         <jqui:resources/> 
         <g:javascript src="jquery-ui-layout/jquery.layout-latest.js"/>
         <g:layoutHead />
-        <jq:jquery>     	
+        <jq:jquery>
+        	jQuery.fn.outerHtml = function(include_scripts) {
+				if(include_scripts === undefined){ include_scripts = false; }
+				var clone = this.clone(true);
+				var items = jQuery.map(clone, function(element){
+				if(jQuery.nodeName(element, "script")){
+				if(include_scripts){
+				var attributes;
+				if(element.attributes){
+				attributes = jQuery.map(element.attributes, function(attribute){
+				return attribute.name + '="' + attribute.value + '" ';
+				});
+				}
+				return '<' + element.nodeName + ' ' + attributes.join(' ') + ">" + jQuery(element).html() + "</" + element.nodeName +'>';
+				} else {
+				return '';
+				}
+				} else {
+				return jQuery('<div>').append(element).remove().html();
+				}
+				});
+				return items.join('');
+			}     	
         	$('body').layout({
         	north__spacing_open: 0, 
         	south__spacing_open: 0
         	});
         	$("h3+ul").filter(function(index){
-        		//alert( $(this).html().trim().length);
-        		return $(this).html().trim().length<=0;
+        		return $.isEmptyObject($(this).find('li').outerHtml());
         	}).prev().remove();
         	$("ul").filter(function(index){
-        		//alert( $(this).html().trim().length);
-        		return $(this).html().trim().length<=0;
+        		return $.isEmptyObject($(this).find('li').outerHtml());
         	}).remove();
         	$("#accordion").accordion({
 				header:'h3',
@@ -81,8 +101,7 @@
         	<h3 class="ui-widget-header">${message(code: 'menu.label', default: 'My Menu')}</h3>
 	     	<div id="accordion">
 					<h3><a href="javascript:void(0);">${message(code: 'menu.system.label', default: 'System Management')}</a></h3>
-					<ul>
-						<sec:access url="/company/**">
+					<ul><sec:access url="/company/**">
                         <li><g:link elementId="companyList" controller="company">${message(code: 'menu.company.label', default: 'Company Management')}</g:link></li>
                         </sec:access>
                         <sec:access url="/department/**">
@@ -96,8 +115,7 @@
                         </sec:access>
                         <sec:access url="/user/**">
                         <li><g:link elementId="userList" controller="user">${message(code: 'menu.user.label', default: 'User Management')}</g:link></li>
-                        </sec:access>
-                    </ul>
+                        </sec:access></ul>
 					<h3><a href="javascript:void(0);">${message(code: 'menu.performance.label', default: 'Performance Management')}</a></h3>
 					<ul>
 						<sec:access url="/job/**">
