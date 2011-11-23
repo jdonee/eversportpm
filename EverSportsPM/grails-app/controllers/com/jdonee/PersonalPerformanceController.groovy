@@ -65,7 +65,11 @@ class PersonalPerformanceController {
 	def savePeripheralPeople={
 		def personalPerformanceInstance = PersonalPerformance.get(params.personalPerformanceId)
 		def newCodes=params.peripheralPeople.replaceAll(~" ","")//去除空格
-		newCodes=newCodes.substring(0,newCodes.length()-1).tokenize(Constants.COMMA_SEPARATOR)//转换成数组
+		if(newCodes.endsWith(Constants.COMMA_SEPARATOR)){
+			newCodes=newCodes.substring(0,newCodes.length()-1).tokenize(Constants.COMMA_SEPARATOR)//转换成数组
+		}else{
+			newCodes=newCodes.tokenize(Constants.COMMA_SEPARATOR)//转换成数组
+		}
 		def queryCodes=[]
 		def showCodes=[]
 		def peripheralPeople=personalPerformanceInstance.peripheralPeople
