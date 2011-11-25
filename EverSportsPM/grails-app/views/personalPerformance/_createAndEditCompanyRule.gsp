@@ -1,6 +1,6 @@
 <g:set var="entityName" value="${message(code: 'companyRule.label', default: 'CompanyRule')}" />
 <jq:jquery>
-				var content = $( "#content" ),allFields = $( [] ).add( content ),tips = $( ".validateTips" );
+				var content = $( "#content" ),companyRuleId=$("#companyRuleId"),allFields = $( [] ).add( content ).add(companyRuleId),tips = $( ".validateTips" );
 				function updateTips( t ) {
 					tips.text( t ).addClass( "ui-state-highlight" );
 					setTimeout(function() {
@@ -18,7 +18,20 @@
 					}
 				}
 				
-       			$("#company .del").live('click',function() {
+       			$("#company .update").live('click',function() {
+					var updateItem=$(this);
+					var id=updateItem.parent().parent().attr("id").replace("company-","");
+					$.getJSON("${createLink(controller:'personalPerformance', action: 'getCompanyRuleById')}", { id: id }, 
+						function(json){
+						if(!jQuery.isEmptyObject(json)){
+							$("#companyRuleId").val(json.id);
+							$("#content").val(json.content);
+							$( "#company-form" ).dialog( "open" );
+						}
+					});
+		     	});	
+		     	
+		     	$("#company .del").live('click',function() {
 					var delItem=$(this);
 					var id=delItem.parent().parent().attr("id").replace("company-","");
 					$.getJSON("${createLink(controller:'personalPerformance', action: 'deleteCompanyRuleById')}", { id: id }, 
@@ -28,7 +41,7 @@
 						}else{
 							alert(json.message);
 						  	delItem.parents(".repeat").remove();  
-						};
+						}
 					});
 		     	});	
 		     	
@@ -45,12 +58,21 @@
 							allFields.removeClass( "ui-state-error" );		
 							bValid = bValid && checkLength(content, "${message(code: 'companyRule.content.label', default: 'Content')}", 1);	
 							if ( bValid ) {
-								$.getJSON("${createLink(controller:'personalPerformance', action: 'saveCompanyRule')}", { content:$("#content").val(),personalPerformanceId:$("#personalPerformanceId").val() },function(json){
+								if(companyRuleId.val()==""||companyRuleId.val().length<=0){
+									$.getJSON("${createLink(controller:'personalPerformance', action: 'saveCompanyRule')}", { content:$("#content").val(),personalPerformanceId:$("#personalPerformanceId").val() },function(json){
 									if(!jQuery.isEmptyObject(json)){
-										$( "#company tbody" ).append("<tr id='company-" +json.id+"' class='repeat'><td>" + json.content + "</td><td>"+json.customed+"</td><td><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td></tr>" ); 
+										$( "#company tbody" ).append("<tr id='company-" +json.id+"' class='repeat'><td>" + json.content + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td></tr>" ); 
 										companyForm.dialog( "close" ); 
 										}
 									});	
+								}else{
+									$.getJSON("${createLink(controller:'personalPerformance', action: 'updateCompanyRule')}", { content:$("#content").val(),companyRuleId:companyRuleId.val() },function(json){
+									if(!jQuery.isEmptyObject(json)){
+										$("#company-"+json.id).empty().append("<td>" + json.content + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>");
+										companyForm.dialog( "close" ); 
+										}
+									});
+								}
 							}
 						},
 						"${message(code: 'default.button.cancel.label', default: 'Cancel')}": function() {
@@ -65,6 +87,7 @@
 <div id="company-form" title="<g:message code="default.create.label" args="[entityName]" />">
 				<p class="validateTips">${message(code: 'default.form.tips.label', default: 'All form fields are required.')}</p>
 				<form>
+				<g:hiddenField name="companyRuleId"/>
 				<fieldset>
 					<label for="content"><g:message code="companyRule.content.label" default="Content" /></label>
 					<g:textArea name="content"  style="width: 500px; height: 100px;" class="text ui-widget-content ui-corner-all"/>

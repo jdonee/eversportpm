@@ -1,7 +1,7 @@
 <g:set var="entityName" value="${message(code: 'kpiRule.label', default: 'KpiRule')}" />
 <jq:jquery>
 			var desiredItem = $( "#desiredItem" ),targetValue = $( "#targetValue" ),description = $( "#description" ),weight = $( "#weight" ),
-			allFields = $( [] ).add( desiredItem ).add( targetValue ).add( description ).add(weight),tips = $( ".validateTips" );
+			kpiRuleId=$("#kpiRuleId"),allFields = $( [] ).add( desiredItem ).add( targetValue ).add( description ).add(weight).add(kpiRuleId),tips = $( ".validateTips" );
 			function checkRegexp( o, regexp, n ) {
 				if ( !( regexp.test( o.val() ) ) ) {
 					o.addClass( "ui-state-error" );
@@ -39,6 +39,22 @@
 				}
 			}
 			
+			$("#kpi .update").live('click',function() {
+					var updateItem=$(this);
+					var id=updateItem.parent().parent().attr("id").replace("kpi-","");
+					$.getJSON("${createLink(controller:'personalPerformance', action: 'getKpiRuleById')}", { id: id }, 
+						function(json){
+						if(!jQuery.isEmptyObject(json)){
+							$("#kpiRuleId").val(json.id);
+							$("#desiredItem").val(json.desiredItem);
+							$("#targetValue").val(json.targetValue);
+							$("#description").val(json.description);
+							$("#weight").val(json.weight);
+							$( "#kpi-form" ).dialog( "open" );
+						}
+					});
+		     });	
+			
 	       $("#kpi .del").live('click',function() {
 	       			if(confirm("${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}")){
 						var delItem=$(this);
@@ -72,16 +88,30 @@
 							bValid = bValid && checkValue( weight, "${message(code:'kpiRule.weight.label',default:'Weight')}", 0,100);			
 							bValid = bValid && checkRegexp( weight, /^([0-9])+$/, "${message(code:'kpiRule.weight.validate.label',default:'Weight field only allow :0-9')}" );		
 							if ( bValid ) {
-								$.getJSON("${createLink(controller:'personalPerformance', action: 'saveKpiRule')}",
-								 { desiredItem:$("#desiredItem").val(),targetValue:$("#targetValue").val(),
-								 description:$("#description").val(),weight:$("#weight").val(),
-								 personalPerformanceId:$("#personalPerformanceId").val() },
-								 function(json){
+								if(kpiRuleId.val()==""||kpiRuleId.val().length<=0){
+									$.getJSON("${createLink(controller:'personalPerformance', action: 'saveKpiRule')}",
+									 { desiredItem:$("#desiredItem").val(),targetValue:$("#targetValue").val(),
+									 description:$("#description").val(),weight:$("#weight").val(),
+									 personalPerformanceId:$("#personalPerformanceId").val() },
+									 function(json){
+										if(!jQuery.isEmptyObject(json)){
+											$( "#kpi tbody" ).append("<tr id='kpi-" +json.id+"' class='repeat'><td>" + json.desiredItem + "</td><td>"+json.targetValue+"</td><td>"+json.description+"</td><td>"+json.weight+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td></tr>" ); 
+											kpiForm.dialog( "close" ); 
+											}
+									});	
+								}else{
+									$.getJSON("${createLink(controller:'personalPerformance', action: 'updateKpiRule')}", 
+									{ desiredItem:$("#desiredItem").val(),targetValue:$("#targetValue").val(),
+									 description:$("#description").val(),weight:$("#weight").val(),
+									 kpiRuleId:kpiRuleId.val() },
+									function(json){
 									if(!jQuery.isEmptyObject(json)){
-										$( "#kpi tbody" ).append("<tr id='kpi-" +json.id+"' class='repeat'><td>" + json.desiredItem + "</td><td>"+json.targetValue+"</td><td>"+json.description+"</td><td>"+json.weight+"</td><td><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td></tr>" ); 
+										$("#kpi-"+json.id).empty().append("<td>" + json.desiredItem + "</td><td>"+json.targetValue+"</td><td>"+json.description+"</td><td>"+json.weight+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>");
 										kpiForm.dialog( "close" ); 
 										}
-									});	
+									});
+								}	
+								
 							}
 						},
 						"${message(code: 'default.button.cancel.label', default: 'Cancel')}": function() {
@@ -96,6 +126,7 @@
 <div id="kpi-form" title="<g:message code="default.create.label" args="[entityName]" />">
 				<p class="validateTips">${message(code: 'default.form.tips.label', default: 'All form fields are required.')}</p>
 				<form>
+				<g:hiddenField name="kpiRuleId"/>
 				<fieldset>
 					<label for="desiredItem"><g:message code="kpiRule.desiredItem.label" default="Desired Item" /></label>
 					<g:textArea name="desiredItem" style="width: 500px; height: 50px;" class="text ui-widget-content ui-corner-all"/>

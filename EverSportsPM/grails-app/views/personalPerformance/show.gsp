@@ -200,7 +200,7 @@
 													<td>${k.description?.encodeAsHTML()}</td>
 													<td>${k.weight?.encodeAsHTML()}</td>
 													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'">    	
-													<td><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>
+													<td><button class="update">${message(code: 'default.button.update.label', default: 'Update')}</button><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>
 													</g:grep>												
 													<%--<td>${k.actualValue?.encodeAsHTML()}</td>
 													<td>${k.score?.encodeAsHTML()}</td>--%>
@@ -242,7 +242,7 @@
 													<td>
 													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'">    
 													<g:if test="${j?.customed==true}">
-														<button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
+														<button class="update">${message(code: 'default.button.update.label', default: 'Update')}</button><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
 													</g:if>
 													</g:grep>
 													&nbsp;
@@ -275,9 +275,6 @@
 													<th><g:message code="companyRule.content.label" default="Content" /></th>
 													<th><g:message code="companyRule.customed.label" default="Customed" /></th>
 													<th><g:message code="default.operater.label"  default="Operater"/></th>
-													<%--<th><g:message code="companyRule.personSummary.label" default="Person Summary" /></th>
-													<th><g:message code="companyRule.appraise.label" default="Appraise" /></th>
-													<th><g:message code="companyRule.expectation.label" default="Expectation" /></th> --%>
 												</tr>
 											</thead>
 											<tbody>
@@ -288,13 +285,10 @@
 													<td>
 													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'">    
 													<g:if test="${c?.customed==true}">
-														<button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
+														<button class="update">${message(code: 'default.button.update.label', default: 'Update')}</button><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
 													</g:if>
 													</g:grep>
 													&nbsp;</td>
-													<%--<td>${c.personSummary?.encodeAsHTML()}</td>
-													<td>${c.appraise?.encodeAsHTML()}</td>
-													<td>${c.expectation?.encodeAsHTML()}</td> --%>
 												</tr>
 												</g:each>
 											</tbody>

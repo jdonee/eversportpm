@@ -61,6 +61,35 @@ class PersonalPerformanceController {
 		}
 		render objectMap as JSON
 	}
+	
+	def updateKpiRule = {
+		def kpiRuleInstance = KpiRule.get(params.kpiRuleId)
+		def objectMap=[:]
+		if (kpiRuleInstance) {
+			kpiRuleInstance.properties = params
+			if (kpiRuleInstance.save(flush: true)) {
+				objectMap.put("id",kpiRuleInstance.id)
+				objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
+				objectMap.put("targetValue",kpiRuleInstance.targetValue)
+				objectMap.put("description",kpiRuleInstance.description)
+				objectMap.put("weight",kpiRuleInstance.weight)
+			}
+		}
+		render objectMap as JSON
+	}
+	
+	def getKpiRuleById={
+		def kpiRuleInstance = KpiRule.get(params.id)
+		def objectMap=[:]
+		if (kpiRuleInstance) {
+			objectMap.put("id",kpiRuleInstance.id)
+			objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
+			objectMap.put("targetValue",kpiRuleInstance.targetValue)
+			objectMap.put("description",kpiRuleInstance.description)
+			objectMap.put("weight",kpiRuleInstance.weight)
+			}
+		render objectMap as JSON
+	}
 
 	def savePeripheralPeople={
 		def personalPerformanceInstance = PersonalPerformance.get(params.personalPerformanceId)
@@ -112,6 +141,35 @@ class PersonalPerformanceController {
 		}
 		render objectMap as JSON
 	}
+	
+	def updateJobRule = {
+		def jobRuleInstance = JobRule.get(params.jobRuleId)
+		def objectMap=[:]
+		if (jobRuleInstance) {
+			jobRuleInstance.properties = params
+			if (jobRuleInstance.save(flush: true)) {
+				objectMap.put("id",jobRuleInstance.id)
+				objectMap.put("jobItem",jobRuleInstance.jobItem)
+				if(jobRuleInstance.customed==Boolean.TRUE){
+					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
+				}else{
+					objectMap.put("customed", "${message(code: 'default.boolean.false')}")
+				}
+			}
+		}
+		render objectMap as JSON
+	}
+	
+	def getJobRuleById={
+		def jobRuleInstance = JobRule.get(params.id)
+		def objectMap=[:]
+		if (jobRuleInstance) {
+			objectMap.put("id",jobRuleInstance.id)
+			objectMap.put("jobItem",jobRuleInstance.jobItem)
+			objectMap.put("customed",jobRuleInstance.customed)
+			}
+		render objectMap as JSON
+	}
 
 	def saveCompanyRule = {
 		def companyRuleInstance = new CompanyRule(content:params.content,personalPerformance:PersonalPerformance.get(params.personalPerformanceId))
@@ -125,6 +183,35 @@ class PersonalPerformanceController {
 				objectMap.put("customed", "${message(code: 'default.boolean.false')}")
 			}
 		}
+		render objectMap as JSON
+	}
+	
+	def updateCompanyRule = {
+		def companyRuleInstance = CompanyRule.get(params.companyRuleId)
+		def objectMap=[:]
+		if (companyRuleInstance) {
+			companyRuleInstance.properties = params
+			if (companyRuleInstance.save(flush: true)) {
+				objectMap.put("id",companyRuleInstance.id)
+				objectMap.put("content",companyRuleInstance.content)
+				if(companyRuleInstance.customed==Boolean.TRUE){
+					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
+				}else{
+					objectMap.put("customed", "${message(code: 'default.boolean.false')}")
+				}
+			}
+		}
+		render objectMap as JSON
+	}
+	
+	def getCompanyRuleById={
+		def companyRuleInstance = CompanyRule.get(params.id)
+		def objectMap=[:]
+		if (companyRuleInstance) {
+			objectMap.put("id",companyRuleInstance.id)
+			objectMap.put("content",companyRuleInstance.content)
+			objectMap.put("customed",companyRuleInstance.customed)
+			}
 		render objectMap as JSON
 	}
 
