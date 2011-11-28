@@ -78,4 +78,11 @@ class PersonalPerformanceService {
 		}
 		return weights== Constants.TOTAL_SCORE
 	}
+	
+	def saveJobRuleScores(jobRule,jobs){
+		jobs.each {  job ->
+			def jobRuleScoreInstance=new JobRuleScore(job:job,jobRule:jobRule)
+			jobRuleScoreInstance.save(flush: true)
+		}
+	}
 }

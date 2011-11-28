@@ -303,17 +303,23 @@
                     </tbody>
                 </table>
             </div>
-            <g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[01]'"><%--只有在初始化和已完成指标状态下可以在此编辑和删除 --%>
+            <g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[012]'"><%--只有在初始化和已完成指标状态下可以在此编辑和删除 --%>
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${personalPerformanceInstance?.id}" />                    
+                    <g:hiddenField name="id" value="${personalPerformanceInstance?.id}" />
+                    	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[01]'">                    
                     	<span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
                     	<span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                    	</g:grep>
                     	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'">    
                     	<span class="button"><g:actionSubmit class="check" action="inputFinish" value="${message(code: 'default.button.inputFinish.label', default: 'Finish')}"/></span>
                     	</g:grep>
                     	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[1]'">    
                     	<span class="button"><g:actionSubmit class="uncheck" action="refresh" value="${message(code: 'default.button.refresh.label', default: 'Refresh')}"/></span>
+                    	<span class="button"><g:actionSubmit class="check" action="audit" value="${message(code: 'default.button.audit.label', default: 'Audit')}"/></span>
+                    	</g:grep>
+                    	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[2]'">    
+                    	<span class="button"><g:actionSubmit class="uncheck" action="abandon" value="${message(code: 'default.button.abandon.label', default: 'Abandon')}"/></span>
                     	</g:grep>
                 </g:form>
             </div>

@@ -61,7 +61,7 @@ class PersonalPerformanceController {
 		}
 		render objectMap as JSON
 	}
-	
+
 	def updateKpiRule = {
 		def kpiRuleInstance = KpiRule.get(params.kpiRuleId)
 		def objectMap=[:]
@@ -77,7 +77,7 @@ class PersonalPerformanceController {
 		}
 		render objectMap as JSON
 	}
-	
+
 	def getKpiRuleById={
 		def kpiRuleInstance = KpiRule.get(params.id)
 		def objectMap=[:]
@@ -87,7 +87,7 @@ class PersonalPerformanceController {
 			objectMap.put("targetValue",kpiRuleInstance.targetValue)
 			objectMap.put("description",kpiRuleInstance.description)
 			objectMap.put("weight",kpiRuleInstance.weight)
-			}
+		}
 		render objectMap as JSON
 	}
 
@@ -115,14 +115,14 @@ class PersonalPerformanceController {
 		def peripheralPeoples=[]
 		if(queryCodes!=[]){
 			peripheralPeoples=jobService.findAllPeripheralPeopleByCodes(queryCodes.unique()).collect() {
-			return [
-				company:it.company.name,
-				department:it.department.name,
-				user:it.user.username,
-				name:it.name,
-				code:it.code
-			]
-		}
+				return [
+					company:it.company.name,
+					department:it.department.name,
+					user:it.user.username,
+					name:it.name,
+					code:it.code
+				]
+			}
 		}
 		render peripheralPeoples as JSON
 	}
@@ -141,7 +141,7 @@ class PersonalPerformanceController {
 		}
 		render objectMap as JSON
 	}
-	
+
 	def updateJobRule = {
 		def jobRuleInstance = JobRule.get(params.jobRuleId)
 		def objectMap=[:]
@@ -159,7 +159,7 @@ class PersonalPerformanceController {
 		}
 		render objectMap as JSON
 	}
-	
+
 	def getJobRuleById={
 		def jobRuleInstance = JobRule.get(params.id)
 		def objectMap=[:]
@@ -167,7 +167,7 @@ class PersonalPerformanceController {
 			objectMap.put("id",jobRuleInstance.id)
 			objectMap.put("jobItem",jobRuleInstance.jobItem)
 			objectMap.put("customed",jobRuleInstance.customed)
-			}
+		}
 		render objectMap as JSON
 	}
 
@@ -185,7 +185,7 @@ class PersonalPerformanceController {
 		}
 		render objectMap as JSON
 	}
-	
+
 	def updateCompanyRule = {
 		def companyRuleInstance = CompanyRule.get(params.companyRuleId)
 		def objectMap=[:]
@@ -203,7 +203,7 @@ class PersonalPerformanceController {
 		}
 		render objectMap as JSON
 	}
-	
+
 	def getCompanyRuleById={
 		def companyRuleInstance = CompanyRule.get(params.id)
 		def objectMap=[:]
@@ -211,7 +211,7 @@ class PersonalPerformanceController {
 			objectMap.put("id",companyRuleInstance.id)
 			objectMap.put("content",companyRuleInstance.content)
 			objectMap.put("customed",companyRuleInstance.customed)
-			}
+		}
 		render objectMap as JSON
 	}
 
@@ -243,10 +243,11 @@ class PersonalPerformanceController {
 	}
 
 	def inputFinish = {
+		/*指标输入完成*/
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
 			if(!personalPerformanceService.isJusticeWeight(personalPerformanceInstance)){
-				flash.message = "${message(code: 'personalPerformance.not.updated.message', args: [message(code: 'performance.label', default: 'Performance')])}"
+				flash.message = "${message(code: 'personalPerformance.not.updated.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance')])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
 				return
 			}
@@ -257,11 +258,46 @@ class PersonalPerformanceController {
 			}
 		}
 	}
-	
+
 	def refresh = {
+		/*重新输入*/
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
 			personalPerformanceInstance.status=PerformanceStatus.INIT
+			if( personalPerformanceInstance.save(flush: true)){
+				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				redirect(action: "show", id: personalPerformanceInstance.id)
+			}
+		}
+	}
+
+	def audit = {
+		/*审核*/
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		if (personalPerformanceInstance) {
+			if(personalPerformanceInstance.peripheralPeople!=null&&personalPerformanceInstance.peripheralPeople.length()>0){
+				def jobs=jobService.findAllPeripheralPeopleByCodes(personalPerformanceInstance.peripheralPeople.tokenize(Constants.COMMA_SEPARATOR))
+				def jobRules=personalPerformanceInstance.jobRules
+				if(jobRules){
+					jobRules.each { value ->
+						personalPerformanceService.saveJobRuleScores(value,jobs)
+					}
+				}	
+			}
+			personalPerformanceInstance.status=PerformanceStatus.SUPERIOR_AUDITING
+			if( personalPerformanceInstance.save(flush: true)){
+				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				redirect(action: "show", id: personalPerformanceInstance.id)
+			}
+		}
+	}
+
+	def abandon = {
+		/*弃审*/
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		if (personalPerformanceInstance) {
+			personalPerformanceInstance.jobRules.each {  JobRuleScore.removeAll(it) }
+			personalPerformanceInstance.status=PerformanceStatus.INPUT_FINISHED
 			if( personalPerformanceInstance.save(flush: true)){
 				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
@@ -302,7 +338,7 @@ class PersonalPerformanceController {
 			redirect(action: "list")
 		}
 	}
-	
+
 	def deletePeripheralPeopleByCode={
 		def personalPerformanceInstance = PersonalPerformance.get(params.personalPerformanceId)
 		def queryCodes=[]

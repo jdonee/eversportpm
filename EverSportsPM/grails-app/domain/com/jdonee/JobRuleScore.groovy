@@ -17,8 +17,12 @@ class JobRuleScore {
 		jobRule()
 		job()
 		used()
-		score(blank: false,min:0,max:100)
+		score(blank: false,nullable: true,min:0,max:100)
     }
+	
+	static void removeAll(JobRule jobRule) {
+		executeUpdate 'DELETE FROM JobRuleScore WHERE jobRule=:jobRule', [jobRule: jobRule]
+	}
 	
 	String toString(){
 		"${score}"
