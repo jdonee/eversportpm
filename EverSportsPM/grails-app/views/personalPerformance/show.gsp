@@ -316,10 +316,14 @@
                     	</g:grep>
                     	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[1]'">    
                     	<span class="button"><g:actionSubmit class="uncheck" action="refresh" value="${message(code: 'default.button.refresh.label', default: 'Refresh')}"/></span>
+                    	<g:if test="${checkPermission}">
                     	<span class="button"><g:actionSubmit class="check" action="audit" value="${message(code: 'default.button.audit.label', default: 'Audit')}"/></span>
+                    	</g:if>
                     	</g:grep>
-                    	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[2]'">    
+                    	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[2]'">
+                    	<g:if test="${checkPermission}">    
                     	<span class="button"><g:actionSubmit class="uncheck" action="abandon" value="${message(code: 'default.button.abandon.label', default: 'Abandon')}"/></span>
+                    	</g:if>
                     	</g:grep>
                 </g:form>
             </div>

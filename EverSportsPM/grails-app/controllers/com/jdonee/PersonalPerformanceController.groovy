@@ -97,7 +97,7 @@ class PersonalPerformanceController {
 			if(peripheralPeople!=null&&peripheralPeople.length()>0){
 				jobInstanceList=jobService.findAllPeripheralPeopleByCodes(peripheralPeople.tokenize(Constants.COMMA_SEPARATOR))
 			}
-			[personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobInstanceList]
+			[personalPerformanceInstance: personalPerformanceInstance,checkPermission:personalPerformanceService.checkPermissionByUserAndJobCode(currentUser,personalPerformanceInstance.job.code),jobInstanceList:jobInstanceList]
 		}
 	}
 
