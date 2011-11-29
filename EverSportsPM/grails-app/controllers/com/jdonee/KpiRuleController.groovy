@@ -1,5 +1,6 @@
 package com.jdonee
 
+import grails.converters.JSON
 class KpiRuleController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -97,4 +98,64 @@ class KpiRuleController {
             redirect(action: "list")
         }
     }
+	
+	def saveKpiRule = {
+		def kpiRuleInstance = new KpiRule(desiredItem:params.desiredItem,targetValue:params.targetValue,description:params.description,weight:params.weight,personalPerformance:PersonalPerformance.get(params.personalPerformanceId))
+		def objectMap=[:]
+		if (kpiRuleInstance.save(flush: true)) {
+			objectMap.put("id",kpiRuleInstance.id)
+			objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
+			objectMap.put("targetValue",kpiRuleInstance.targetValue)
+			objectMap.put("description",kpiRuleInstance.description)
+			objectMap.put("weight",kpiRuleInstance.weight)
+		}
+		render objectMap as JSON
+	}
+
+	def updateKpiRule = {
+		def kpiRuleInstance = KpiRule.get(params.kpiRuleId)
+		def objectMap=[:]
+		if (kpiRuleInstance) {
+			kpiRuleInstance.properties = params
+			if (kpiRuleInstance.save(flush: true)) {
+				objectMap.put("id",kpiRuleInstance.id)
+				objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
+				objectMap.put("targetValue",kpiRuleInstance.targetValue)
+				objectMap.put("description",kpiRuleInstance.description)
+				objectMap.put("weight",kpiRuleInstance.weight)
+			}
+		}
+		render objectMap as JSON
+	}
+
+	def getKpiRuleById={
+		def kpiRuleInstance = KpiRule.get(params.id)
+		def objectMap=[:]
+		if (kpiRuleInstance) {
+			objectMap.put("id",kpiRuleInstance.id)
+			objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
+			objectMap.put("targetValue",kpiRuleInstance.targetValue)
+			objectMap.put("description",kpiRuleInstance.description)
+			objectMap.put("weight",kpiRuleInstance.weight)
+		}
+		render objectMap as JSON
+	}
+	
+	def deleteKpiRuleById={
+		def kpiRuleInstance = KpiRule.get(params.id)
+		def messageMap=[:]
+		if (kpiRuleInstance) {
+			try {
+				kpiRuleInstance.delete(flush: true)
+				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'kpiRule.label', default: 'KpiRule'), params.id])}")
+			}
+			catch (org.springframework.dao.DataIntegrityViolationException e) {
+				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'kpiRule.label', default: 'KpiRule'), params.id])}")
+			}
+		}
+		else {
+			messageMap.put("error", "${message(code: 'default.not.found.message', args: [message(code: 'kpiRule.label', default: 'KpiRule'), params.id])}")
+		}
+		render messageMap as JSON
+	}
 }

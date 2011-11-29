@@ -49,48 +49,6 @@ class PersonalPerformanceController {
 		}
 	}
 
-	def saveKpiRule = {
-		def kpiRuleInstance = new KpiRule(desiredItem:params.desiredItem,targetValue:params.targetValue,description:params.description,weight:params.weight,personalPerformance:PersonalPerformance.get(params.personalPerformanceId))
-		def objectMap=[:]
-		if (kpiRuleInstance.save(flush: true)) {
-			objectMap.put("id",kpiRuleInstance.id)
-			objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
-			objectMap.put("targetValue",kpiRuleInstance.targetValue)
-			objectMap.put("description",kpiRuleInstance.description)
-			objectMap.put("weight",kpiRuleInstance.weight)
-		}
-		render objectMap as JSON
-	}
-
-	def updateKpiRule = {
-		def kpiRuleInstance = KpiRule.get(params.kpiRuleId)
-		def objectMap=[:]
-		if (kpiRuleInstance) {
-			kpiRuleInstance.properties = params
-			if (kpiRuleInstance.save(flush: true)) {
-				objectMap.put("id",kpiRuleInstance.id)
-				objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
-				objectMap.put("targetValue",kpiRuleInstance.targetValue)
-				objectMap.put("description",kpiRuleInstance.description)
-				objectMap.put("weight",kpiRuleInstance.weight)
-			}
-		}
-		render objectMap as JSON
-	}
-
-	def getKpiRuleById={
-		def kpiRuleInstance = KpiRule.get(params.id)
-		def objectMap=[:]
-		if (kpiRuleInstance) {
-			objectMap.put("id",kpiRuleInstance.id)
-			objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
-			objectMap.put("targetValue",kpiRuleInstance.targetValue)
-			objectMap.put("description",kpiRuleInstance.description)
-			objectMap.put("weight",kpiRuleInstance.weight)
-		}
-		render objectMap as JSON
-	}
-
 	def savePeripheralPeople={
 		def personalPerformanceInstance = PersonalPerformance.get(params.personalPerformanceId)
 		def newCodes=params.peripheralPeople.replaceAll(~" ","")//去除空格
@@ -125,94 +83,6 @@ class PersonalPerformanceController {
 			}
 		}
 		render peripheralPeoples as JSON
-	}
-
-	def saveJobRule = {
-		def jobRuleInstance = new JobRule(jobItem:params.jobItem,personalPerformance:PersonalPerformance.get(params.personalPerformanceId))
-		def objectMap=[:]
-		if (jobRuleInstance.save(flush: true)) {
-			objectMap.put("id",jobRuleInstance.id)
-			objectMap.put("jobItem",jobRuleInstance.jobItem)
-			if(jobRuleInstance.customed==Boolean.TRUE){
-				objectMap.put("customed", "${message(code: 'default.boolean.true')}")
-			}else{
-				objectMap.put("customed", "${message(code: 'default.boolean.false')}")
-			}
-		}
-		render objectMap as JSON
-	}
-
-	def updateJobRule = {
-		def jobRuleInstance = JobRule.get(params.jobRuleId)
-		def objectMap=[:]
-		if (jobRuleInstance) {
-			jobRuleInstance.properties = params
-			if (jobRuleInstance.save(flush: true)) {
-				objectMap.put("id",jobRuleInstance.id)
-				objectMap.put("jobItem",jobRuleInstance.jobItem)
-				if(jobRuleInstance.customed==Boolean.TRUE){
-					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
-				}else{
-					objectMap.put("customed", "${message(code: 'default.boolean.false')}")
-				}
-			}
-		}
-		render objectMap as JSON
-	}
-
-	def getJobRuleById={
-		def jobRuleInstance = JobRule.get(params.id)
-		def objectMap=[:]
-		if (jobRuleInstance) {
-			objectMap.put("id",jobRuleInstance.id)
-			objectMap.put("jobItem",jobRuleInstance.jobItem)
-			objectMap.put("customed",jobRuleInstance.customed)
-		}
-		render objectMap as JSON
-	}
-
-	def saveCompanyRule = {
-		def companyRuleInstance = new CompanyRule(content:params.content,personalPerformance:PersonalPerformance.get(params.personalPerformanceId))
-		def objectMap=[:]
-		if (companyRuleInstance.save(flush: true)) {
-			objectMap.put("id",companyRuleInstance.id)
-			objectMap.put("content",companyRuleInstance.content)
-			if(companyRuleInstance.customed==Boolean.TRUE){
-				objectMap.put("customed", "${message(code: 'default.boolean.true')}")
-			}else{
-				objectMap.put("customed", "${message(code: 'default.boolean.false')}")
-			}
-		}
-		render objectMap as JSON
-	}
-
-	def updateCompanyRule = {
-		def companyRuleInstance = CompanyRule.get(params.companyRuleId)
-		def objectMap=[:]
-		if (companyRuleInstance) {
-			companyRuleInstance.properties = params
-			if (companyRuleInstance.save(flush: true)) {
-				objectMap.put("id",companyRuleInstance.id)
-				objectMap.put("content",companyRuleInstance.content)
-				if(companyRuleInstance.customed==Boolean.TRUE){
-					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
-				}else{
-					objectMap.put("customed", "${message(code: 'default.boolean.false')}")
-				}
-			}
-		}
-		render objectMap as JSON
-	}
-
-	def getCompanyRuleById={
-		def companyRuleInstance = CompanyRule.get(params.id)
-		def objectMap=[:]
-		if (companyRuleInstance) {
-			objectMap.put("id",companyRuleInstance.id)
-			objectMap.put("content",companyRuleInstance.content)
-			objectMap.put("customed",companyRuleInstance.customed)
-		}
-		render objectMap as JSON
 	}
 
 	def show = {
@@ -361,59 +231,6 @@ class PersonalPerformanceController {
 		render messageMap as JSON
 	}
 
-	def deleteJobRuleById={
-		def jobRuleInstance = JobRule.get(params.id)
-		def messageMap=[:]
-		if (jobRuleInstance) {
-			try {
-				jobRuleInstance.delete(flush: true)
-				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'jobRule.label', default: 'JobRule'), params.id])}")
-			}
-			catch (org.springframework.dao.DataIntegrityViolationException e) {
-				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'jobRule.label', default: 'JobRule'), params.id])}")
-			}
-		}
-		else {
-			messageMap.put("error", "${message(code: 'default.not.found.message', args: [message(code: 'jobRule.label', default: 'JobRule'), params.id])}")
-		}
-		render messageMap as JSON
-	}
-
-	def deleteKpiRuleById={
-		def kpiRuleInstance = KpiRule.get(params.id)
-		def messageMap=[:]
-		if (kpiRuleInstance) {
-			try {
-				kpiRuleInstance.delete(flush: true)
-				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'kpiRule.label', default: 'KpiRule'), params.id])}")
-			}
-			catch (org.springframework.dao.DataIntegrityViolationException e) {
-				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'kpiRule.label', default: 'KpiRule'), params.id])}")
-			}
-		}
-		else {
-			messageMap.put("error", "${message(code: 'default.not.found.message', args: [message(code: 'kpiRule.label', default: 'KpiRule'), params.id])}")
-		}
-		render messageMap as JSON
-	}
-
-	def deleteCompanyRuleById={
-		def companyRuleInstance = CompanyRule.get(params.id)
-		def messageMap=[:]
-		if (companyRuleInstance) {
-			try {
-				companyRuleInstance.delete(flush: true)
-				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'companyRule.label', default: 'CompanyRule'), params.id])}")
-			}
-			catch (org.springframework.dao.DataIntegrityViolationException e) {
-				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'companyRule.label', default: 'CompanyRule'), params.id])}")
-			}
-		}
-		else {
-			messageMap.put("error", "${message(code: 'default.not.found.message', args: [message(code: 'companyRule.label', default: 'CompanyRule'), params.id])}")
-		}
-		render messageMap as JSON
-	}
 
 	def delete = {
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)

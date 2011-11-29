@@ -21,7 +21,7 @@
 			$("#job .update").live('click',function() {
 					var updateItem=$(this);
 					var id=updateItem.parent().parent().attr("id").replace("job-","");
-					$.getJSON("${createLink(controller:'personalPerformance', action: 'getJobRuleById')}", { id: id }, 
+					$.getJSON("${createLink(controller:'jobRule', action: 'getJobRuleById')}", { id: id }, 
 						function(json){
 						if(!jQuery.isEmptyObject(json)){
 							$("#jobRuleId").val(json.id);
@@ -34,7 +34,7 @@
 			$("#job .del").live('click',function() {
 					var delItem=$(this);
 					var id=delItem.parent().parent().attr("id").replace("job-","");
-					$.getJSON("${createLink(controller:'personalPerformance', action: 'deleteJobRuleById')}", { id: id }, 
+					$.getJSON("${createLink(controller:'jobRule', action: 'deleteJobRuleById')}", { id: id }, 
 						function(json){
 						if(jQuery.isEmptyObject(json.message)){
 							alert(json.error);
@@ -58,14 +58,14 @@
 							bValid = bValid && checkLength(jobItem, "${message(code: 'jobRule.jobItem.label', default: 'Job Item')}", 1);		
 							if ( bValid ) {
 								if(jobRuleId.val()==""||jobRuleId.val().length<=0){
-									$.getJSON("${createLink(controller:'personalPerformance', action: 'saveJobRule')}", { jobItem:$("#jobItem").val(),personalPerformanceId:$("#personalPerformanceId").val() },function(json){
+									$.getJSON("${createLink(controller:'jobRule', action: 'saveJobRule')}", { jobItem:$("#jobItem").val(),personalPerformanceId:$("#personalPerformanceId").val() },function(json){
 									if(!jQuery.isEmptyObject(json)){
 										$( "#job tbody" ).append("<tr id='job-" +json.id+"' class='repeat'><td>" + json.jobItem + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td></tr>" ); 
 										jobForm.dialog( "close" ); 
 										}
 									});	
 								}else{
-									$.getJSON("${createLink(controller:'personalPerformance', action: 'updateJobRule')}", { jobItem:$("#jobItem").val(),jobRuleId:jobRuleId.val() },function(json){
+									$.getJSON("${createLink(controller:'jobRule', action: 'updateJobRule')}", { jobItem:$("#jobItem").val(),jobRuleId:jobRuleId.val() },function(json){
 									if(!jQuery.isEmptyObject(json)){
 										$("#job-"+json.id).empty().append("<td>" + json.jobItem + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>");
 										jobForm.dialog( "close" ); 

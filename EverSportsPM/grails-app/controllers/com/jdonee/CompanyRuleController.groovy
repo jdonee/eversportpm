@@ -1,5 +1,7 @@
 package com.jdonee
 
+import grails.converters.JSON
+
 class CompanyRuleController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -97,4 +99,66 @@ class CompanyRuleController {
             redirect(action: "list")
         }
     }
+	
+	def saveCompanyRule = {
+		def companyRuleInstance = new CompanyRule(content:params.content,personalPerformance:PersonalPerformance.get(params.personalPerformanceId))
+		def objectMap=[:]
+		if (companyRuleInstance.save(flush: true)) {
+			objectMap.put("id",companyRuleInstance.id)
+			objectMap.put("content",companyRuleInstance.content)
+			if(companyRuleInstance.customed==Boolean.TRUE){
+				objectMap.put("customed", "${message(code: 'default.boolean.true')}")
+			}else{
+				objectMap.put("customed", "${message(code: 'default.boolean.false')}")
+			}
+		}
+		render objectMap as JSON
+	}
+
+	def updateCompanyRule = {
+		def companyRuleInstance = CompanyRule.get(params.companyRuleId)
+		def objectMap=[:]
+		if (companyRuleInstance) {
+			companyRuleInstance.properties = params
+			if (companyRuleInstance.save(flush: true)) {
+				objectMap.put("id",companyRuleInstance.id)
+				objectMap.put("content",companyRuleInstance.content)
+				if(companyRuleInstance.customed==Boolean.TRUE){
+					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
+				}else{
+					objectMap.put("customed", "${message(code: 'default.boolean.false')}")
+				}
+			}
+		}
+		render objectMap as JSON
+	}
+
+	def getCompanyRuleById={
+		def companyRuleInstance = CompanyRule.get(params.id)
+		def objectMap=[:]
+		if (companyRuleInstance) {
+			objectMap.put("id",companyRuleInstance.id)
+			objectMap.put("content",companyRuleInstance.content)
+			objectMap.put("customed",companyRuleInstance.customed)
+		}
+		render objectMap as JSON
+	}
+	
+	def deleteCompanyRuleById={
+		def companyRuleInstance = CompanyRule.get(params.id)
+		def messageMap=[:]
+		if (companyRuleInstance) {
+			try {
+				companyRuleInstance.delete(flush: true)
+				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'companyRule.label', default: 'CompanyRule'), params.id])}")
+			}
+			catch (org.springframework.dao.DataIntegrityViolationException e) {
+				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'companyRule.label', default: 'CompanyRule'), params.id])}")
+			}
+		}
+		else {
+			messageMap.put("error", "${message(code: 'default.not.found.message', args: [message(code: 'companyRule.label', default: 'CompanyRule'), params.id])}")
+		}
+		render messageMap as JSON
+	}
 }

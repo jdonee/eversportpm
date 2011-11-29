@@ -42,7 +42,7 @@
 			$("#kpi .update").live('click',function() {
 					var updateItem=$(this);
 					var id=updateItem.parent().parent().attr("id").replace("kpi-","");
-					$.getJSON("${createLink(controller:'personalPerformance', action: 'getKpiRuleById')}", { id: id }, 
+					$.getJSON("${createLink(controller:'kpiRule', action: 'getKpiRuleById')}", { id: id }, 
 						function(json){
 						if(!jQuery.isEmptyObject(json)){
 							$("#kpiRuleId").val(json.id);
@@ -59,7 +59,7 @@
 	       			if(confirm("${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}")){
 						var delItem=$(this);
 						var id=delItem.parent().parent().attr("id").replace("kpi-","");
-						$.getJSON("${createLink(controller:'personalPerformance', action: 'deleteKpiRuleById')}", { id: id }, 
+						$.getJSON("${createLink(controller:'kpiRule', action: 'deleteKpiRuleById')}", { id: id }, 
 							function(json){
 							if(json.message.length>0){
 							  	alert(json.message);
@@ -89,7 +89,7 @@
 							bValid = bValid && checkRegexp( weight, /^([0-9])+$/, "${message(code:'kpiRule.weight.validate.label',default:'Weight field only allow :0-9')}" );		
 							if ( bValid ) {
 								if(kpiRuleId.val()==""||kpiRuleId.val().length<=0){
-									$.getJSON("${createLink(controller:'personalPerformance', action: 'saveKpiRule')}",
+									$.getJSON("${createLink(controller:'kpiRule', action: 'saveKpiRule')}",
 									 { desiredItem:$("#desiredItem").val(),targetValue:$("#targetValue").val(),
 									 description:$("#description").val(),weight:$("#weight").val(),
 									 personalPerformanceId:$("#personalPerformanceId").val() },
@@ -100,7 +100,7 @@
 											}
 									});	
 								}else{
-									$.getJSON("${createLink(controller:'personalPerformance', action: 'updateKpiRule')}", 
+									$.getJSON("${createLink(controller:'kpiRule', action: 'updateKpiRule')}", 
 									{ desiredItem:$("#desiredItem").val(),targetValue:$("#targetValue").val(),
 									 description:$("#description").val(),weight:$("#weight").val(),
 									 kpiRuleId:kpiRuleId.val() },

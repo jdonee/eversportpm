@@ -21,7 +21,7 @@
        			$("#company .update").live('click',function() {
 					var updateItem=$(this);
 					var id=updateItem.parent().parent().attr("id").replace("company-","");
-					$.getJSON("${createLink(controller:'personalPerformance', action: 'getCompanyRuleById')}", { id: id }, 
+					$.getJSON("${createLink(controller:'companyRule', action: 'getCompanyRuleById')}", { id: id }, 
 						function(json){
 						if(!jQuery.isEmptyObject(json)){
 							$("#companyRuleId").val(json.id);
@@ -34,7 +34,7 @@
 		     	$("#company .del").live('click',function() {
 					var delItem=$(this);
 					var id=delItem.parent().parent().attr("id").replace("company-","");
-					$.getJSON("${createLink(controller:'personalPerformance', action: 'deleteCompanyRuleById')}", { id: id }, 
+					$.getJSON("${createLink(controller:'companyRule', action: 'deleteCompanyRuleById')}", { id: id }, 
 						function(json){
 						if(jQuery.isEmptyObject(json.message)){
 							alert(json.error);
@@ -59,14 +59,14 @@
 							bValid = bValid && checkLength(content, "${message(code: 'companyRule.content.label', default: 'Content')}", 1);	
 							if ( bValid ) {
 								if(companyRuleId.val()==""||companyRuleId.val().length<=0){
-									$.getJSON("${createLink(controller:'personalPerformance', action: 'saveCompanyRule')}", { content:$("#content").val(),personalPerformanceId:$("#personalPerformanceId").val() },function(json){
+									$.getJSON("${createLink(controller:'companyRule', action: 'saveCompanyRule')}", { content:$("#content").val(),personalPerformanceId:$("#personalPerformanceId").val() },function(json){
 									if(!jQuery.isEmptyObject(json)){
 										$( "#company tbody" ).append("<tr id='company-" +json.id+"' class='repeat'><td>" + json.content + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td></tr>" ); 
 										companyForm.dialog( "close" ); 
 										}
 									});	
 								}else{
-									$.getJSON("${createLink(controller:'personalPerformance', action: 'updateCompanyRule')}", { content:$("#content").val(),companyRuleId:companyRuleId.val() },function(json){
+									$.getJSON("${createLink(controller:'companyRule', action: 'updateCompanyRule')}", { content:$("#content").val(),companyRuleId:companyRuleId.val() },function(json){
 									if(!jQuery.isEmptyObject(json)){
 										$("#company-"+json.id).empty().append("<td>" + json.content + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>");
 										companyForm.dialog( "close" ); 

@@ -1,5 +1,6 @@
 package com.jdonee
 
+import grails.converters.JSON
 class JobRuleController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -97,4 +98,66 @@ class JobRuleController {
             redirect(action: "list")
         }
     }
+	
+	def saveJobRule = {
+		def jobRuleInstance = new JobRule(jobItem:params.jobItem,personalPerformance:PersonalPerformance.get(params.personalPerformanceId))
+		def objectMap=[:]
+		if (jobRuleInstance.save(flush: true)) {
+			objectMap.put("id",jobRuleInstance.id)
+			objectMap.put("jobItem",jobRuleInstance.jobItem)
+			if(jobRuleInstance.customed==Boolean.TRUE){
+				objectMap.put("customed", "${message(code: 'default.boolean.true')}")
+			}else{
+				objectMap.put("customed", "${message(code: 'default.boolean.false')}")
+			}
+		}
+		render objectMap as JSON
+	}
+
+	def updateJobRule = {
+		def jobRuleInstance = JobRule.get(params.jobRuleId)
+		def objectMap=[:]
+		if (jobRuleInstance) {
+			jobRuleInstance.properties = params
+			if (jobRuleInstance.save(flush: true)) {
+				objectMap.put("id",jobRuleInstance.id)
+				objectMap.put("jobItem",jobRuleInstance.jobItem)
+				if(jobRuleInstance.customed==Boolean.TRUE){
+					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
+				}else{
+					objectMap.put("customed", "${message(code: 'default.boolean.false')}")
+				}
+			}
+		}
+		render objectMap as JSON
+	}
+
+	def getJobRuleById={
+		def jobRuleInstance = JobRule.get(params.id)
+		def objectMap=[:]
+		if (jobRuleInstance) {
+			objectMap.put("id",jobRuleInstance.id)
+			objectMap.put("jobItem",jobRuleInstance.jobItem)
+			objectMap.put("customed",jobRuleInstance.customed)
+		}
+		render objectMap as JSON
+	}
+	
+	def deleteJobRuleById={
+		def jobRuleInstance = JobRule.get(params.id)
+		def messageMap=[:]
+		if (jobRuleInstance) {
+			try {
+				jobRuleInstance.delete(flush: true)
+				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'jobRule.label', default: 'JobRule'), params.id])}")
+			}
+			catch (org.springframework.dao.DataIntegrityViolationException e) {
+				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'jobRule.label', default: 'JobRule'), params.id])}")
+			}
+		}
+		else {
+			messageMap.put("error", "${message(code: 'default.not.found.message', args: [message(code: 'jobRule.label', default: 'JobRule'), params.id])}")
+		}
+		render messageMap as JSON
+	}
 }
