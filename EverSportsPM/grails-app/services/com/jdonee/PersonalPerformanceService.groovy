@@ -2,6 +2,7 @@ package com.jdonee
 
 import com.jdonee.utils.TemplateType
 import com.jdonee.utils.Constants
+import com.jdonee.utils.PerformanceStatus
 
 class PersonalPerformanceService {
 
@@ -26,6 +27,42 @@ class PersonalPerformanceService {
 				}
 				maxResults params.max
 			}
+		}
+		return results
+	}
+	
+	def findAllMyPersonalPerformanceByUser(user,params) {
+		def results=[]
+		def codes=Job.withCriteria{
+				projections{ property("code") }
+				eq "user",user
+		}.join(Constants.COMMA_SEPARATOR)
+		results = PersonalPerformance.withCriteria{
+				job{
+					or{
+						'in'("code",codes)
+						'in'("status",[PerformanceStatus.START_ASSESS,PerformanceStatus.SUPERIOR_SUMMARY])
+					}
+				}
+				maxResults params.max
+		}
+		return results
+	}
+	
+	def findAllSuperiorPersonalPerformanceByUser(user,params) {
+		def results=[]
+		def codes=Job.withCriteria{
+				projections{ property("code") }
+				eq "user",user
+		}.join(Constants.COMMA_SEPARATOR)
+		results = PersonalPerformance.withCriteria{
+				job{
+					or{
+						'in'("parentCode",codes)
+						'in'("status",[PerformanceStatus.PERSON_SUMMARY,PerformanceStatus.PERSON_AFFIRM,PerformanceStatus.SUPERIOR_AFFIRM])
+					}
+				}
+				maxResults params.max
 		}
 		return results
 	}
