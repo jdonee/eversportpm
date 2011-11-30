@@ -144,7 +144,9 @@
                         </sec:access>
                         <li><g:link controller="/">${message(code: 'menu.queryPersonPerformance.label', default: 'Query Person Performance')}</g:link></li>
                         <li><g:link controller="/">${message(code: 'menu.peripheralPersonPerformance.label', default: 'Peripheral Person Performance')}</g:link></li>
+                        <g:if test="${session.checkPermission}">
                         <li><g:link controller="/">${message(code: 'menu.superiorPersonPerformance.label', default: 'Superior Person Performance')}</g:link></li>
+                        </g:if>
                     </ul> 
 			</div>
         </div>

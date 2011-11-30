@@ -30,34 +30,6 @@ class PersonalPerformanceService {
 		return results
 	}
 
-	/**
-	 * 检查当前用户是否具有权限
-	 * @param user
-	 * @param jobCode
-	 * @return
-	 */
-	def checkPermissionByUserAndJobCode(user,jobCode){
-		def boo=Boolean.FALSE
-		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
-		if(jobs){
-			boo=Boolean.TRUE
-		}else{
-			def codes=Job.withCriteria{
-				projections{ property("code") }
-				eq "user",user
-			}.join(Constants.COMMA_SEPARATOR)
-			def c = Job.createCriteria()
-			def parentCode=c.get{
-				 projections{ property("parentCode") }
-				 eq ("code",jobCode)
-			}
-			if(parentCode in codes){
-				boo=Boolean.TRUE
-			}
-		}
-		return boo
-	}
-
 	def initPersonalPerformance(personalPerformanceInstance){
 		if(personalPerformanceInstance.performance.useTemplate){
 			def jobContent=SystemTemplate.withCriteria(uniqueResult:true) {

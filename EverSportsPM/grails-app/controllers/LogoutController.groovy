@@ -7,6 +7,8 @@ class LogoutController {
 	 */
 	def index = {
 		// TODO  put any pre-logout code here
+		log.info "User agent: " + request.getHeader("User-Agent")
+		session.invalidate()
 		redirect uri: SpringSecurityUtils.securityConfig.logout.filterProcessesUrl // '/j_spring_security_logout'
 	}
 }

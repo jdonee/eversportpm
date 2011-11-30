@@ -97,7 +97,7 @@ class PersonalPerformanceController {
 			if(peripheralPeople!=null&&peripheralPeople.length()>0){
 				jobInstanceList=jobService.findAllPeripheralPeopleByCodes(peripheralPeople.tokenize(Constants.COMMA_SEPARATOR))
 			}
-			[personalPerformanceInstance: personalPerformanceInstance,checkPermission:personalPerformanceService.checkPermissionByUserAndJobCode(currentUser,personalPerformanceInstance.job.code),jobInstanceList:jobInstanceList]
+			[personalPerformanceInstance: personalPerformanceInstance,checkPermission:jobService.checkPermissionByUserAndJobCode(currentUser,personalPerformanceInstance.job.code),jobInstanceList:jobInstanceList]
 		}
 	}
 
@@ -123,7 +123,7 @@ class PersonalPerformanceController {
 			}
 			personalPerformanceInstance.status=PerformanceStatus.INPUT_FINISHED
 			if( personalPerformanceInstance.save(flush: true)){
-				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				flash.message = "${message(code: 'personalPerformance.inputFinish.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
 			}
 		}
@@ -135,7 +135,7 @@ class PersonalPerformanceController {
 		if (personalPerformanceInstance) {
 			personalPerformanceInstance.status=PerformanceStatus.INIT
 			if( personalPerformanceInstance.save(flush: true)){
-				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				flash.message = "${message(code: 'personalPerformance.refresh.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
 			}
 		}
@@ -156,7 +156,7 @@ class PersonalPerformanceController {
 			}
 			personalPerformanceInstance.status=PerformanceStatus.SUPERIOR_AUDITING
 			if( personalPerformanceInstance.save(flush: true)){
-				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				flash.message = "${message(code: 'personalPerformance.audit.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
 			}
 		}
@@ -169,7 +169,7 @@ class PersonalPerformanceController {
 			personalPerformanceInstance.jobRules.each {  JobRuleScore.removeAll(it) }
 			personalPerformanceInstance.status=PerformanceStatus.INPUT_FINISHED
 			if( personalPerformanceInstance.save(flush: true)){
-				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				flash.message = "${message(code: 'personalPerformance.abandon.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
 			}
 		}
