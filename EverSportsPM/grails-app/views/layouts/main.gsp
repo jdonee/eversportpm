@@ -142,11 +142,17 @@
                         <sec:access url="/personalPerformance/**">
                         <li><g:link elementId="personalPerformanceList" controller="personalPerformance">${message(code: 'menu.personPerformance.label', default: 'Person Performance')}</g:link></li>
                         </sec:access>
-                        <li><g:link controller="/">${message(code: 'menu.queryPersonPerformance.label', default: 'Query Person Performance')}</g:link></li>
-                        <li><g:link controller="/">${message(code: 'menu.peripheralPersonPerformance.label', default: 'Peripheral Person Performance')}</g:link></li>
+                        <sec:access url="/myPersonPerformance/**">
+                        <li><g:link elementId="myPersonPerformanceList" controller="myPersonPerformance">${message(code: 'menu.myPersonPerformance.label', default: 'My Person Performance')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/peripheralPersonPerformance/**">
+                        <li><g:link elementId="peripheralPersonPerformanceList" controller="peripheralPersonPerformance">${message(code: 'menu.peripheralPersonPerformance.label', default: 'Peripheral Person Performance')}</g:link></li>
+                        </sec:access>
+                        <sec:access url="/superiorPersonPerformance/**">
                         <g:if test="${session.checkPermission}">
-                        <li><g:link controller="/">${message(code: 'menu.superiorPersonPerformance.label', default: 'Superior Person Performance')}</g:link></li>
+                        <li><g:link elementId="superiorPersonPerformanceList" controller="superiorPersonPerformance">${message(code: 'menu.superiorPersonPerformance.label', default: 'Superior Person Performance')}</g:link></li>
                         </g:if>
+                        </sec:access>
                     </ul> 
 			</div>
         </div>
