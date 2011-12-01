@@ -323,6 +323,7 @@
                     	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[2]'">
                     	<g:if test="${checkPermission}">    
                     	<span class="button"><g:actionSubmit class="uncheck" action="abandon" value="${message(code: 'default.button.abandon.label', default: 'Abandon')}"/></span>
+                    	<span class="button"><g:actionSubmit class="check" action="assess" value="${message(code: 'default.button.assess.label', default: 'Assess')}" onclick="return confirm('${message(code: 'personalPerformance.button.commit.confirm.message', default: 'The operater can\'t rollback,Are you sure?')}');"/></span>
                     	</g:if>
                     	</g:grep>
                 </g:form>

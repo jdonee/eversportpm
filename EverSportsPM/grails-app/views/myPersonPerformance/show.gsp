@@ -8,12 +8,9 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
         <link rel="stylesheet" href="${resource(dir:'css',file:'personalPerformance.css')}" />
         <jq:jquery>
-        	$("#personalPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
+        	$("#myPersonPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
         	// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
 			$( "#dialog:ui-dialog" ).dialog( "destroy" );
-				$("#create-peripheralPeople" ).button().click(function() {
-						$( "#peripheralPeople-form" ).dialog( "open" );
-				});
 				$("#create-CompanyRule" ).button().click(function() {
 						$( "#company-form" ).dialog( "open" );
 				});
@@ -29,8 +26,7 @@
     	<h3 class="ui-widget-header"><g:message code="default.show.label" args="[entityName]" /></h3>
         <div id="pageBody">
         <div class="nav">
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><g:link class="list" action="list"><g:message code="mypersonPerformance.list.label" default="My Assess And Summary"/></g:link></span>
         </div>
         <br/>
         <div class="body">
@@ -332,7 +328,6 @@
         </div>
         </div>
         <div class="hiddenForms">
-        	<g:render template="createAndEditPeripheralPeople" />
         	<g:render template="createAndEditKpiRule" />
 			<g:render template="createAndEditJobRule" />
 			<g:render template="createAndEditCompanyRule" />		

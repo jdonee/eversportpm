@@ -5,15 +5,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'personalPerformance.label', default: 'PersonalPerformance')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title><g:message code="mypersonPerformance.list.label" default="My Assess And Summary"/></title>
         <jq:jquery>
-        	$("#personalPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
+        	$("#myPersonPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"}); 
 		</jq:jquery>
     </head>
-    <h3 class="ui-widget-header"><g:message code="default.list.label" args="[entityName]" /></h3>
+    <h3 class="ui-widget-header"><g:message code="mypersonPerformance.list.label" default="My Assess And Summary"/></h3>
     	<div id="pageBody">
         <div class="nav">
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+        &nbsp;
         </div>
         <br/>
         <div class="body">

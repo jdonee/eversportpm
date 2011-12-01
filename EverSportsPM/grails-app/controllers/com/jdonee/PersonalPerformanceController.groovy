@@ -161,7 +161,7 @@ class PersonalPerformanceController {
 			}
 		}
 	}
-
+	
 	def abandon = {
 		/*弃审*/
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
@@ -170,6 +170,18 @@ class PersonalPerformanceController {
 			personalPerformanceInstance.status=PerformanceStatus.INPUT_FINISHED
 			if( personalPerformanceInstance.save(flush: true)){
 				flash.message = "${message(code: 'personalPerformance.abandon.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				redirect(action: "show", id: personalPerformanceInstance.id)
+			}
+		}
+	}
+	
+	def assess = {
+		/*准备考核*/
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		if (personalPerformanceInstance) {
+			personalPerformanceInstance.status=PerformanceStatus.START_ASSESS
+			if( personalPerformanceInstance.save(flush: true)){
+				flash.message = "${message(code: 'personalPerformance.assess.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
 			}
 		}

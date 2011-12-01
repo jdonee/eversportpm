@@ -1,5 +1,8 @@
 package com.jdonee
 
+import grails.converters.JSON
+import com.jdonee.utils.PerformanceStatus
+import com.jdonee.utils.Constants
 class MyPersonPerformanceController {
 
 	def springSecurityService
@@ -11,7 +14,7 @@ class MyPersonPerformanceController {
 	
 	def list = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		[personalPerformanceInstanceList: personalPerformanceService.findAllPersonalPerformanceByUser(currentUser,params), personalPerformanceInstanceTotal: PersonalPerformance.count()]
+		[personalPerformanceInstanceList: personalPerformanceService.findAllMyPersonalPerformanceByUser(currentUser,params), personalPerformanceInstanceTotal: PersonalPerformance.count()]
 	}
 	
 	def show = {
@@ -28,5 +31,9 @@ class MyPersonPerformanceController {
 			}
 			[personalPerformanceInstance: personalPerformanceInstance,checkPermission:jobService.checkPermissionByUserAndJobCode(currentUser,personalPerformanceInstance.job.code),jobInstanceList:jobInstanceList]
 		}
+	}
+	
+	private getCurrentUser() {
+		return User.get(springSecurityService.principal.id)
 	}
 }

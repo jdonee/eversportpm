@@ -17,7 +17,7 @@ class PersonalPerformanceService {
 			def codes=Job.withCriteria{
 				projections{ property("code") }
 				eq "user",user
-			}.join(Constants.COMMA_SEPARATOR)
+			}
 			results = PersonalPerformance.withCriteria{
 				job{
 					or{
@@ -36,13 +36,11 @@ class PersonalPerformanceService {
 		def codes=Job.withCriteria{
 				projections{ property("code") }
 				eq "user",user
-		}.join(Constants.COMMA_SEPARATOR)
+		}
 		results = PersonalPerformance.withCriteria{
+				'in'("status",[PerformanceStatus.START_ASSESS,PerformanceStatus.SUPERIOR_SUMMARY])
 				job{
-					or{
 						'in'("code",codes)
-						'in'("status",[PerformanceStatus.START_ASSESS,PerformanceStatus.SUPERIOR_SUMMARY])
-					}
 				}
 				maxResults params.max
 		}
@@ -54,7 +52,7 @@ class PersonalPerformanceService {
 		def codes=Job.withCriteria{
 				projections{ property("code") }
 				eq "user",user
-		}.join(Constants.COMMA_SEPARATOR)
+		}
 		results = PersonalPerformance.withCriteria{
 				job{
 					or{

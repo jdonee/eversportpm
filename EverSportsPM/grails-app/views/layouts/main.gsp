@@ -142,7 +142,7 @@
                         <sec:access url="/personalPerformance/**">
                         <li><g:link elementId="personalPerformanceList" controller="personalPerformance">${message(code: 'menu.personPerformance.label', default: 'Person Performance')}</g:link></li>
                         </sec:access>
-                        <sec:access url="/myPersonPerformance/**">
+                        <sec:access url="/myPersonalPerformance/**">
                         <li><g:link elementId="myPersonPerformanceList" controller="myPersonPerformance">${message(code: 'menu.myPersonPerformance.label', default: 'My Person Performance')}</g:link></li>
                         </sec:access>
                         <sec:access url="/peripheralPersonPerformance/**">
