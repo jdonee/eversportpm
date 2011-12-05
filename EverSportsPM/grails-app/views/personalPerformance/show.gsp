@@ -312,10 +312,10 @@
                     	<span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                     	</g:grep>
                     	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'">    
-                    	<span class="button"><g:actionSubmit class="check" action="inputFinish" value="${message(code: 'default.button.inputFinish.label', default: 'Finish')}"/></span>
+                    	<span class="button"><g:actionSubmit class="check" action="inputFinish" value="${message(code: 'default.button.inputFinish.label', default: 'Input Finish')}"/></span>
                     	</g:grep>
                     	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[1]'">    
-                    	<span class="button"><g:actionSubmit class="uncheck" action="refresh" value="${message(code: 'default.button.refresh.label', default: 'Refresh')}"/></span>
+                    	<span class="button"><g:actionSubmit class="uncheck" action="refreshInput" value="${message(code: 'default.button.refreshInput.label', default: 'Refresh Input')}"/></span>
                     	<g:if test="${checkPermission}">
                     	<span class="button"><g:actionSubmit class="check" action="audit" value="${message(code: 'default.button.audit.label', default: 'Audit')}"/></span>
                     	</g:if>
@@ -323,7 +323,7 @@
                     	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[2]'">
                     	<g:if test="${checkPermission}">    
                     	<span class="button"><g:actionSubmit class="uncheck" action="abandon" value="${message(code: 'default.button.abandon.label', default: 'Abandon')}"/></span>
-                    	<span class="button"><g:actionSubmit class="check" action="assess" value="${message(code: 'default.button.assess.label', default: 'Assess')}" onclick="return confirm('${message(code: 'personalPerformance.button.commit.confirm.message', default: 'The operater can\'t rollback,Are you sure?')}');"/></span>
+                    	<span class="button"><g:actionSubmit class="check" action="openAssess" value="${message(code: 'default.button.openAssess.label', default: 'Start Assess')}" onclick="return confirm('${message(code: 'personalPerformance.button.commit.confirm.message', default: 'The operater can\'t rollback,Are you sure?')}');"/></span>
                     	</g:if>
                     	</g:grep>
                 </g:form>

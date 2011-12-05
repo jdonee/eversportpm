@@ -122,6 +122,10 @@ class JobRuleController {
 			if (jobRuleInstance.save(flush: true)) {
 				objectMap.put("id",jobRuleInstance.id)
 				objectMap.put("jobItem",jobRuleInstance.jobItem)
+				objectMap.put("personSummary",jobRuleInstance.personSummary)
+				objectMap.put("peripheralScore",jobRuleInstance.peripheralScore)
+				objectMap.put("score",jobRuleInstance.score)
+				objectMap.put("expectation",jobRuleInstance.expectation)
 				if(jobRuleInstance.customed==Boolean.TRUE){
 					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
 				}else{
@@ -138,6 +142,10 @@ class JobRuleController {
 		if (jobRuleInstance) {
 			objectMap.put("id",jobRuleInstance.id)
 			objectMap.put("jobItem",jobRuleInstance.jobItem)
+			objectMap.put("personSummary",jobRuleInstance.personSummary)
+			objectMap.put("peripheralScore",jobRuleInstance.peripheralScore)
+			objectMap.put("score",jobRuleInstance.score)
+			objectMap.put("expectation",jobRuleInstance.expectation)
 			objectMap.put("customed",jobRuleInstance.customed)
 		}
 		render objectMap as JSON

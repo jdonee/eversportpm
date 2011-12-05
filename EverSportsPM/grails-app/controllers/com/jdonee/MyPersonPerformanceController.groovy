@@ -33,6 +33,54 @@ class MyPersonPerformanceController {
 		}
 	}
 	
+	def personSummary = {
+		/*完成员工自评*/
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		if (personalPerformanceInstance) {
+			personalPerformanceInstance.status=PerformanceStatus.PERSON_SUMMARY
+			if( personalPerformanceInstance.save(flush: true)){
+				flash.message = "${message(code: 'personalPerformance.personSummary.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				redirect(action: "show", id: personalPerformanceInstance.id)
+			}
+		}
+	}
+	
+	def refreshPersonSummary = {
+		/*重新自评*/
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		if (personalPerformanceInstance) {
+			personalPerformanceInstance.status=PerformanceStatus.OPEN_ASSESS
+			if( personalPerformanceInstance.save(flush: true)){
+				flash.message = "${message(code: 'personalPerformance.openAssess.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				redirect(action: "show", id: personalPerformanceInstance.id)
+			}
+		}
+	}
+	
+	def personAffirm = {
+		/*员工确认完成*/
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		if (personalPerformanceInstance) {
+			personalPerformanceInstance.status=PerformanceStatus.PERSON_AFFIRM
+			if( personalPerformanceInstance.save(flush: true)){
+				flash.message = "${message(code: 'personalPerformance.personAffirm.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				redirect(action: "show", id: personalPerformanceInstance.id)
+			}
+		}
+	}
+	
+	def refreshPersonAffirm = {
+		/*员工重新确认*/
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		if (personalPerformanceInstance) {
+			personalPerformanceInstance.status=PerformanceStatus.SUPERIOR_SUMMARY
+			if( personalPerformanceInstance.save(flush: true)){
+				flash.message = "${message(code: 'personalPerformance.superiorSummary.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				redirect(action: "show", id: personalPerformanceInstance.id)
+			}
+		}
+	}
+	
 	private getCurrentUser() {
 		return User.get(springSecurityService.principal.id)
 	}

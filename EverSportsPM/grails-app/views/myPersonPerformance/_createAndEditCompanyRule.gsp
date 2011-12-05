@@ -1,6 +1,6 @@
 <g:set var="entityName" value="${message(code: 'companyRule.label', default: 'CompanyRule')}" />
 <jq:jquery>
-				var content = $( "#content" ),companyRuleId=$("#companyRuleId"),allFields = $( [] ).add( content ).add(companyRuleId),tips = $( ".validateTips" );
+				var content = $( "#content" ),companyRuleId=$("#companyRuleId"),cPersonSummary=$("#cPersonSummary"),allFields = $( [] ).add( content ).add(companyRuleId).add(cPersonSummary),tips = $( ".validateTips" );
 				function updateTips( t ) {
 					tips.text( t ).addClass( "ui-state-highlight" );
 					setTimeout(function() {
@@ -24,31 +24,19 @@
 					$.getJSON("${createLink(controller:'companyRule', action: 'getCompanyRuleById')}", { id: id }, 
 						function(json){
 						if(!jQuery.isEmptyObject(json)){
-							$("#companyRuleId").val(json.id);
-							$("#content").val(json.content);
+							companyRuleId.val(json.id);
+							content.html(json.content);
+							cPersonSummary.val(json.personSummary);
 							$( "#company-form" ).dialog( "open" );
 						}
 					});
 		     	});	
 		     	
-		     	$("#company .del").live('click',function() {
-					var delItem=$(this);
-					var id=delItem.parent().parent().attr("id").replace("company-","");
-					$.getJSON("${createLink(controller:'companyRule', action: 'deleteCompanyRuleById')}", { id: id }, 
-						function(json){
-						if(jQuery.isEmptyObject(json.message)){
-							alert(json.error);
-						}else{
-							alert(json.message);
-						  	delItem.parents(".repeat").remove();  
-						}
-					});
-		     	});	
 		     	
 				$( "#company-form" ).dialog({
 					autoOpen: false,
 					resizable: false,
-					height: 300,
+					height: 400,
 					width: 550,
 					modal: true,
 					buttons: {
@@ -56,23 +44,14 @@
 							var bValid = true;
 							var companyForm=$(this);
 							allFields.removeClass( "ui-state-error" );		
-							bValid = bValid && checkLength(content, "${message(code: 'companyRule.content.label', default: 'Content')}", 1);	
+							bValid = bValid && checkLength(cPersonSummary, "${message(code: 'companyRule.personSummary.label', default: 'Person Summary')}", 1);		
 							if ( bValid ) {
-								if(companyRuleId.val()==""||companyRuleId.val().length<=0){
-									$.getJSON("${createLink(controller:'companyRule', action: 'saveCompanyRule')}", { content:$("#content").val(),personalPerformanceId:$("#personalPerformanceId").val() },function(json){
+									$.getJSON("${createLink(controller:'companyRule', action: 'updateCompanyRule')}", { personSummary:cPersonSummary.val(),companyRuleId:companyRuleId.val() },function(json){
 									if(!jQuery.isEmptyObject(json)){
-										$( "#company tbody" ).append("<tr id='company-" +json.id+"' class='repeat'><td>" + json.content + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td></tr>" ); 
-										companyForm.dialog( "close" ); 
-										}
-									});	
-								}else{
-									$.getJSON("${createLink(controller:'companyRule', action: 'updateCompanyRule')}", { content:$("#content").val(),companyRuleId:companyRuleId.val() },function(json){
-									if(!jQuery.isEmptyObject(json)){
-										$("#company-"+json.id).empty().append("<td>" + json.content + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>");
+										$("#company-"+json.id).empty().append("<td>" + json.content + "</td><td>" + json.personSummary + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.summary.label', default: 'Summary')}</button></td>");
 										companyForm.dialog( "close" ); 
 										}
 									});
-								}
 							}
 						},
 						"${message(code: 'default.button.cancel.label', default: 'Cancel')}": function() {
@@ -90,7 +69,9 @@
 				<g:hiddenField name="companyRuleId"/>
 				<fieldset>
 					<label for="content"><g:message code="companyRule.content.label" default="Content" /></label>
-					<g:textArea name="content"  style="width: 500px; height: 100px;" class="text ui-widget-content ui-corner-all"/>
+					<p id="content" class="text ui-widget-content ui-corner-all"></p>
+					<label for="personSummary"><g:message code="companyRule.personSummary.label" default="Person Summary" /></label>
+					<g:textArea name="cPersonSummary"  style="width: 500px; height: 100px;" class="text ui-widget-content ui-corner-all"/>
 				</fieldset>
 				</form>
 			</div>

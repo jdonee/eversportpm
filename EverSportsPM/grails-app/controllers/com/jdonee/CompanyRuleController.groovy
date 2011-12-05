@@ -122,6 +122,9 @@ class CompanyRuleController {
 			companyRuleInstance.properties = params
 			if (companyRuleInstance.save(flush: true)) {
 				objectMap.put("id",companyRuleInstance.id)
+				objectMap.put("personSummary",companyRuleInstance.personSummary)
+				objectMap.put("appraise",companyRuleInstance.appraise)
+				objectMap.put("expectation",companyRuleInstance.expectation)
 				objectMap.put("content",companyRuleInstance.content)
 				if(companyRuleInstance.customed==Boolean.TRUE){
 					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
@@ -139,6 +142,9 @@ class CompanyRuleController {
 		if (companyRuleInstance) {
 			objectMap.put("id",companyRuleInstance.id)
 			objectMap.put("content",companyRuleInstance.content)
+			objectMap.put("personSummary",companyRuleInstance.personSummary)
+			objectMap.put("appraise",companyRuleInstance.appraise)
+			objectMap.put("expectation",companyRuleInstance.expectation)
 			objectMap.put("customed",companyRuleInstance.customed)
 		}
 		render objectMap as JSON

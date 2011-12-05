@@ -122,6 +122,8 @@ class KpiRuleController {
 				objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
 				objectMap.put("targetValue",kpiRuleInstance.targetValue)
 				objectMap.put("description",kpiRuleInstance.description)
+				objectMap.put("actualValue",kpiRuleInstance.actualValue)
+				objectMap.put("score",kpiRuleInstance.score)
 				objectMap.put("weight",kpiRuleInstance.weight)
 			}
 		}

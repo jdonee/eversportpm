@@ -38,7 +38,7 @@ class PersonalPerformanceService {
 				eq "user",user
 		}
 		results = PersonalPerformance.withCriteria{
-				'in'("status",[PerformanceStatus.START_ASSESS,PerformanceStatus.SUPERIOR_SUMMARY])
+				'in'("status",[PerformanceStatus.OPEN_ASSESS,PerformanceStatus.SUPERIOR_SUMMARY])
 				job{
 						'in'("code",codes)
 				}

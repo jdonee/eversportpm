@@ -1,6 +1,6 @@
 <g:set var="entityName" value="${message(code: 'jobRule.label', default: 'JobRule')}" />
 <jq:jquery>
-			var jobItem = $( "#jobItem" ),jobRuleId=$("#jobRuleId"),allFields = $( [] ).add( jobItem ).add(jobRuleId),tips = $( ".validateTips" );
+			var jobItem = $( "#jobItem" ),jobRuleId=$("#jobRuleId"),personSummary=$("#personSummary"),allFields = $( [] ).add( jobItem ).add(jobRuleId).add(personSummary),tips = $( ".validateTips" );
         	function updateTips( t ) {
 				tips.text( t ).addClass( "ui-state-highlight" );
 				setTimeout(function() {
@@ -24,30 +24,18 @@
 					$.getJSON("${createLink(controller:'jobRule', action: 'getJobRuleById')}", { id: id }, 
 						function(json){
 						if(!jQuery.isEmptyObject(json)){
-							$("#jobRuleId").val(json.id);
-							$("#jobItem").val(json.jobItem);
+							jobRuleId.val(json.id);
+							jobItem.html(json.jobItem);
+							personSummary.val(json.personSummary);
 							$( "#job-form" ).dialog( "open" );
 						}
 					});
 		     	});	
 			
-			$("#job .del").live('click',function() {
-					var delItem=$(this);
-					var id=delItem.parent().parent().attr("id").replace("job-","");
-					$.getJSON("${createLink(controller:'jobRule', action: 'deleteJobRuleById')}", { id: id }, 
-						function(json){
-						if(jQuery.isEmptyObject(json.message)){
-							alert(json.error);
-						}else{
-							alert(json.message);
-						  	delItem.parents(".repeat").remove();  
-						}; 
-					});
-		        });
 			$( "#job-form" ).dialog({
 					autoOpen: false,
 					resizable: false,
-					height: 300,
+					height: 400,
 					width: 550,
 					modal: true,
 					buttons: {
@@ -55,23 +43,14 @@
 							var bValid = true;
 							var jobForm=$(this);
 							allFields.removeClass( "ui-state-error" );		
-							bValid = bValid && checkLength(jobItem, "${message(code: 'jobRule.jobItem.label', default: 'Job Item')}", 1);		
+							bValid = bValid && checkLength(personSummary, "${message(code: 'jobRule.personSummary.label', default: 'Person Summary')}", 1);		
 							if ( bValid ) {
-								if(jobRuleId.val()==""||jobRuleId.val().length<=0){
-									$.getJSON("${createLink(controller:'jobRule', action: 'saveJobRule')}", { jobItem:$("#jobItem").val(),personalPerformanceId:$("#personalPerformanceId").val() },function(json){
+									$.getJSON("${createLink(controller:'jobRule', action: 'updateJobRule')}", { personSummary:personSummary.val(),jobRuleId:jobRuleId.val() },function(json){
 									if(!jQuery.isEmptyObject(json)){
-										$( "#job tbody" ).append("<tr id='job-" +json.id+"' class='repeat'><td>" + json.jobItem + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td></tr>" ); 
-										jobForm.dialog( "close" ); 
-										}
-									});	
-								}else{
-									$.getJSON("${createLink(controller:'jobRule', action: 'updateJobRule')}", { jobItem:$("#jobItem").val(),jobRuleId:jobRuleId.val() },function(json){
-									if(!jQuery.isEmptyObject(json)){
-										$("#job-"+json.id).empty().append("<td>" + json.jobItem + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.update.label', default: 'Update')}</button><button class='del'>${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>");
+										$("#job-"+json.id).empty().append("<td>" + json.jobItem + "</td><td>" + json.personSummary + "</td><td>"+json.customed+"</td><td><button class='update'>${message(code: 'default.button.summary.label', default: 'Summary')}</button></td>");
 										jobForm.dialog( "close" ); 
 										}
 									});
-								}	
 							}
 						},
 						"${message(code: 'default.button.cancel.label', default: 'Cancel')}": function() {
@@ -90,7 +69,9 @@
 				<g:hiddenField name="jobRuleId"/>
 				<fieldset>
 					<label for="jobItem"><g:message code="jobRule.jobItem.label" default="Job Item" /></label>
-					<g:textArea name="jobItem" style="width: 500px; height: 100px;" class="text ui-widget-content ui-corner-all"/>
+					<p id="jobItem" class="text ui-widget-content ui-corner-all"></p>
+					<label for="personSummary"><g:message code="jobRule.personSummary.label" default="Person Summary" /></label>
+					<g:textArea name="personSummary" style="width: 500px; height: 100px;" class="text ui-widget-content ui-corner-all"/>
 				</fieldset>
 				</form>
 			</div>

@@ -129,13 +129,13 @@ class PersonalPerformanceController {
 		}
 	}
 
-	def refresh = {
+	def refreshInput = {
 		/*重新输入*/
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
 			personalPerformanceInstance.status=PerformanceStatus.INIT
 			if( personalPerformanceInstance.save(flush: true)){
-				flash.message = "${message(code: 'personalPerformance.refresh.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				flash.message = "${message(code: 'personalPerformance.refreshInput.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
 			}
 		}
@@ -175,13 +175,13 @@ class PersonalPerformanceController {
 		}
 	}
 	
-	def assess = {
+	def openAssess = {
 		/*准备考核*/
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
-			personalPerformanceInstance.status=PerformanceStatus.START_ASSESS
+			personalPerformanceInstance.status=PerformanceStatus.OPEN_ASSESS
 			if( personalPerformanceInstance.save(flush: true)){
-				flash.message = "${message(code: 'personalPerformance.assess.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+				flash.message = "${message(code: 'personalPerformance.openAssess.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
 			}
 		}
