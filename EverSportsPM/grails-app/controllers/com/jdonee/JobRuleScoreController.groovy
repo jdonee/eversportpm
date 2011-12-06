@@ -1,6 +1,8 @@
 package com.jdonee
 
+import grails.converters.JSON
 class JobRuleScoreController {
+	def personalPerformanceService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -97,4 +99,46 @@ class JobRuleScoreController {
             redirect(action: "list")
         }
     }
+	
+	def updateJobRuleScore = {
+		def jobRuleScoreInstance = JobRuleScore.get(params.jobRuleScoreId)
+		def objectMap=[:]
+		if (jobRuleScoreInstance) {
+			jobRuleScoreInstance.properties = params
+			jobRuleScoreInstance.used=Boolean.TRUE
+			if (jobRuleScoreInstance.save(flush: true)) {
+				personalPerformanceService.changeJobRuleScore(jobRuleScoreInstance.jobRule)
+				objectMap.put("id",jobRuleScoreInstance.id)
+				objectMap.put("jobItem",jobRuleScoreInstance.jobRule.jobItem)
+				objectMap.put("personSummary",jobRuleScoreInstance.jobRule.personSummary)
+				objectMap.put("peripheralScore",jobRuleScoreInstance.jobRule.peripheralScore)
+				objectMap.put("score",jobRuleScoreInstance.score)
+				if(jobRuleScoreInstance.used==Boolean.TRUE){
+					objectMap.put("used", "${message(code: 'default.boolean.true')}")
+				}else{
+					objectMap.put("used", "${message(code: 'default.boolean.false')}")
+				}
+				if(jobRuleScoreInstance.jobRule.customed==Boolean.TRUE){
+					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
+				}else{
+					objectMap.put("customed", "${message(code: 'default.boolean.false')}")
+				}
+			}
+		}
+		render objectMap as JSON
+	}
+
+	def getJobRuleScoreById={
+		def jobRuleScoreInstance = JobRuleScore.get(params.id)
+		def objectMap=[:]
+		if (jobRuleScoreInstance) {
+			objectMap.put("id",jobRuleScoreInstance.id)
+			objectMap.put("jobItem",jobRuleScoreInstance.jobRule.jobItem)
+			objectMap.put("personSummary",jobRuleScoreInstance.jobRule.personSummary)
+			objectMap.put("score",jobRuleScoreInstance.score)
+			objectMap.put("customed",jobRuleScoreInstance.jobRule.customed)
+			objectMap.put("used",jobRuleScoreInstance.used)
+		}
+		render objectMap as JSON
+	}
 }

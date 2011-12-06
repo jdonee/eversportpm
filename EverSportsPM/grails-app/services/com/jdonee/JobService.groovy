@@ -23,6 +23,10 @@ class JobService {
 	def findAllPeripheralPeopleByCodes(codes){
 		return Job.withCriteria{ 'in'("code",codes) }
 	}
+	
+	def findCurrectJobByCode(code){
+		return Job.findByCode(code)
+	}
 
 	def searchJobByCode(code){
 		return Job.findAllByCodeLike(code + '%').collect() {

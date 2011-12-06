@@ -14,10 +14,7 @@ class PersonalPerformanceService {
 		if(jobs){
 			results=PersonalPerformance.list(params)
 		}else{
-			def codes=Job.withCriteria{
-				projections{ property("code") }
-				eq "user",user
-			}
+			def codes=getCodesByUser(user)
 			results = PersonalPerformance.withCriteria{
 				job{
 					or{
@@ -30,39 +27,67 @@ class PersonalPerformanceService {
 		}
 		return results
 	}
-	
+
 	def findAllMyPersonalPerformanceByUser(user,params) {
 		def results=[]
-		def codes=Job.withCriteria{
-				projections{ property("code") }
-				eq "user",user
-		}
+		def codes=getCodesByUser(user)
 		results = PersonalPerformance.withCriteria{
-				'in'("status",[PerformanceStatus.OPEN_ASSESS,PerformanceStatus.SUPERIOR_SUMMARY])
-				job{
-						'in'("code",codes)
-				}
-				maxResults params.max
+			'in'("status",[
+				PerformanceStatus.OPEN_ASSESS,
+				PerformanceStatus.SUPERIOR_SUMMARY
+			])
+			job{ 'in'("code",codes) }
+			maxResults params.max
 		}
 		return results
 	}
-	
-	def findAllSuperiorPersonalPerformanceByUser(user,params) {
+
+	def findAllPeripheralPersonalPerformanceByUser(user,params) {
 		def results=[]
-		def codes=Job.withCriteria{
-				projections{ property("code") }
-				eq "user",user
-		}
-		results = PersonalPerformance.withCriteria{
-				job{
-					or{
-						'in'("parentCode",codes)
-						'in'("status",[PerformanceStatus.PERSON_SUMMARY,PerformanceStatus.PERSON_AFFIRM,PerformanceStatus.SUPERIOR_AFFIRM])
-					}
+		def codes=getCodesByUser(user)
+		codes.each { jobCode->
+			results += PersonalPerformance.withCriteria{
+				'in'("status",[
+					PerformanceStatus.PERSON_SUMMARY
+				])
+				and{
+					like("peripheralPeople","%"+jobCode+"%")
 				}
 				maxResults params.max
+			}
+		}
+		return results.unique().sort()
+	}
+
+	def findAllSuperiorPersonalPerformanceByUser(user,params) {
+		def results=[]
+		def codes=getCodesByUser(user)
+		results = PersonalPerformance.withCriteria{
+			job{
+				or{
+					'in'("parentCode",codes)
+					'in'("status",[
+						PerformanceStatus.PERSON_SUMMARY,
+						PerformanceStatus.PERSON_AFFIRM,
+						PerformanceStatus.SUPERIOR_AFFIRM
+					])
+				}
+			}
+			maxResults params.max
 		}
 		return results
+	}
+
+	/**
+	 * 获取用户所有的岗位代码
+	 * @param user
+	 * @return
+	 */
+	def getCodesByUser(user){
+		return Job.withCriteria{
+			projections{ property("code") }
+			eq "user",user
+		}
 	}
 
 	def initPersonalPerformance(personalPerformanceInstance){
@@ -114,6 +139,20 @@ class PersonalPerformanceService {
 		jobs.each {  job ->
 			def jobRuleScoreInstance=new JobRuleScore(job:job,jobRule:jobRule)
 			jobRuleScoreInstance.save(flush: true)
+		}
+	}
+
+	def changeJobRuleScore(jobRule){
+		def jobRuleScoreCount=JobRuleScore.countByJobRuleAndUsed(jobRule,Boolean.TRUE)
+		if(jobRuleScoreCount>0){
+			def c=JobRuleScore.createCriteria()
+			def scores=c.get{
+				projections{ sum("score") }
+				eq "jobRule",jobRule
+				eq "used",Boolean.TRUE
+			}
+			jobRule.peripheralScore=(scores/jobRuleScoreCount as Integer)
+			jobRule.save(flush: true)
 		}
 	}
 }
