@@ -27,20 +27,8 @@
                             <th><g:message code="personalPerformance.performance.label" default="Performance" /></th>
                         
                             <th><g:message code="personalPerformance.job.label" default="Job" /></th>
-                            
-                            <g:sortableColumn property="mainLevel" title="${message(code: 'personalPerformance.mainLevel.label', default: 'Main Level')}" />
-                        
-                            <g:sortableColumn property="companyRuleLevel" title="${message(code: 'personalPerformance.companyRuleLevel.label', default: 'Company Rule Level')}" />
                         
                             <g:sortableColumn property="peripheralPeople" title="${message(code: 'personalPerformance.peripheralPeople.label', default: 'Peripheral People')}" />
-                        
-                            <g:sortableColumn property="kpiRuleScore" title="${message(code: 'personalPerformance.kpiRuleScore.label', default: 'Kpi Rule Score')}" />
-                            
-                            <g:sortableColumn property="jobRuleScore" title="${message(code: 'personalPerformance.jobRuleScore.label', default: 'Job Rule Score')}" />
-         
-                            <g:sortableColumn property="score" title="${message(code: 'personalPerformance.score.label', default: 'Score')}" />
-                            
-                            <g:sortableColumn property="feedbackPeople" title="${message(code: 'personalPerformance.feedbackPeople.label', default: 'Feedback People')}" />
                             
                             <g:sortableColumn property="status" title="${message(code: 'personalPerformance.status.label', default: 'Status')}" />
                             
@@ -57,19 +45,7 @@
                         
                             <td>${fieldValue(bean: personalPerformanceInstance, field: "job")}</td>
                         
-                            <td>${fieldValue(bean: personalPerformanceInstance, field: "mainLevel")}</td>
-                        
-                            <td>${fieldValue(bean: personalPerformanceInstance, field: "companyRuleLevel")}</td>
-                        
                             <td>${fieldValue(bean: personalPerformanceInstance, field: "peripheralPeople")}</td>
-                            
-                            <td>${fieldValue(bean: personalPerformanceInstance, field: "kpiRuleScore")}</td>
-                        
-                            <td>${fieldValue(bean: personalPerformanceInstance, field: "jobRuleScore")}</td>
-                        
-                            <td>${fieldValue(bean: personalPerformanceInstance, field: "score")}</td>
-                        
-                            <td>${fieldValue(bean: personalPerformanceInstance, field: "feedbackPeople")}</td>
                         
                             <td>${personalPerformanceInstance?.status?.label?.encodeAsHTML()}</td>
                             

@@ -10,8 +10,8 @@ import java.util.Date;
 class PersonalPerformance  {
 	Performance performance
 	Job job
-	String companyRuleLevel='A' //企业价值观等级
-	String mainLevel='A' //KPI和岗位职责要项等级
+	String companyRuleLevel //企业价值观等级
+	String mainLevel //KPI和岗位职责要项等级
 	Integer jobRuleScore=0 //岗位职责要项分数
 	Integer kpiRuleScore=0 //KPI分数
 	Integer score=0 //KPI和岗位职责要项分数

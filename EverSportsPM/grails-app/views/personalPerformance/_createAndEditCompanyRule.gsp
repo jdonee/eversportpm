@@ -48,7 +48,7 @@
 				$( "#company-form" ).dialog({
 					autoOpen: false,
 					resizable: false,
-					height: 300,
+					height: 400,
 					width: 550,
 					modal: true,
 					buttons: {

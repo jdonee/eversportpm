@@ -10,6 +10,7 @@ class SystemController {
 			currentUserInstance = currentUser
 			def checkPermission = session["checkPermission"]
 			session["checkPermission"] = jobService.checkPermissionByUser(currentUser)
+			println session["checkPermission"]
 		}
 		[user:currentUserInstance]
 	}

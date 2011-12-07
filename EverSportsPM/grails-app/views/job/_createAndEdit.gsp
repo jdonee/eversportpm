@@ -125,7 +125,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: jobInstance, field: 'code', 'errors')}">
                                     <g:textField name="code" maxlength="50" value="${jobInstance?.code}" />
-                                    <span class="icon_warn"><g:message code="job.code.warn" default="code must be is a integer,for example '010101'" /></span>
+                                    <span class="icon_warn"><g:message code="job.code.warn" default="reference code format:'deptCode-number' , for example '0101-01'" /></span>
                                 </td>
                                 <td>&nbsp;
 								<g:if test="${hasErrors(bean: jobInstance, field: 'code', 'errors')}">
@@ -144,7 +144,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: jobInstance, field: 'parentCode', 'errors')}">
                                     <g:textField name="parentCode" maxlength="50" value="${jobInstance?.parentCode}" />
-                                    <span class="icon_warn"><g:message code="job.parentCode.warn" default="parentCode must be is a integer,for example '010101'" /></span>
+                                    <span class="icon_warn"><g:message code="job.parentCode.warn" default="reference parentCode format:'deptCode-number' , for example '0101-01'" /></span>
                                 </td>
                                  <td>&nbsp;
 								<g:if test="${hasErrors(bean: jobInstance, field: 'parentCode', 'errors')}">

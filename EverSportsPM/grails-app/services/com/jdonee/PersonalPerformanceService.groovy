@@ -8,13 +8,12 @@ class PersonalPerformanceService {
 
 	static transactional = true
 
-	def findAllPersonalPerformanceByUser(user,params) {
+	def findAllPersonalPerformanceByUser(user,codes,params) {
 		def results=[]
 		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
 		if(jobs){
 			results=PersonalPerformance.list(params)
 		}else{
-			def codes=getCodesByUser(user)
 			results = PersonalPerformance.withCriteria{
 				job{
 					or{
@@ -28,9 +27,8 @@ class PersonalPerformanceService {
 		return results
 	}
 
-	def findAllMyPersonalPerformanceByUser(user,params) {
+	def findAllMyPersonalPerformanceByUser(codes,params) {
 		def results=[]
-		def codes=getCodesByUser(user)
 		results = PersonalPerformance.withCriteria{
 			'in'("status",[
 				PerformanceStatus.OPEN_ASSESS,
@@ -42,9 +40,8 @@ class PersonalPerformanceService {
 		return results
 	}
 
-	def findAllPeripheralPersonalPerformanceByUser(user,params) {
+	def findAllPeripheralPersonalPerformanceByUser(codes,params) {
 		def results=[]
-		def codes=getCodesByUser(user)
 		codes.each { jobCode->
 			results += PersonalPerformance.withCriteria{
 				'in'("status",[
@@ -59,35 +56,34 @@ class PersonalPerformanceService {
 		return results.unique().sort()
 	}
 
-	def findAllSuperiorPersonalPerformanceByUser(user,params) {
+	def findAllSuperiorPersonalPerformanceByUser(user,codes,params) {
 		def results=[]
-		def codes=getCodesByUser(user)
-		results = PersonalPerformance.withCriteria{
-			job{
-				or{
-					'in'("parentCode",codes)
-					'in'("status",[
-						PerformanceStatus.PERSON_SUMMARY,
-						PerformanceStatus.PERSON_AFFIRM,
-						PerformanceStatus.SUPERIOR_AFFIRM
-					])
-				}
+		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
+		if(jobs){
+			results = PersonalPerformance.withCriteria{
+				'in'("status",[
+					PerformanceStatus.PERSON_SUMMARY,
+					PerformanceStatus.SUPERIOR_SUMMARY,
+					PerformanceStatus.PERSON_AFFIRM,
+					PerformanceStatus.SUPERIOR_AFFIRM,
+					PerformanceStatus.CLOSE_ASSESS
+				])
+				maxResults params.max
 			}
-			maxResults params.max
+		}else{
+			results = PersonalPerformance.withCriteria{
+				'in'("status",[
+					PerformanceStatus.PERSON_SUMMARY,
+					PerformanceStatus.SUPERIOR_SUMMARY,
+					PerformanceStatus.PERSON_AFFIRM,
+					PerformanceStatus.SUPERIOR_AFFIRM,
+					PerformanceStatus.CLOSE_ASSESS
+				])
+				job{'in'("parentCode",codes) }
+				maxResults params.max
+			}
 		}
 		return results
-	}
-
-	/**
-	 * 获取用户所有的岗位代码
-	 * @param user
-	 * @return
-	 */
-	def getCodesByUser(user){
-		return Job.withCriteria{
-			projections{ property("code") }
-			eq "user",user
-		}
 	}
 
 	def initPersonalPerformance(personalPerformanceInstance){

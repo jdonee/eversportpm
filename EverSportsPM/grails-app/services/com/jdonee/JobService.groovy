@@ -23,7 +23,7 @@ class JobService {
 	def findAllPeripheralPeopleByCodes(codes){
 		return Job.withCriteria{ 'in'("code",codes) }
 	}
-	
+
 	def findCurrectJobByCode(code){
 		return Job.findByCode(code)
 	}
@@ -37,7 +37,24 @@ class JobService {
 			]
 		}
 	}
-	
+
+//	def searchJobByCode(code,currectCodes){
+//		Job.withCriteria{
+//			ilike("code",code + "%")			
+//			not{
+//				'in'("code",currectCodes)
+//			}
+//			maxResults(20)
+//			order("code", "asc")
+//		}.collect() {
+//			return [
+//				id: it.id,
+//				label: it.code+"["+it.name+"("+it.user.username+")]",
+//				value: it.code
+//			]
+//		}
+//	}
+
 	/**
 	 * 检查用户是否是HR或者有下属岗位
 	 * @param user
@@ -55,7 +72,7 @@ class JobService {
 			}.join(Constants.COMMA_SEPARATOR)
 			def c = Job.createCriteria()
 			def results=c.get{
-				 projections{ property("code") }
+				projections{ property("code") }
 				'in'("parentCode",codes)
 			}
 			if(results!=null){
@@ -64,34 +81,34 @@ class JobService {
 		}
 		return boo
 	}
-	
+
 	/**
-	* 检查当前用户是否具有某个人考核的管理权限
-	* @param user
-	* @param jobCode
-	* @return
-	*/
-   def checkPermissionByUserAndJobCode(user,jobCode){
-	   def boo=Boolean.FALSE
-	   def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
-	   if(jobs){
-		   boo=Boolean.TRUE
-	   }else{
-		   def codes=Job.withCriteria{
-			   projections{ property("code") }
-			   eq "user",user
-		   }.join(Constants.COMMA_SEPARATOR)
-		   def c = Job.createCriteria()
-		   def parentCode=c.get{
+	 * 检查当前用户是否具有某个人考核的管理权限
+	 * @param user
+	 * @param jobCode
+	 * @return
+	 */
+	def checkPermissionByUserAndJobCode(user,jobCode){
+		def boo=Boolean.FALSE
+		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
+		if(jobs){
+			boo=Boolean.TRUE
+		}else{
+			def codes=Job.withCriteria{
+				projections{ property("code") }
+				eq "user",user
+			}.join(Constants.COMMA_SEPARATOR)
+			def c = Job.createCriteria()
+			def parentCode=c.get{
 				projections{ property("parentCode") }
 				eq ("code",jobCode)
-		   }
-		   if(parentCode in codes){
-			   boo=Boolean.TRUE
-		   }
-	   }
-	   return boo
-   }
+			}
+			if(parentCode in codes){
+				boo=Boolean.TRUE
+			}
+		}
+		return boo
+	}
 
 	def findAllJobByUser(user){
 		def results=[]
@@ -112,4 +129,16 @@ class JobService {
 		}
 		return results
 	}
+	
+	/**
+	* 获取用户所有的岗位代码
+	* @param user
+	* @return
+	*/
+   def getCodesByUser(user){
+	   return Job.withCriteria{
+		   projections{ property("code") }
+		   eq "user",user
+	   }
+   }
 }

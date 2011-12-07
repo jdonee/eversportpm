@@ -7,30 +7,12 @@
         <g:set var="entityName" value="${message(code: 'personalPerformance.label', default: 'PersonalPerformance')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
         <link rel="stylesheet" href="${resource(dir:'css',file:'personalPerformance.css')}" />
-        <jq:jquery>
-        	$("#personalPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
-        	// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
-			$( "#dialog:ui-dialog" ).dialog( "destroy" );
-				$("#create-peripheralPeople" ).button().click(function() {
-						$( "#peripheralPeople-form" ).dialog( "open" );
-				});
-				$("#create-CompanyRule" ).button().click(function() {
-						$( "#company-form" ).dialog( "open" );
-				});
-				$("#create-jobRule" ).button().click(function() {
-						$( "#job-form" ).dialog( "open" );
-				});
-				$( "#create-kpiRule" ).button().click(function() {
-						$( "#kpi-form" ).dialog( "open" );
-				});
-		</jq:jquery>
     </head>
     <body>
     	<h3 class="ui-widget-header"><g:message code="default.show.label" args="[entityName]" /></h3>
         <div id="pageBody">
         <div class="nav">
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><g:link class="list" action="list"><g:message code="personPerformanceReport.list.label" default="Person Performance Report" /></g:link></span>
         </div>
         <br/>
         <div class="body">
@@ -58,6 +40,34 @@
                             <td valign="top" class="name"><g:message code="personalPerformance.job.label" default="Job" /></td>
                             
                             <td valign="top" class="value"><g:link controller="job" action="show" id="${personalPerformanceInstance?.job?.id}">${personalPerformanceInstance?.job?.encodeAsHTML()}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.companyRuleLevel.label" default="Company Rule Level" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "companyRuleLevel")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.mainLevel.label" default="Main Level" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "mainLevel")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.jobRuleScore.label" default="Job Rule Score" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "jobRuleScore")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.kpiRuleScore.label" default="Kpi Rule Score" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "kpiRuleScore")}</td>
                             
                         </tr>
                     
@@ -105,9 +115,30 @@
                         </tr>
                     
                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.score.label" default="Score" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "score")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="personalPerformance.status.label" default="Status" /></td>
                             
                             <td valign="top" class="value">${personalPerformanceInstance?.status?.label?.encodeAsHTML()}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.feedback.label" default="Feedback" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "feedback")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.feedbackPeople.label" default="Feedback People" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "feedbackPeople")}</td>
                             
                         </tr>
                     

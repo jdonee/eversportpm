@@ -23,7 +23,7 @@ class PersonalPerformanceController {
 
 	def list = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		[personalPerformanceInstanceList: personalPerformanceService.findAllPersonalPerformanceByUser(currentUser,params), personalPerformanceInstanceTotal: PersonalPerformance.count()]
+		[personalPerformanceInstanceList: personalPerformanceService.findAllPersonalPerformanceByUser(currentUser,jobService.getCodesByUser(currentUser),params), personalPerformanceInstanceTotal: PersonalPerformance.count()]
 	}
 
 	def create = {

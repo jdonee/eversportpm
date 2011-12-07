@@ -45,11 +45,11 @@
 					$.getJSON("${createLink(controller:'kpiRule', action: 'getKpiRuleById')}", { id: id }, 
 						function(json){
 						if(!jQuery.isEmptyObject(json)){
-							$("#kpiRuleId").val(json.id);
-							$("#desiredItem").val(json.desiredItem);
-							$("#targetValue").val(json.targetValue);
-							$("#description").val(json.description);
-							$("#weight").val(json.weight);
+							kpiRuleId.val(json.id);
+							desiredItem.val(json.desiredItem);
+							targetValue.val(json.targetValue);
+							description.val(json.description);
+							weight.val(json.weight);
 							$( "#kpi-form" ).dialog( "open" );
 						}
 					});
@@ -90,8 +90,8 @@
 							if ( bValid ) {
 								if(kpiRuleId.val()==""||kpiRuleId.val().length<=0){
 									$.getJSON("${createLink(controller:'kpiRule', action: 'saveKpiRule')}",
-									 { desiredItem:$("#desiredItem").val(),targetValue:$("#targetValue").val(),
-									 description:$("#description").val(),weight:$("#weight").val(),
+									 { desiredItem:desiredItem.val(),targetValue:targetValue.val(),
+									 description:description.val(),weight:weight.val(),
 									 personalPerformanceId:$("#personalPerformanceId").val() },
 									 function(json){
 										if(!jQuery.isEmptyObject(json)){
@@ -101,8 +101,8 @@
 									});	
 								}else{
 									$.getJSON("${createLink(controller:'kpiRule', action: 'updateKpiRule')}", 
-									{ desiredItem:$("#desiredItem").val(),targetValue:$("#targetValue").val(),
-									 description:$("#description").val(),weight:$("#weight").val(),
+									{ desiredItem:desiredItem.val(),targetValue:targetValue.val(),
+									 description:description.val(),weight:weight.val(),
 									 kpiRuleId:kpiRuleId.val() },
 									function(json){
 									if(!jQuery.isEmptyObject(json)){

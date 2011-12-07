@@ -24,8 +24,8 @@
 					$.getJSON("${createLink(controller:'jobRule', action: 'getJobRuleById')}", { id: id }, 
 						function(json){
 						if(!jQuery.isEmptyObject(json)){
-							$("#jobRuleId").val(json.id);
-							$("#jobItem").val(json.jobItem);
+							jobRuleId.val(json.id);
+							jobItem.val(json.jobItem);
 							$( "#job-form" ).dialog( "open" );
 						}
 					});
@@ -47,7 +47,7 @@
 			$( "#job-form" ).dialog({
 					autoOpen: false,
 					resizable: false,
-					height: 300,
+					height: 400,
 					width: 550,
 					modal: true,
 					buttons: {
