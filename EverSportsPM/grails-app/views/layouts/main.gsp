@@ -149,7 +149,7 @@
                         <li><g:link elementId="peripheralPersonPerformanceList" controller="peripheralPersonPerformance">${message(code: 'menu.peripheralPersonPerformance.label', default: 'Peripheral Person Performance')}</g:link></li>
                         </sec:access>
                         <sec:access url="/superiorPersonPerformance/**">
-                        <g:if test="${session.checkPermission}">
+                        <g:if test="${session.checkMenuPermission}">
                         <li><g:link elementId="superiorPersonPerformanceList" controller="superiorPersonPerformance">${message(code: 'menu.superiorPersonPerformance.label', default: 'Superior Person Performance')}</g:link></li>
                         </g:if>
                         </sec:access>

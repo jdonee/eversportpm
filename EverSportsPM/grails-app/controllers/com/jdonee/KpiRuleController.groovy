@@ -104,10 +104,10 @@ class KpiRuleController {
 		def objectMap=[:]
 		if (kpiRuleInstance.save(flush: true)) {
 			objectMap.put("id",kpiRuleInstance.id)
-			objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
-			objectMap.put("targetValue",kpiRuleInstance.targetValue)
-			objectMap.put("description",kpiRuleInstance.description)
-			objectMap.put("weight",kpiRuleInstance.weight)
+			objectMap.put("desiredItem",kpiRuleInstance.desiredItem==null?"":kpiRuleInstance.desiredItem)
+			objectMap.put("targetValue",kpiRuleInstance.targetValue==null?"":kpiRuleInstance.targetValue)
+			objectMap.put("description",kpiRuleInstance.description==null?"":kpiRuleInstance.description)
+			objectMap.put("weight",kpiRuleInstance.weight==null?"":kpiRuleInstance.weight)
 		}
 		render objectMap as JSON
 	}
@@ -119,12 +119,12 @@ class KpiRuleController {
 			kpiRuleInstance.properties = params
 			if (kpiRuleInstance.save(flush: true)) {
 				objectMap.put("id",kpiRuleInstance.id)
-				objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
-				objectMap.put("targetValue",kpiRuleInstance.targetValue)
-				objectMap.put("description",kpiRuleInstance.description)
-				objectMap.put("actualValue",kpiRuleInstance.actualValue)
-				objectMap.put("score",kpiRuleInstance.score)
-				objectMap.put("weight",kpiRuleInstance.weight)
+				objectMap.put("desiredItem",kpiRuleInstance.desiredItem==null?"":kpiRuleInstance.desiredItem)
+				objectMap.put("targetValue",kpiRuleInstance.targetValue==null?"":kpiRuleInstance.targetValue)
+				objectMap.put("description",kpiRuleInstance.description==null?"":kpiRuleInstance.description)
+				objectMap.put("actualValue",kpiRuleInstance.actualValue==null?"":kpiRuleInstance.actualValue)
+				objectMap.put("score",kpiRuleInstance.score==null?"":kpiRuleInstance.score)
+				objectMap.put("weight",kpiRuleInstance.weight==null?"":kpiRuleInstance.weight)
 			}
 		}
 		render objectMap as JSON
@@ -135,10 +135,10 @@ class KpiRuleController {
 		def objectMap=[:]
 		if (kpiRuleInstance) {
 			objectMap.put("id",kpiRuleInstance.id)
-			objectMap.put("desiredItem",kpiRuleInstance.desiredItem)
-			objectMap.put("targetValue",kpiRuleInstance.targetValue)
-			objectMap.put("description",kpiRuleInstance.description)
-			objectMap.put("weight",kpiRuleInstance.weight)
+			objectMap.put("desiredItem",kpiRuleInstance.desiredItem==null?"":kpiRuleInstance.desiredItem)
+			objectMap.put("targetValue",kpiRuleInstance.targetValue==null?"":kpiRuleInstance.targetValue)
+			objectMap.put("description",kpiRuleInstance.description==null?"":kpiRuleInstance.description)
+			objectMap.put("weight",kpiRuleInstance.weight==null?"":kpiRuleInstance.weight)
 		}
 		render objectMap as JSON
 	}

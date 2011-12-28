@@ -151,4 +151,5 @@ class PersonalPerformanceService {
 			jobRule.save(flush: true)
 		}
 	}
+	
 }

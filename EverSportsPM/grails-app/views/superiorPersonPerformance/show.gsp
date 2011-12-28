@@ -49,10 +49,10 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personalPerformance.companyRuleLevel.label" default="Company Rule Level" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "companyRuleLevel")}</td>
-                            
+                            <td valign="top" class="name"><g:message code="personalPerformance.companyRuleLevel.label" default="Company Rule Level" /></td>                           
+                            <td valign="top" class="value">
+                            ${fieldValue(bean: personalPerformanceInstance, field: "companyRuleLevel")}
+                            </td>                            
                         </tr>
                     
                         <tr class="prop">
@@ -73,41 +73,6 @@
                             <td valign="top" class="name"><g:message code="personalPerformance.kpiRuleScore.label" default="Kpi Rule Score" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "kpiRuleScore")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personalPerformance.peripheralPeople.label" default="Peripheral People" /></td>                            
-                            <td valign="top" class="value">
-                            <div id="peripheral-contain" class="ui-widget">
-										<table id="peripheral" class="ui-widget ui-widget-content">
-											<thead>
-												<tr class="ui-widget-header ">
-													<th><g:message code="job.company.label" default="Company" /></th>
-													<th><g:message code="job.department.label" default="Department" /></th>
-													<th><g:message code="job.user.label" default="User" /></th>
-													<th>${message(code: 'job.name.label', default: 'Name')}</th>
-													<th>${message(code: 'job.code.label', default: 'Code')}</th>										
-												</tr>
-											</thead>
-											<tbody>
-												<g:each in="${jobInstanceList}" var="jobInstance">
-												<tr id="peripheral-${jobInstance.code}" class="repeat">
-													<td>${jobInstance?.company?.name?.encodeAsHTML()}</td>
-                        
-						                            <td>${jobInstance?.department?.name?.encodeAsHTML()}</td>
-						                        
-						                            <td>${jobInstance?.user?.username?.encodeAsHTML()}</td>						                           
-						                        
-						                            <td>${jobInstance?.name?.encodeAsHTML()}</td>
-						                        
-						                            <td>${jobInstance?.code?.encodeAsHTML()}</td>										
-												</tr>
-												</g:each>
-											</tbody>
-										</table>
-								</div>
-							</td>
                             
                         </tr>
                     
@@ -270,6 +235,23 @@
 											</tbody>
 										</table>
 									</div>
+									<div>
+										<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'">
+										<jq:jquery>
+														var value = $("input[name=companyRuleLevels]:checked").val();
+														$("#companyRuleLevel").val(value);
+														$("input[name=companyRuleLevels]").live('change',function(event) { 
+        													$("#companyRuleLevel").val($(this).val());
+        												});
+										</jq:jquery>
+										<span>${message(code: 'companyRule.scoreLevel.level.message', default: 'Company Rule Level:')}</span>                    	
+                    					<span><g:radio name="companyRuleLevels" value="A" checked="checked"/>${message(code: 'companyRule.scoreLevel.level.a', default: 'Excellent')}</span>&nbsp;&nbsp;
+                            			<span><g:radio name="companyRuleLevels" value="B" />${message(code: 'companyRule.scoreLevel.level.b', default: 'Better')}</span>&nbsp;&nbsp;
+                            			<span><g:radio name="companyRuleLevels" value="C" />${message(code: 'companyRule.scoreLevel.level.c', default: 'Common')}</span>&nbsp;&nbsp;
+                            			<span><g:radio name="companyRuleLevels" value="D" />${message(code: 'companyRule.scoreLevel.level.d', default: 'Pass')}</span>&nbsp;&nbsp;
+                            			<span><g:radio name="companyRuleLevels" value="E" />${message(code: 'companyRule.scoreLevel.level.e', default: 'Fail')}</span>&nbsp;&nbsp;                
+                    					</g:grep>
+                    				</div>
                                 </td>
                             </tr>
                     </tbody>
@@ -279,7 +261,8 @@
             <div class="buttons">
                 <g:form>
                     <g:hiddenField name="id" value="${personalPerformanceInstance?.id}" />
-                    	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'">                    
+                    	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'">
+                    	<g:hiddenField name="companyRuleLevel" value="${personalPerformanceInstance?.companyRuleLevel}" />
                     	<span class="button"><g:actionSubmit class="check" action="superiorSummary" value="${message(code: 'default.button.superiorSummary.label', default: 'Superior Summary')}"/></span>
                     	</g:grep>
                     	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[5]'">    

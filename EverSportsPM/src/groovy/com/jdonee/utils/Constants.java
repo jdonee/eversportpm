@@ -7,5 +7,7 @@ public interface Constants {
 	final static String DEFAULT_SEPARATOR="||";
 	
 	final static String COMMA_SEPARATOR=",";
+	
+	final static Integer WEIGHT_PERCENT=Integer.valueOf(100);
 
 }

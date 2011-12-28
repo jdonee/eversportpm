@@ -104,7 +104,7 @@ class JobRuleController {
 		def objectMap=[:]
 		if (jobRuleInstance.save(flush: true)) {
 			objectMap.put("id",jobRuleInstance.id)
-			objectMap.put("jobItem",jobRuleInstance.jobItem)
+			objectMap.put("jobItem",jobRuleInstance.jobItem==null?"":jobRuleInstance.jobItem)
 			if(jobRuleInstance.customed==Boolean.TRUE){
 				objectMap.put("customed", "${message(code: 'default.boolean.true')}")
 			}else{
@@ -121,11 +121,11 @@ class JobRuleController {
 			jobRuleInstance.properties = params
 			if (jobRuleInstance.save(flush: true)) {
 				objectMap.put("id",jobRuleInstance.id)
-				objectMap.put("jobItem",jobRuleInstance.jobItem)
-				objectMap.put("personSummary",jobRuleInstance.personSummary)
-				objectMap.put("peripheralScore",jobRuleInstance.peripheralScore)
-				objectMap.put("score",jobRuleInstance.score)
-				objectMap.put("expectation",jobRuleInstance.expectation)
+				objectMap.put("jobItem",jobRuleInstance.jobItem==null?"":jobRuleInstance.jobItem)
+				objectMap.put("personSummary",jobRuleInstance.personSummary==null?"":jobRuleInstance.personSummary)
+				objectMap.put("peripheralScore",jobRuleInstance.peripheralScore==null?"":jobRuleInstance.peripheralScore)
+				objectMap.put("score",jobRuleInstance.score==null?"":jobRuleInstance.score)
+				objectMap.put("expectation",jobRuleInstance.expectation==null?"":jobRuleInstance.expectation)
 				if(jobRuleInstance.customed==Boolean.TRUE){
 					objectMap.put("customed", "${message(code: 'default.boolean.true')}")
 				}else{
@@ -141,11 +141,12 @@ class JobRuleController {
 		def objectMap=[:]
 		if (jobRuleInstance) {
 			objectMap.put("id",jobRuleInstance.id)
-			objectMap.put("jobItem",jobRuleInstance.jobItem)
-			objectMap.put("personSummary",jobRuleInstance.personSummary)
-			objectMap.put("peripheralScore",jobRuleInstance.peripheralScore)
-			objectMap.put("score",jobRuleInstance.score)
-			objectMap.put("expectation",jobRuleInstance.expectation)
+			objectMap.put("jobItem",jobRuleInstance.jobItem==null?"":jobRuleInstance.jobItem)
+			objectMap.put("personSummary",jobRuleInstance.personSummary==null?"":jobRuleInstance.personSummary)
+			objectMap.put("peripheralScore",jobRuleInstance.peripheralScore==null?"":jobRuleInstance.peripheralScore)
+			objectMap.put("score",jobRuleInstance.score==null?"":jobRuleInstance.score)
+			objectMap.put("expectation",jobRuleInstance.expectation==null?"":jobRuleInstance.expectation)
+			objectMap.put("peripheralScore",jobRuleInstance.peripheralScore==null?"":jobRuleInstance.peripheralScore)
 			objectMap.put("customed",jobRuleInstance.customed)
 		}
 		render objectMap as JSON

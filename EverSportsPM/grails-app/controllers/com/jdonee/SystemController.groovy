@@ -8,9 +8,9 @@ class SystemController {
 		def currentUserInstance = null
 		if (springSecurityService.isLoggedIn()) {
 			currentUserInstance = currentUser
-			def checkPermission = session["checkPermission"]
-			session["checkPermission"] = jobService.checkPermissionByUser(currentUser)
-			println session["checkPermission"]
+			def checkMenuPermission = session["checkMenuPermission"]
+			session["checkMenuPermission"] = jobService.checkPermissionByUser(currentUser)
+			println session["checkMenuPermission"]
 		}
 		[user:currentUserInstance]
 	}

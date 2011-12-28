@@ -7,6 +7,7 @@ class SuperiorPersonPerformanceController {
 	def springSecurityService
 	def personalPerformanceService
 	def jobService
+	def scoreLevelService
 
     def index = {
 		redirect(action: "list", params: params)
@@ -33,9 +34,11 @@ class SuperiorPersonPerformanceController {
 		/*完成上级考评*/
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
+			println params.companyRuleLevel
+			personalPerformanceInstance.companyRuleLevel=params.companyRuleLevel
+			scoringPersonalPerformance(personalPerformanceInstance)
 			personalPerformanceInstance.status=PerformanceStatus.SUPERIOR_SUMMARY
-			if( personalPerformanceInstance.save(flush: true)){
-				
+			if( personalPerformanceInstance.save(flush: true)){				
 				flash.message = "${message(code: 'personalPerformance.superiorSummary.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
 				redirect(action: "show", id: personalPerformanceInstance.id)
 			}
@@ -46,6 +49,10 @@ class SuperiorPersonPerformanceController {
 		/*上级重新考评*/
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
+			personalPerformanceInstance.kpiRuleScore=0
+			personalPerformanceInstance.jobRuleScore=0
+			personalPerformanceInstance.score=0
+			personalPerformanceInstance.mainLevel=null
 			personalPerformanceInstance.status=PerformanceStatus.PERSON_SUMMARY
 			if( personalPerformanceInstance.save(flush: true)){
 				flash.message = "${message(code: 'personalPerformance.personSummary.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
@@ -94,9 +101,34 @@ class SuperiorPersonPerformanceController {
 		return User.get(springSecurityService.principal.id)
 	}
 	
-	def scoringPersonalPerformance(personalPerformance){
-		//TODO:
-		personalPerformance.jobRules
-		return personalPerformance
+	def scoringPersonalPerformance(personalPerformanceInstance){
+		def performanceInstance=personalPerformanceInstance.performance
+		def kpiRules=personalPerformanceInstance.kpiRules
+		if(kpiRules){
+			def kpiRuleScore=0
+			kpiRules.each { kpiRule ->
+				kpiRuleScore+=(kpiRule.score*kpiRule.weight/Constants.WEIGHT_PERCENT as Integer)
+			}
+			personalPerformanceInstance.kpiRuleScore=kpiRuleScore //统计KPI得分
+		}
+		def jobRules=personalPerformanceInstance.jobRules
+		if(jobRules){
+			def jobRuleScore=0
+			jobRules.each { jobRule ->
+				if(jobRule.peripheralScore!=null&&jobRule.peripheralScore>0){//如有周边评分纳入计算范围，否则只计算领导评分
+					jobRuleScore+=((jobRule.score*(Constants.WEIGHT_PERCENT-performanceInstance.peripheralWeight)/Constants.WEIGHT_PERCENT
+						+jobRule.peripheralScore*performanceInstance.peripheralWeight/Constants.WEIGHT_PERCENT) as Integer)
+				}else{
+					jobRuleScore+=jobRule.score
+				}
+			}
+			personalPerformanceInstance.jobRuleScore=(jobRuleScore/jobRules.size() as Integer) //统计岗位职责要项得分
+		}
+		//KPI得分*KPI权重/100+岗位职责要项分数*岗位职责权重/100=总分
+		personalPerformanceInstance.score=((personalPerformanceInstance.kpiRuleScore*performanceInstance.mainWeight/Constants.WEIGHT_PERCENT+personalPerformanceInstance.jobRuleScore*performanceInstance.auxiliaryWeight/Constants.WEIGHT_PERCENT) as Integer)
+		def level=scoreLevelService.getLevelByScore(personalPerformanceInstance.score)
+		if(level!=null){
+			personalPerformanceInstance.mainLevel=level
+		}
 	}
 }
