@@ -1,7 +1,7 @@
 <g:set var="entityName" value="${message(code: 'jobRule.label', default: 'JobRule')}" />
 <jq:jquery>
 			var jobItem = $( "#jobItem" ),jobRuleId=$("#jobRuleId"),personSummary = $( "#personSummary" ),peripheralScore=$("#peripheralScore"),score=$("#score"),expectation = $( "#jExpectation" ),
-			allFields = $( [] ).add( jobItem ).add( personSummary ).add( score ).add( expectation ).add( peripheralScore ).add(jobRuleId),
+			allFields = $([]).add(jobItem).add(personSummary).add(score).add(expectation).add(peripheralScore).add(jobRuleId),
 			tips = $( ".validateTips" );
 			function checkRegexp( o, regexp, n ) {
 				if ( !( regexp.test( o.val() ) ) ) {
@@ -60,7 +60,7 @@
 			$( "#job-form" ).dialog({
 					autoOpen: false,
 					resizable: false,
-					height: 500,
+					height: 600,
 					width: 550,
 					modal: true,
 					buttons: {

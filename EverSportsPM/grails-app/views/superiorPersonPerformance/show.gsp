@@ -1,4 +1,3 @@
-
 <%@ page import="com.jdonee.PersonalPerformance" %>
 <html>
     <head>
@@ -11,6 +10,9 @@
         	$("#superiorPersonPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
         	// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
 			$( "#dialog:ui-dialog" ).dialog( "destroy" );
+			$( "#create-Feedback" ).button().click(function() {
+						$( "#feedback-form" ).dialog( "open" );
+			});
 		</jq:jquery>
     </head>
     <body>
@@ -93,14 +95,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personalPerformance.feedback.label" default="Feedback" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "feedback")}</td>
+                            <td valign="top" class="value"><span id="sFeedback">${fieldValue(bean: personalPerformanceInstance, field: "feedback")}</span></td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personalPerformance.feedbackPeople.label" default="Feedback People" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "feedbackPeople")}</td>
+                            <td valign="top" class="value"><span id="sFeedbackPeople">${fieldValue(bean: personalPerformanceInstance, field: "feedbackPeople")}</span></td>
                             
                         </tr>
                     
@@ -132,8 +134,10 @@
 													<th><g:message code="kpiRule.description.label" default="Description" /></th>
 													<th><g:message code="kpiRule.weight.label" default="Weight" /></th>
 													<th><g:message code="kpiRule.actualValue.label" default="Actual Value" /></th>
-													<th><g:message code="kpiRule.score.label" default="Score" /></th>													
-													<th><g:message code="default.operater.label"  default="Operater"/></th>																									
+													<th><g:message code="kpiRule.score.label" default="Score" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'">													
+													<th><g:message code="default.operater.label"  default="Operater"/></th>
+													</g:grep>																									
 												</tr>
 											</thead>
 											<tbody>
@@ -171,8 +175,9 @@
 													<th><g:message code="jobRule.score.label" default="Score" /></th>
 													<th><g:message code="jobRule.expectation.label" default="Expectation" /></th>
 													<th><g:message code="jobRule.customed.label" default="Customed" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'">  
 													<th><g:message code="default.operater.label"  default="Operater"/></th>
-													
+													</g:grep>
 												</tr>
 											</thead>
 											<tbody>
@@ -184,12 +189,9 @@
 													<td>${j.score?.encodeAsHTML()}</td>
 													<td>${j.expectation?.encodeAsHTML()}</td>	
 													<td><g:formatBoolean boolean="${j?.customed}" /></td>
-													<td>
-													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'">    
-														<button class="update">${message(code: 'default.button.summary.label', default: 'Summary')}</button>
-													</g:grep>
-													&nbsp;
-													</td>																				
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'"> 
+													<td><button class="update">${message(code: 'default.button.summary.label', default: 'Summary')}</button></td>
+													</g:grep>																				
 												</tr>
 												</g:each>
 											</tbody>
@@ -212,7 +214,9 @@
 													<th><g:message code="companyRule.appraise.label" default="Appraise" /></th>
 													<th><g:message code="companyRule.expectation.label" default="Expectation" /></th>
 													<th><g:message code="companyRule.customed.label" default="Customed" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'"> 
 													<th><g:message code="default.operater.label"  default="Operater"/></th>
+													</g:grep>
 												</tr>
 											</thead>
 											<tbody>
@@ -223,20 +227,16 @@
 													<td>${c.appraise?.encodeAsHTML()}</td>
 													<td>${c.expectation?.encodeAsHTML()}</td>
 													<td><g:formatBoolean boolean="${c?.customed}" /></td>
-													<td>
-													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'">    
-													<g:if test="${c?.customed==true}">
-														<button class="update">${message(code: 'default.button.summary.label', default: 'Summary')}</button>
-													</g:if>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'"> 
+													<td><button class="update">${message(code: 'default.button.summary.label', default: 'Summary')}</button></td>
 													</g:grep>
-													&nbsp;</td>
 												</tr>
 												</g:each>
 											</tbody>
 										</table>
 									</div>
-									<div>
-										<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'">
+									<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[4]'">
+									<div>					
 										<jq:jquery>
 														var value = $("input[name=companyRuleLevels]:checked").val();
 														$("#companyRuleLevel").val(value);
@@ -250,10 +250,21 @@
                             			<span><g:radio name="companyRuleLevels" value="C" />${message(code: 'companyRule.scoreLevel.level.c', default: 'Common')}</span>&nbsp;&nbsp;
                             			<span><g:radio name="companyRuleLevels" value="D" />${message(code: 'companyRule.scoreLevel.level.d', default: 'Pass')}</span>&nbsp;&nbsp;
                             			<span><g:radio name="companyRuleLevels" value="E" />${message(code: 'companyRule.scoreLevel.level.e', default: 'Fail')}</span>&nbsp;&nbsp;                
-                    					</g:grep>
                     				</div>
+                    				</g:grep>
                                 </td>
                             </tr>
+                            <g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[6]'">
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label>&nbsp;</label>
+                                </td>       
+                            	<td valign="top" class="value"> 
+									<br/>
+									<button id="create-Feedback">${message(code: 'default.add.label', args: [message(code: 'feedback.label', default: 'Feedback')])}</button>
+                            	</td>
+                            </tr>
+                            </g:grep>
                     </tbody>
                 </table>
             </div>
@@ -277,14 +288,14 @@
                     	</g:grep>
                 </g:form>
             </div>
-            </g:grep>
-               
+            </g:grep> 
         </div>
         </div>
         <div class="hiddenForms">
         	<g:render template="createAndEditKpiRule" />
 			<g:render template="createAndEditJobRule" />
-			<g:render template="createAndEditCompanyRule" />		
+			<g:render template="createAndEditCompanyRule" />
+			<g:render template="createFeedback" />		
 			</div><!-- End demo -->   
     </body>
 </html>

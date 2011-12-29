@@ -2,7 +2,7 @@
 <jq:jquery>
 			var desiredItem = $( "#desiredItem" ),targetValue = $( "#targetValue" ),description = $( "#description" ),weight = $( "#weight" ),
 			actualValue=$("#actualValue"),score=$("#score"),kpiRuleId=$("#kpiRuleId"),
-			allFields = $( [] ).add( desiredItem ).add( targetValue ).add( description ).add(weight).add(desiredItem).add(score).add(kpiRuleId),
+			allFields = $([]).add(desiredItem).add(targetValue).add(description).add(weight).add(desiredItem).add(score).add(kpiRuleId),
 			tips = $( ".validateTips" );
 			function checkRegexp( o, regexp, n ) {
 				if ( !( regexp.test( o.val() ) ) ) {
@@ -62,7 +62,7 @@
 			$( "#kpi-form" ).dialog({
 					autoOpen: false,
 					resizable: false,
-					height: 400,
+					height: 600,
 					width: 550,
 					modal: true,
 					buttons: {

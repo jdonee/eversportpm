@@ -116,7 +116,7 @@
             <div class="paginateButtons">
                 <g:paginate total="${jobInstanceTotal}" params="${filterParams}" />
             </div>
-            <export:formats  params="${filterParams}" formats="['csv', 'excel', 'rtf','pdf']"/>
+            <export:formats  params="${filterParams}" formats="['csv', 'excel', 'rtf']"/>
         </div>
         </div>
     </body>

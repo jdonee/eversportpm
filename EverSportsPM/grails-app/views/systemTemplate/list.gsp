@@ -7,7 +7,7 @@
         <g:set var="entityName" value="${message(code: 'systemTemplate.label', default: 'SystemTemplate')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     	<jq:jquery>
-        	$("#scoreLevelList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
+        	$("#systemTemplateList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
 </jq:jquery>
     </head>
     <body>

@@ -111,7 +111,7 @@ class PersonalPerformanceService {
 				def temps=companyContent.tokenize(Constants.DEFAULT_SEPARATOR)
 				if(temps){
 					temps.each{ value ->
-						def companyRule= new CompanyRule(content:value,personalPerformance:personalPerformanceInstance)
+						def companyRule= new CompanyRule(content:value,customed:Boolean.FALSE,personalPerformance:personalPerformanceInstance)
 						companyRule.save(flush:true)
 					}
 				}

@@ -73,7 +73,9 @@
 													<th><g:message code="job.user.label" default="User" /></th>
 													<th>${message(code: 'job.name.label', default: 'Name')}</th>
 													<th>${message(code: 'job.code.label', default: 'Code')}</th>
-													<th><g:message code="default.operater.label"  default="Operater"/></th>												
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[01]'">
+													<th><g:message code="default.operater.label"  default="Operater"/></th>
+													</g:grep>												
 												</tr>
 											</thead>
 											<tbody>
@@ -103,6 +105,59 @@
 							</td>
                             
                         </tr>
+                        
+                        <g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[78]'"> 
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.companyRuleLevel.label" default="Company Rule Level" /></td>                           
+                            <td valign="top" class="value">
+                            ${fieldValue(bean: personalPerformanceInstance, field: "companyRuleLevel")}
+                            </td>                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.mainLevel.label" default="Main Level" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "mainLevel")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.jobRuleScore.label" default="Job Rule Score" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "jobRuleScore")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.kpiRuleScore.label" default="Kpi Rule Score" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "kpiRuleScore")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.score.label" default="Score" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "score")}</td>
+                            
+                        </tr>
+                        
+                        <g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[78]'">
+                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.feedback.label" default="Feedback" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "feedback")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.feedbackPeople.label" default="Feedback People" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "feedbackPeople")}</td>
+                            
+                        </tr>
+                        </g:grep>
+                        </g:grep>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personalPerformance.status.label" default="Status" /></td>
@@ -138,9 +193,13 @@
 													<th><g:message code="kpiRule.targetValue.label" default="Target Value" /></th>
 													<th><g:message code="kpiRule.description.label" default="Description" /></th>
 													<th><g:message code="kpiRule.weight.label" default="Weight" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[78]'">
+													<th><g:message code="kpiRule.actualValue.label" default="Actual Value" /></th>
+													<th><g:message code="kpiRule.score.label" default="Score" /></th>		
+													</g:grep> 
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[01]'">
 													<th><g:message code="default.operater.label"  default="Operater"/></th>
-													<%--<th><g:message code="kpiRule.actualValue.label" default="Actual Value" /></th>
-													<th><g:message code="kpiRule.score.label" default="Score" /></th>--%>													
+													</g:grep>												
 												</tr>
 											</thead>
 											<tbody>
@@ -150,11 +209,13 @@
 													<td>${k.targetValue?.encodeAsHTML()}</td>
 													<td>${k.description?.encodeAsHTML()}</td>
 													<td>${k.weight?.encodeAsHTML()}</td>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[78]'">
+													<td>${k.actualValue?.encodeAsHTML()}</td>
+													<td>${k.score?.encodeAsHTML()}</td>
+													</g:grep>
 													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'">    	
 													<td><button class="update">${message(code: 'default.button.update.label', default: 'Update')}</button><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>
 													</g:grep>												
-													<%--<td>${k.actualValue?.encodeAsHTML()}</td>
-													<td>${k.score?.encodeAsHTML()}</td>--%>
 												</tr>
 												</g:each>
 											</tbody>
@@ -177,31 +238,36 @@
 											<thead>
 												<tr class="ui-widget-header ">
 													<th><g:message code="jobRule.jobItem.label" default="Job Item" /></th>
-													<th><g:message code="jobRule.customed.label" default="Customed" /></th>
-													<th><g:message code="default.operater.label"  default="Operater"/></th>
-													<%--<th><g:message code="jobRule.personSummary.label" default="Person Summary" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[78]'">
+													<th><g:message code="jobRule.personSummary.label" default="Person Summary" /></th>
 													<th><g:message code="jobRule.peripheralScore.label" default="Peripheral Score" /></th>
 													<th><g:message code="jobRule.score.label" default="Score" /></th>
-													<th><g:message code="jobRule.expectation.label" default="Expectation" /></th> --%>
+													<th><g:message code="jobRule.expectation.label" default="Expectation" /></th>
+													</g:grep>
+													<th><g:message code="jobRule.customed.label" default="Customed" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[01]'">
+													<th><g:message code="default.operater.label"  default="Operater"/></th>
+													</g:grep>
 												</tr>
 											</thead>
 											<tbody>
 												<g:each in="${personalPerformanceInstance?.jobRules?}" var="j">
 												<tr id="job-${j.id}" class="repeat">
-													<td>${j.jobItem?.encodeAsHTML()}</td>
+													<td>${j.jobItem?.encodeAsHTML()}</td>													
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[78]'">
+													<td>${j.personSummary?.encodeAsHTML()}</td>
+													<td>${j.peripheralScore?.encodeAsHTML()}</td>
+													<td>${j.score?.encodeAsHTML()}</td>
+													<td>${j.expectation?.encodeAsHTML()}</td>	
+													</g:grep>
 													<td><g:formatBoolean boolean="${j?.customed}" /></td>
-													<td>
-													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'">    
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'"> 
+													<td>   
 													<g:if test="${j?.customed==true}">
 														<button class="update">${message(code: 'default.button.update.label', default: 'Update')}</button><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
 													</g:if>
-													</g:grep>
-													&nbsp;
 													</td>
-													<%--<td>${j.personSummary?.encodeAsHTML()}</td>
-													<td>${j.peripheralScore?.encodeAsHTML()}</td>
-													<td>${j.score?.encodeAsHTML()}</td>
-													<td>${j.expectation?.encodeAsHTML()}</td>--%>								
+													</g:grep>							
 												</tr>
 												</g:each>
 											</tbody>
@@ -224,22 +290,34 @@
 											<thead>
 												<tr class="ui-widget-header ">
 													<th><g:message code="companyRule.content.label" default="Content" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[78]'">
+													<th><g:message code="companyRule.personSummary.label" default="Person Summary" /></th>
+													<th><g:message code="companyRule.appraise.label" default="Appraise" /></th>
+													<th><g:message code="companyRule.expectation.label" default="Expectation" /></th>
+													</g:grep>
 													<th><g:message code="companyRule.customed.label" default="Customed" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'"> 
 													<th><g:message code="default.operater.label"  default="Operater"/></th>
+													</g:grep>
 												</tr>
 											</thead>
 											<tbody>
 												<g:each in="${personalPerformanceInstance?.companyRules?}" var="c">
 												<tr id="company-${c.id}" class="repeat">
 													<td>${c.content?.encodeAsHTML()}</td>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[78]'">
+													<td>${c.personSummary?.encodeAsHTML()}</td>
+													<td>${c.appraise?.encodeAsHTML()}</td>
+													<td>${c.expectation?.encodeAsHTML()}</td>
+													</g:grep>
 													<td><g:formatBoolean boolean="${c?.customed}" /></td>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'"> 
 													<td>
-													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'">    
 													<g:if test="${c?.customed==true}">
 														<button class="update">${message(code: 'default.button.update.label', default: 'Update')}</button><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button>
 													</g:if>
+													</td>
 													</g:grep>
-													&nbsp;</td>
 												</tr>
 												</g:each>
 											</tbody>

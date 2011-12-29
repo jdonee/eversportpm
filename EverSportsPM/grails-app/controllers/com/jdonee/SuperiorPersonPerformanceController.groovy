@@ -34,7 +34,6 @@ class SuperiorPersonPerformanceController {
 		/*完成上级考评*/
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
-			println params.companyRuleLevel
 			personalPerformanceInstance.companyRuleLevel=params.companyRuleLevel
 			scoringPersonalPerformance(personalPerformanceInstance)
 			personalPerformanceInstance.status=PerformanceStatus.SUPERIOR_SUMMARY
@@ -77,6 +76,8 @@ class SuperiorPersonPerformanceController {
 		/*上级重新确认*/
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
+			personalPerformanceInstance.feedback=null
+			personalPerformanceInstance.feedbackPeople=null
 			personalPerformanceInstance.status=PerformanceStatus.PERSON_AFFIRM
 			if( personalPerformanceInstance.save(flush: true)){
 				flash.message = "${message(code: 'personalPerformance.personAffirm.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
@@ -95,6 +96,20 @@ class SuperiorPersonPerformanceController {
 				redirect(action: "show", id: personalPerformanceInstance.id)
 			}
 		}
+	}
+	
+	def addFeedback = {
+		/*增加反馈*/
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		def objectMap=[:]
+		if (personalPerformanceInstance) {
+			personalPerformanceInstance.properties = params
+			if (personalPerformanceInstance.save(flush: true)) {
+				objectMap.put("feedback",personalPerformanceInstance.feedback==null?"":personalPerformanceInstance.feedback)
+				objectMap.put("feedbackPeople",personalPerformanceInstance.feedbackPeople==null?"":personalPerformanceInstance.feedbackPeople)
+			}
+		}
+		render objectMap as JSON
 	}
 	
 	private getCurrentUser() {

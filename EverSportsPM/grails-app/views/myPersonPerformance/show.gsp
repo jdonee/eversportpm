@@ -47,41 +47,43 @@
                             <td valign="top" class="value"><g:link controller="job" action="show" id="${personalPerformanceInstance?.job?.id}">${personalPerformanceInstance?.job?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
+                        
+                        <g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[5678]'"> 
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.companyRuleLevel.label" default="Company Rule Level" /></td>                           
+                            <td valign="top" class="value">
+                            ${fieldValue(bean: personalPerformanceInstance, field: "companyRuleLevel")}
+                            </td>                            
+                        </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personalPerformance.peripheralPeople.label" default="Peripheral People" /></td>                            
-                            <td valign="top" class="value">
-                            <div id="peripheral-contain" class="ui-widget">
-										<table id="peripheral" class="ui-widget ui-widget-content">
-											<thead>
-												<tr class="ui-widget-header ">
-													<th><g:message code="job.company.label" default="Company" /></th>
-													<th><g:message code="job.department.label" default="Department" /></th>
-													<th><g:message code="job.user.label" default="User" /></th>
-													<th>${message(code: 'job.name.label', default: 'Name')}</th>
-													<th>${message(code: 'job.code.label', default: 'Code')}</th>										
-												</tr>
-											</thead>
-											<tbody>
-												<g:each in="${jobInstanceList}" var="jobInstance">
-												<tr id="peripheral-${jobInstance.code}" class="repeat">
-													<td>${jobInstance?.company?.name?.encodeAsHTML()}</td>
-                        
-						                            <td>${jobInstance?.department?.name?.encodeAsHTML()}</td>
-						                        
-						                            <td>${jobInstance?.user?.username?.encodeAsHTML()}</td>						                           
-						                        
-						                            <td>${jobInstance?.name?.encodeAsHTML()}</td>
-						                        
-						                            <td>${jobInstance?.code?.encodeAsHTML()}</td>											
-												</tr>
-												</g:each>
-											</tbody>
-										</table>
-								</div>
-							</td>
+                            <td valign="top" class="name"><g:message code="personalPerformance.mainLevel.label" default="Main Level" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "mainLevel")}</td>
                             
                         </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.jobRuleScore.label" default="Job Rule Score" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "jobRuleScore")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.kpiRuleScore.label" default="Kpi Rule Score" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "kpiRuleScore")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personalPerformance.score.label" default="Score" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personalPerformanceInstance, field: "score")}</td>
+                            
+                        </tr>
+                        </g:grep>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personalPerformance.status.label" default="Status" /></td>
@@ -116,7 +118,11 @@
 													<th><g:message code="kpiRule.desiredItem.label" default="Desired Item" /></th>
 													<th><g:message code="kpiRule.targetValue.label" default="Target Value" /></th>
 													<th><g:message code="kpiRule.description.label" default="Description" /></th>
-													<th><g:message code="kpiRule.weight.label" default="Weight" /></th>												
+													<th><g:message code="kpiRule.weight.label" default="Weight" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[5678]'">
+													<th><g:message code="kpiRule.actualValue.label" default="Actual Value" /></th>
+													<th><g:message code="kpiRule.score.label" default="Score" /></th>		
+													</g:grep> 												
 												</tr>
 											</thead>
 											<tbody>
@@ -126,6 +132,10 @@
 													<td>${k.targetValue?.encodeAsHTML()}</td>
 													<td>${k.description?.encodeAsHTML()}</td>
 													<td>${k.weight?.encodeAsHTML()}</td>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[5678]'">
+													<td>${k.actualValue?.encodeAsHTML()}</td>
+													<td>${k.score?.encodeAsHTML()}</td>
+													</g:grep>
 												</tr>
 												</g:each>
 											</tbody>
@@ -145,8 +155,15 @@
 												<tr class="ui-widget-header ">
 													<th><g:message code="jobRule.jobItem.label" default="Job Item" /></th>
 													<th><g:message code="jobRule.personSummary.label" default="Person Summary" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[5678]'">
+													<th><g:message code="jobRule.peripheralScore.label" default="Peripheral Score" /></th>
+													<th><g:message code="jobRule.score.label" default="Score" /></th>
+													<th><g:message code="jobRule.expectation.label" default="Expectation" /></th>
+													</g:grep>
 													<th><g:message code="jobRule.customed.label" default="Customed" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[3]'">  
 													<th><g:message code="default.operater.label"  default="Operater"/></th>
+													</g:grep>
 												</tr>
 											</thead>
 											<tbody>
@@ -154,13 +171,15 @@
 												<tr id="job-${j.id}" class="repeat">
 													<td>${j.jobItem?.encodeAsHTML()}</td>													
 													<td>${j.personSummary?.encodeAsHTML()}</td>
-													<td><g:formatBoolean boolean="${j?.customed}" /></td>
-													<td>
-													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[3]'">    
-														<button class="update">${message(code: 'default.button.summary.label', default: 'Summary')}</button>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[5678]'">
+													<td>${j.peripheralScore?.encodeAsHTML()}</td>
+													<td>${j.score?.encodeAsHTML()}</td>
+													<td>${j.expectation?.encodeAsHTML()}</td>	
 													</g:grep>
-													&nbsp;
-													</td>							
+													<td><g:formatBoolean boolean="${j?.customed}" /></td>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[3]'">  
+													<td><button class="update">${message(code: 'default.button.summary.label', default: 'Summary')}</button></td>
+													</g:grep>	
 												</tr>
 												</g:each>
 											</tbody>
@@ -180,8 +199,14 @@
 												<tr class="ui-widget-header ">
 													<th><g:message code="companyRule.content.label" default="Content" /></th>
 													<th><g:message code="companyRule.personSummary.label" default="Person Summary" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[5678]'">
+													<th><g:message code="companyRule.appraise.label" default="Appraise" /></th>
+													<th><g:message code="companyRule.expectation.label" default="Expectation" /></th>
+													</g:grep>
 													<th><g:message code="companyRule.customed.label" default="Customed" /></th>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[3]'">  
 													<th><g:message code="default.operater.label"  default="Operater"/></th>
+													</g:grep>
 												</tr>
 											</thead>
 											<tbody>
@@ -189,12 +214,14 @@
 												<tr id="company-${c.id}" class="repeat">
 													<td>${c.content?.encodeAsHTML()}</td>
 													<td>${c.personSummary?.encodeAsHTML()}</td>
-													<td><g:formatBoolean boolean="${c?.customed}" /></td>
-													<td>
-													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[3]'">
-														<button class="update">${message(code: 'default.button.summary.label', default: 'Summary')}</button>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[5678]'">
+													<td>${c.appraise?.encodeAsHTML()}</td>
+													<td>${c.expectation?.encodeAsHTML()}</td>
 													</g:grep>
-													&nbsp;</td>
+													<td><g:formatBoolean boolean="${c?.customed}" /></td>
+													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[3]'">
+													<td><button class="update">${message(code: 'default.button.summary.label', default: 'Summary')}</button></td>
+													</g:grep>
 												</tr>
 												</g:each>
 											</tbody>

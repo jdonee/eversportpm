@@ -28,7 +28,7 @@ class SystemTemplate {
 	String getTemplateContentBy(){
 		def temps="${templateContent}".tokenize(Constants.DEFAULT_SEPARATOR)
 		StringBuilder sb=new StringBuilder();
-		if(temps.length>0){
+		if(temps.size()>0){
 			temps.each{ value -> sb.append(value).append(System.getProperty("line.separator"))}
 		}else{
 			sb.append("${templateContent}").append(System.getProperty("line.separator"))
