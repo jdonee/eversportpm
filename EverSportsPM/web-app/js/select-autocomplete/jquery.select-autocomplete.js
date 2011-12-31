@@ -29,7 +29,7 @@
 			//stick each of it's options in to an items array of objects with name and value attributes 
 			var $this = $(this),
 				data = [],
-				$input = $('<input type="text" />');
+				$input = $('<input type="text" size="40"/>');
 			
 			if (this.tagName.toLowerCase() != 'select') { return; }
 				

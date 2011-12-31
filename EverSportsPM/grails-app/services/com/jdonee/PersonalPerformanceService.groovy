@@ -7,6 +7,24 @@ import com.jdonee.utils.PerformanceStatus
 class PersonalPerformanceService {
 
 	static transactional = true
+	
+	def findAllPersonalPerformancesByPerformanceAndJob(performanceId,jobId) {
+		def result = PersonalPerformance.withCriteria{
+						projections{
+							property("id")
+							property("job")
+							property("performance")
+						}
+						eq("job",Job.get(jobId.toLong()))
+						not{
+							eq("performance",Performance.get(performanceId.toLong()))
+							eq("status",PerformanceStatus.INIT)
+						}
+						//maxResults(100)
+						order("id", "asc")
+					}
+		return result
+	 }
 
 	def findAllPersonalPerformanceByUser(user,codes,params) {
 		def results=[]
@@ -84,6 +102,25 @@ class PersonalPerformanceService {
 			}
 		}
 		return results
+	}
+	
+	def copyPersonalPerformance(sourcePersonalPerformanceInstance,personalPerformanceInstance){
+		sourcePersonalPerformanceInstance.kpiRules.each { rule-> 
+			def kpiRule=new KpiRule(desiredItem:rule.desiredItem,targetValue:rule.targetValue,weight:rule.weight,description:rule.description,personalPerformance:personalPerformanceInstance)
+			kpiRule.save(flush:true)
+		}
+		sourcePersonalPerformanceInstance.jobRules.each { rule->
+			if(rule.customed==Boolean.TRUE){
+				def jobRule=new JobRule(jobItem:rule.jobItem,customed:rule.customed,personalPerformance:personalPerformanceInstance)
+				jobRule.save(flush:true)
+			}
+		}
+		sourcePersonalPerformanceInstance.companyRules.each { rule->
+			if(rule.customed==Boolean.TRUE){
+				def companyRule=new CompanyRule(content:rule.content,customed:rule.customed,personalPerformance:personalPerformanceInstance)
+				companyRule.save(flush:true)
+			}	
+		}
 	}
 
 	def initPersonalPerformance(personalPerformanceInstance){

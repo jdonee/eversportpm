@@ -25,7 +25,7 @@ class JobService {
 	}
 
 	def findCurrectJobByCode(code){
-		return Job.findByCode(code)
+		return Job.findByCodeAndClosed(code,Boolean.FALSE)
 	}
 
 	def searchJobByCode(code){
@@ -38,23 +38,6 @@ class JobService {
 		}
 	}
 
-//	def searchJobByCode(code,currectCodes){
-//		Job.withCriteria{
-//			ilike("code",code + "%")			
-//			not{
-//				'in'("code",currectCodes)
-//			}
-//			maxResults(20)
-//			order("code", "asc")
-//		}.collect() {
-//			return [
-//				id: it.id,
-//				label: it.code+"["+it.name+"("+it.user.username+")]",
-//				value: it.code
-//			]
-//		}
-//	}
-
 	/**
 	 * 检查用户是否是HR或者有下属岗位
 	 * @param user
@@ -62,7 +45,11 @@ class JobService {
 	 */
 	def checkPermissionByUser(user){
 		def boo=Boolean.FALSE
-		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
+		def jobs=Job.withCriteria{
+				eq "user",user
+				eq "companyResponsible",Boolean.TRUE
+				eq("closed",Boolean.FALSE)
+		}
 		if(jobs){
 			boo=Boolean.TRUE
 		}else{
@@ -74,6 +61,7 @@ class JobService {
 			def results=c.get{
 				projections{ property("code") }
 				'in'("parentCode",codes)
+				eq("closed",Boolean.FALSE)
 			}
 			if(results!=null){
 				boo=Boolean.TRUE
@@ -90,18 +78,24 @@ class JobService {
 	 */
 	def checkPermissionByUserAndJobCode(user,jobCode){
 		def boo=Boolean.FALSE
-		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
+		def jobs=Job.withCriteria{
+				eq "user",user
+				eq "companyResponsible",Boolean.TRUE
+				eq("closed",Boolean.FALSE)
+			}
 		if(jobs){
 			boo=Boolean.TRUE
 		}else{
 			def codes=Job.withCriteria{
 				projections{ property("code") }
-				eq "user",user
+				eq ("user",user)
+				eq ("closed",Boolean.FALSE)
 			}.join(Constants.COMMA_SEPARATOR)
 			def c = Job.createCriteria()
 			def parentCode=c.get{
 				projections{ property("parentCode") }
 				eq ("code",jobCode)
+				eq ("closed",Boolean.FALSE)
 			}
 			if(parentCode in codes){
 				boo=Boolean.TRUE
@@ -112,9 +106,13 @@ class JobService {
 
 	def findAllJobByUser(user){
 		def results=[]
-		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
+		def jobs=Job.withCriteria{
+				eq "user",user
+				eq "companyResponsible",Boolean.TRUE
+				eq("closed",Boolean.FALSE)
+			}
 		if(jobs){
-			results=Job.list()
+			results=Job.findAllByClosed(Boolean.FALSE)
 		}else{
 			def codes=Job.withCriteria{
 				projections{ property("code") }
@@ -125,6 +123,7 @@ class JobService {
 					'in'("code",codes)
 					'in'("parentCode",codes)
 				}
+				eq("closed",Boolean.FALSE)
 			}
 		}
 		return results
@@ -139,6 +138,7 @@ class JobService {
 	   return Job.withCriteria{
 		   projections{ property("code") }
 		   eq "user",user
+		   eq("closed",Boolean.FALSE)
 	   }
    }
 }

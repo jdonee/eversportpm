@@ -8,7 +8,6 @@
         <jqval:resources />
         <jqvalui:resources />
         <jqvalui:renderValidationScript for="com.jdonee.PersonalPerformance" not="performance,peripheralPeople,job,feedback,feedbackPeople,dateCreated,lastUpdated" form="personalPerformanceForm" errorClass="invalid" validClass="success" onsubmit="false"  renderErrorsOnTop="true" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
         <h3 class="ui-widget-header"><g:message code="default.edit.label" args="[entityName]" /></h3>
@@ -30,6 +29,8 @@
             </g:hasErrors>
             <g:form method="post" name="personalPerformanceForm">
                 <g:hiddenField name="id" value="${personalPerformanceInstance?.id}" />
+                <g:hiddenField name="performanceId" value="${personalPerformanceInstance?.performance?.id}" />
+                <g:hiddenField name="jobId" value="${personalPerformanceInstance?.job?.id}" />
                 <g:hiddenField name="version" value="${personalPerformanceInstance?.version}" />
                 <g:render template="createAndEdit" />
                 <div class="buttons">

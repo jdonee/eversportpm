@@ -20,6 +20,12 @@ class PersonalPerformanceController {
 		List jobs = jobService.searchJobByCode(code)
 		render jobs as JSON
 	}
+	
+	def getPersonalPerformances ={
+		assert null != params.jobId
+		assert null != params.performanceId
+		render personalPerformanceService.findAllPersonalPerformancesByPerformanceAndJob(params.performanceId,params.jobId) as JSON
+	}
 
 	def list = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -34,7 +40,7 @@ class PersonalPerformanceController {
 
 	def save = {
 		def personalPerformanceInstance = new PersonalPerformance(params)
-		if(checkUnique(params)!=null){
+		if(checkUnique(params)){
 			flash.message = "${message(code: 'personalPerformance.unique.failure', default:'This performance can only exist in one of the available record.')}"
 			render(view: "create", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
 			return
@@ -48,41 +54,41 @@ class PersonalPerformanceController {
 			render(view: "create", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
 		}
 	}
-
-	def savePeripheralPeople={
-		def personalPerformanceInstance = PersonalPerformance.get(params.personalPerformanceId)
-		def newCodes=params.peripheralPeople.replaceAll(~" ","")//去除空格
-		if(newCodes.endsWith(Constants.COMMA_SEPARATOR)){
-			newCodes=newCodes.substring(0,newCodes.length()-1).tokenize(Constants.COMMA_SEPARATOR)//转换成数组
-		}else{
-			newCodes=newCodes.tokenize(Constants.COMMA_SEPARATOR)//转换成数组
+	
+	
+	def copy = {
+		def personalPerformanceInstance = new PersonalPerformance()
+		personalPerformanceInstance.properties = params
+		return [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)]
+	}
+	
+	def copyAndSave={
+		def personalPerformanceInstance = new PersonalPerformance(params)
+		def personalPerformanceId=params.long('personalPerformanceId')
+		if(!personalPerformanceId){
+			flash.message = "${message(code: 'personalPerformance.not.select.message', default:'Please select a valid Personal Performance.')}"
+			render(view: "copy", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
+			return
 		}
-		def queryCodes=[]
-		def showCodes=[]
-		def peripheralPeople=personalPerformanceInstance.peripheralPeople
-		if(peripheralPeople!=null){//如果存在周边评价人
-			def oldCodes=peripheralPeople.tokenize(Constants.COMMA_SEPARATOR)
-			queryCodes=newCodes.unique()-oldCodes.unique()//查询使用差集，避免重复显示
-			showCodes=newCodes.unique()+oldCodes.unique()//显示使用合集，以便更新周边评价岗位。
-			personalPerformanceInstance.peripheralPeople=showCodes.unique().join(Constants.COMMA_SEPARATOR)//转换成字符串
-		}else{
-			queryCodes=newCodes
-			personalPerformanceInstance.peripheralPeople=queryCodes.unique().join(Constants.COMMA_SEPARATOR)
+		if(checkUnique(params)){
+			flash.message = "${message(code: 'personalPerformance.unique.failure', default:'This performance can only exist in one of the available record.')}"
+			render(view: "copy", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
+			return
 		}
-		personalPerformanceInstance.save(flush: true)
-		def peripheralPeoples=[]
-		if(queryCodes!=[]){
-			peripheralPeoples=jobService.findAllPeripheralPeopleByCodes(queryCodes.unique()).collect() {
-				return [
-					company:it.company.name,
-					department:it.department.name,
-					user:it.user.username,
-					name:it.name,
-					code:it.code
-				]
+		if (personalPerformanceInstance.save(flush: true)) {
+			personalPerformanceService.initPersonalPerformance(personalPerformanceInstance)
+			if(personalPerformanceId){
+				def sourcePersonalPerformanceInstance=PersonalPerformance.get(personalPerformanceId)
+				if(sourcePersonalPerformanceInstance){
+					personalPerformanceService.copyPersonalPerformance(sourcePersonalPerformanceInstance,personalPerformanceInstance)
+				}
 			}
+			flash.message = "${message(code: 'default.created.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), personalPerformanceInstance.id])}"
+			redirect(action: "show", id: personalPerformanceInstance.id)
 		}
-		render peripheralPeoples as JSON
+		else {
+			render(view: "copy", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
+		}
 	}
 
 	def show = {
@@ -190,7 +196,7 @@ class PersonalPerformanceController {
 	def update = {
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
-			if(checkUnique(params)!=null){
+			if(checkUnique(params)){
 				flash.message = "${message(code: 'personalPerformance.unique.failure', default:'This performance can only exist in one of the available record.')}"
 				render(view: "edit", model: [personalPerformanceInstance: personalPerformanceInstance,jobInstanceList:jobService.findAllJobByUser(currentUser)])
 				return
@@ -221,29 +227,6 @@ class PersonalPerformanceController {
 		}
 	}
 
-	def deletePeripheralPeopleByCode={
-		def personalPerformanceInstance = PersonalPerformance.get(params.personalPerformanceId)
-		def queryCodes=[]
-		def newCodes=[]
-		def messageMap=[:]
-		if (personalPerformanceInstance) {
-			def peripheralPeople=personalPerformanceInstance.peripheralPeople
-			if(peripheralPeople!=null&&peripheralPeople.length()>0){//如果存在周边评价人
-				def code=params.code
-				queryCodes=code.tokenize(Constants.COMMA_SEPARATOR)
-				def oldCodes=peripheralPeople.tokenize(Constants.COMMA_SEPARATOR)
-				newCodes=oldCodes.unique()-queryCodes.unique()
-				personalPerformanceInstance.peripheralPeople=newCodes.unique().join(Constants.COMMA_SEPARATOR)
-				personalPerformanceInstance.save(flush: true)
-				messageMap.put("message", "${message(code: 'default.deleted.message', args: [message(code: 'personalPerformance.peripheralPeople.label', default: 'Peripheral People'), params.code])}")
-			}else{
-				messageMap.put("error", "${message(code: 'default.not.deleted.message', args: [message(code: 'personalPerformance.peripheralPeople.label', default: 'Peripheral People'), params.code])}")
-			}
-		}
-		render messageMap as JSON
-	}
-
-
 	def delete = {
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (personalPerformanceInstance) {
@@ -268,6 +251,17 @@ class PersonalPerformanceController {
 	}
 
 	def checkUnique(def params){
-		return PersonalPerformance.findByPerformanceAndJob(Performance.get(params.long('performance.id')),Job.get(params.long('job.id')))
+		def personalPerformanceCount=PersonalPerformance.findAllByPerformanceAndJob(Performance.get(params.long('performance.id')),Job.get(params.long('job.id'))).size()
+		def boo=Boolean.FALSE
+		if(params.id==null){
+			boo=(personalPerformanceCount>0)
+		}else{
+			if(params.performanceId!=params.performance.id||params.jobId!=params.job.id){
+				boo=(personalPerformanceCount>0)
+			}else{
+				boo=(personalPerformanceCount>1)
+			}
+		}
+		return boo
 	}
 }

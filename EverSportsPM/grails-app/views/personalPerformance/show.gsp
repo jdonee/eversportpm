@@ -70,38 +70,26 @@
 												<tr class="ui-widget-header ">
 													<th><g:message code="job.company.label" default="Company" /></th>
 													<th><g:message code="job.department.label" default="Department" /></th>
+													<th><g:message code="user.employeeName.label" default="Employee Name" /></th>
 													<th><g:message code="job.user.label" default="User" /></th>
 													<th>${message(code: 'job.name.label', default: 'Name')}</th>
-													<th>${message(code: 'job.code.label', default: 'Code')}</th>
-													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[01]'">
-													<th><g:message code="default.operater.label"  default="Operater"/></th>
-													</g:grep>												
+													<th>${message(code: 'job.code.label', default: 'Code')}</th>											
 												</tr>
 											</thead>
 											<tbody>
 												<g:each in="${jobInstanceList}" var="jobInstance">
 												<tr id="peripheral-${jobInstance.code}" class="repeat">
-													<td>${jobInstance?.company?.name?.encodeAsHTML()}</td>
-                        
+													<td>${jobInstance?.company?.name?.encodeAsHTML()}</td>                        
 						                            <td>${jobInstance?.department?.name?.encodeAsHTML()}</td>
-						                        
-						                            <td>${jobInstance?.user?.username?.encodeAsHTML()}</td>						                           
-						                        
-						                            <td>${jobInstance?.name?.encodeAsHTML()}</td>
-						                        
-						                            <td>${jobInstance?.code?.encodeAsHTML()}</td>
-													<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[01]'">    	
-													<td><button class="del">${message(code: 'default.button.delete.label', default: 'Delete')}</button></td>
-													</g:grep>												
+						                            <td>${jobInstance?.user?.employeeName?.encodeAsHTML()}</td>							                        
+						                            <td>${jobInstance?.user?.username?.encodeAsHTML()}</td>						                           						                        
+						                            <td>${jobInstance?.name?.encodeAsHTML()}</td>						                        
+						                            <td>${jobInstance?.code?.encodeAsHTML()}</td>												
 												</tr>
 												</g:each>
 											</tbody>
 										</table>
 								</div>
-								<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[01]'">
-									<br/>    
-									<button id="create-peripheralPeople">${message(code: 'default.add.label', args: [message(code: 'personalPerformance.peripheralPeople.label', default: 'Peripheral People')])}</button>
-								</g:grep>
 							</td>
                             
                         </tr>
@@ -362,7 +350,6 @@
         </div>
         </div>
         <div class="hiddenForms">
-        	<g:render template="createAndEditPeripheralPeople" />
         	<g:render template="createAndEditKpiRule" />
 			<g:render template="createAndEditJobRule" />
 			<g:render template="createAndEditCompanyRule" />		

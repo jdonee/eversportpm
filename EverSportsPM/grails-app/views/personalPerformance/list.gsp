@@ -13,7 +13,7 @@
     <h3 class="ui-widget-header"><g:message code="default.list.label" args="[entityName]" /></h3>
     	<div id="pageBody">
         <div class="nav">
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link><g:link class="create" action="copy"><g:message code="default.copy.label" args="[entityName]" /></g:link></span>
         </div>
         <br/>
         <div class="body">
