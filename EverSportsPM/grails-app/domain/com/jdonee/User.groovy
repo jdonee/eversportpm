@@ -12,6 +12,7 @@ class User {
 	String email //邮箱
 	String firstName //名
 	String lastName  //姓
+	boolean isChinseName=true //是否中文名
 	boolean enabled //是否可用
 	boolean accountExpired //用户过期
 	boolean accountLocked //用户锁定
@@ -22,7 +23,13 @@ class User {
 	static transients=['employeeName']
 	
 	String getEmployeeName(){
-		return lastName+","+firstName
+		def employeeName=""
+		if(isChinseName){
+			employeeName=lastName+firstName
+		}else{
+			employeeName=firstName+" "+lastName
+		}
+		return employeeName
 	}
 	
 	static hasMany =[jobs: Job]
@@ -50,6 +57,6 @@ class User {
 	}
 	
 	String toString(){
-		"${username}[${lastName},${firstName}]"
+		"${username}[${employeeName}]"
 	}
 }

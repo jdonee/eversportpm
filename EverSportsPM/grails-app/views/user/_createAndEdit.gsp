@@ -119,6 +119,17 @@
 					</g:each>
 				<td>&nbsp;</td>
 			</tr>
+			
+			<tr class="prop">
+				<td valign="top" class="name"><label for="isChinseName"><g:message
+							code="user.isChinseName.label" default="Is Chinse Name" />
+				</label></td>
+				<td valign="top"
+					class="value ${hasErrors(bean: userInstance, field: 'isChinseName', 'errors')}">
+					<g:checkBox name="isChinseName"
+						value="${userInstance?.isChinseName}" /></td>
+				<td>&nbsp;</td>
+			</tr>
 
 			<tr class="prop">
 				<td valign="top" class="name"><label for="accountExpired"><g:message

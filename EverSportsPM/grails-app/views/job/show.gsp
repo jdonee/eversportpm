@@ -116,6 +116,19 @@
                             <td valign="top" class="value"><g:formatDate date="${jobInstance?.lastUpdated}" /></td>
                             
                         </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="job.personalPerformances.label" default="Personal Performances" /></td>
+                            
+                            <td valign="top" style="text-align: left;" class="value">
+                                <ul>
+                                <g:each in="${jobInstance.personalPerformances}" var="p">
+                                    <li><g:link controller="personalPerformance" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+                                </g:each>
+                                </ul>
+                            </td>
+                            
+                        </tr>
                     
                     </tbody>
                 </table>

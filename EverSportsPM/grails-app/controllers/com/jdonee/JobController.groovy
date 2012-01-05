@@ -5,7 +5,7 @@ import grails.converters.JSON
 
 class JobController {
 
-	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	static allowedMethods =[GET:"show", PUT:"update", DELETE:"delete", POST:"save"]
 	// Export service provided by Export plugin
 	def exportService
 	def departmentService

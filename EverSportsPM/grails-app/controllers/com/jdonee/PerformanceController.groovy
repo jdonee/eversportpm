@@ -2,7 +2,7 @@ package com.jdonee
 
 class PerformanceController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods =[GET:"show", PUT:"update", DELETE:"delete", POST:"save"]
 	
 	def filterPaneService
 

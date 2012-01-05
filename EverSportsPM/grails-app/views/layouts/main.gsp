@@ -107,15 +107,17 @@
                         <sec:access url="/department/**">
                         <li><g:link elementId="departmentList" controller="department">${message(code: 'menu.department.label', default: 'Department Management')}</g:link></li>
                         </sec:access>
+                        <sec:access url="/user/**">
+                        <li><g:link elementId="userList" controller="user">${message(code: 'menu.user.label', default: 'User Management')}</g:link></li>
+                        </sec:access>
                         <sec:access url="/role/**">
                         <li><g:link elementId="roleList" controller="role">${message(code: 'menu.role.label', default: 'Role Management')}</g:link></li>
                         </sec:access>
                         <sec:access url="/requestmap/**">
                         <li><g:link elementId="requestmapList" controller="requestmap">${message(code: 'menu.requestmap.label', default: 'Requestmap Management')}</g:link></li>
                         </sec:access>
-                        <sec:access url="/user/**">
-                        <li><g:link elementId="userList" controller="user">${message(code: 'menu.user.label', default: 'User Management')}</g:link></li>
-                        </sec:access></ul>
+
+                        </ul>
 					<h3><a href="javascript:void(0);">${message(code: 'menu.performance.label', default: 'Performance Management')}</a></h3>
 					<ul>
 						<sec:access url="/job/**">

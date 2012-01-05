@@ -48,23 +48,23 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.firstName.label" default="First Name" /></td>
+                            <td valign="top" class="name"><g:message code="user.employeeName.label" default="Employee Name" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "firstName")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "employeeName")}</td>
                             
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.lastName.label" default="Last Name" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "lastName")}</td>
-                            
-                        </tr>
+                        </tr> 
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="user.email.label" default="Email" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: userInstance, field: "email")}</td>
+                            
+                        </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="user.isChinseName.label" default="Is ChinseName"/></td>
+                            
+                            <td valign="top" class="value"><g:formatBoolean boolean="${userInstance?.isChinseName}"/></td>
                             
                         </tr>
                     

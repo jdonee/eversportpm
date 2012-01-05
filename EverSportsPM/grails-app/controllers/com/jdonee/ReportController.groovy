@@ -1,6 +1,8 @@
 package com.jdonee
 
 class ReportController {
+	
+	static allowedMethods =[GET:"show", PUT:"update", DELETE:"delete", POST:"save"]
 
 	def springSecurityService
 	def personalPerformanceService

@@ -4,6 +4,7 @@ import grails.converters.JSON
 import com.jdonee.utils.PerformanceStatus
 import com.jdonee.utils.Constants
 class PeripheralPersonPerformanceController {
+	static allowedMethods =[GET:"show", PUT:"update", DELETE:"delete", POST:"save"]
 
 	def springSecurityService
 	def personalPerformanceService

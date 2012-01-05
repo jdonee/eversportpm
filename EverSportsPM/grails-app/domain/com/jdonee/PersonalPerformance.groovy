@@ -51,6 +51,6 @@ class PersonalPerformance  {
 	}
 
 	String toString(){
-		"岗位信息:${job},考核周期:${performance},状态:${status.label}"
+		"考核周期:${performance},状态:${status.label}"
 	}
 }

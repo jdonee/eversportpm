@@ -5,7 +5,7 @@ import com.jdonee.utils.PerformanceStatus
 import com.jdonee.utils.Constants
 class PersonalPerformanceController {
 
-	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	static allowedMethods =[GET:"show", PUT:"update", DELETE:"delete", POST:"save"]
 
 	def springSecurityService
 	def personalPerformanceService

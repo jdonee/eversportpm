@@ -5,7 +5,8 @@ class CompanyController {
 	
 	def filterPaneService
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    //static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	static allowedMethods =[GET:"show", PUT:"update", DELETE:"delete", POST:"save"]
 
     def index = {
         redirect(action: "list", params: params)

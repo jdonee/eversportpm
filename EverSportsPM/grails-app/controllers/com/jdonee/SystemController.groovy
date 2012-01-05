@@ -1,6 +1,8 @@
 package com.jdonee
 
 class SystemController {
+	
+	static allowedMethods =[GET:"show", PUT:"update", DELETE:"delete", POST:"save"]
 
 	def springSecurityService
 	def jobService

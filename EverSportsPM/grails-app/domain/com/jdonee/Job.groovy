@@ -21,6 +21,7 @@ class Job {
 	Date lastUpdated
 	
     static belongsTo = [user:User,department:Department,jobType:JobType]
+	static hasMany = [personalPerformances:PersonalPerformance]
     static constraints = {
 		company(blank:false)
 		department(blank:false)

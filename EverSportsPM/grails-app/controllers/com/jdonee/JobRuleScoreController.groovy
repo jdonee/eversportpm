@@ -4,7 +4,7 @@ import grails.converters.JSON
 class JobRuleScoreController {
 	def personalPerformanceService
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods =[GET:"show", PUT:"update", DELETE:"delete", POST:"save"]
 
     def index = {
         redirect(action: "list", params: params)
