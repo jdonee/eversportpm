@@ -10,9 +10,7 @@ class User {
 	String username
 	String password
 	String email //邮箱
-	String firstName //名
-	String lastName  //姓
-	boolean isChinseName=true //是否中文名
+	String employeeName //雇员姓名
 	boolean enabled //是否可用
 	boolean accountExpired //用户过期
 	boolean accountLocked //用户锁定
@@ -20,24 +18,11 @@ class User {
 	Date dateCreated
 	Date lastUpdated
 	
-	static transients=['employeeName']
-	
-	String getEmployeeName(){
-		def employeeName=""
-		if(isChinseName){
-			employeeName=lastName+firstName
-		}else{
-			employeeName=firstName+" "+lastName
-		}
-		return employeeName
-	}
-	
 	static hasMany =[jobs: Job]
 	static constraints = {
-		username(blank: false, unique: true)
-		password(blank: false,password:true,minSize:4)
-		firstName(nullable: true,blank:false)
-		lastName(nullable: true,blank:false)
+		username(blank:false, unique: true)
+		password(blank:false,password:true,minSize:4)
+		employeeName(nullable: true,blank:false)
 		email(nullable: true,email:true)
 		enabled()
 		accountExpired()

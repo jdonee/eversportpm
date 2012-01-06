@@ -30,11 +30,9 @@
                         <tr>
                         	<g:sortableColumn property="username" title="${message(code: 'user.username.label', default: 'Username')}" params="${filterParams}" />
                         
-                        	<th class="sortable" style="font-size:10px;">${message(code: 'user.employeeName.label', default: 'Employee Name')}</th>
+                        	<g:sortableColumn property="employeeName" title="${message(code: 'user.employeeName.label', default: 'Employee Name')}" params="${filterParams}" />
                         
                             <g:sortableColumn property="email" title="${message(code: 'user.email.label', default: 'Email')}"  params="${filterParams}"/>
-                            
-                            <g:sortableColumn property="isChinseName" title="${message(code: 'user.isChinseName.label', default: 'Is ChinseName')}"  params="${filterParams}"/>
                             
                             <g:sortableColumn property="enabled" title="${message(code: 'user.enabled.label', default: 'Enabled')}"  params="${filterParams}"/>
                             
@@ -57,9 +55,7 @@
                         
                             <td>${fieldValue(bean: userInstance, field: "employeeName")}</td>                       
                         
-                            <td>${fieldValue(bean: userInstance, field: "email")}</td>
-                            
-                            <td><g:formatBoolean boolean="${userInstance.isChinseName}"/></td>              
+                            <td>${fieldValue(bean: userInstance, field: "email")}</td>         
                             
                             <td><g:formatBoolean boolean="${userInstance.enabled}"/></td>
                             

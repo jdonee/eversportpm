@@ -60,13 +60,6 @@
                             <td valign="top" class="value">${fieldValue(bean: userInstance, field: "email")}</td>
                             
                         </tr>
-                        
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.isChinseName.label" default="Is ChinseName"/></td>
-                            
-                            <td valign="top" class="value"><g:formatBoolean boolean="${userInstance?.isChinseName}"/></td>
-                            
-                        </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="user.enabled.label" default="Enabled"/></td>

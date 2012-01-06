@@ -20,7 +20,9 @@ class PersonInfoController {
 		def userInstance = User.get(currentUser.id)
 		def messageMap=[:]
 		if (userInstance) {
-			userInstance.password = springSecurityService.encodePassword(params.password)
+			if(params.password.length()>0){
+				userInstance.password = springSecurityService.encodePassword(params.password)
+			}
 			if(userInstance.save(flush: true)){
 				messageMap.put("message", "${message(code: 'personInfo.changePwd.message', default: 'Change Success')}")
 			}

@@ -32,7 +32,9 @@ class UserController {
 
     def save = {
         def userInstance = new User(params)
-		userInstance.password = springSecurityService.encodePassword(params.password)
+		if(params.password.length()>0){
+			userInstance.password = springSecurityService.encodePassword(params.password)
+		}
         if (userInstance.save(flush: true)) {
 			for (roleId in params.list('roles')) {
 				def roleInstance=Role.get(roleId.toLong())
@@ -81,7 +83,9 @@ class UserController {
                 }
             }
             userInstance.properties = params
+			if(params.password.length()>0){
 			userInstance.password = springSecurityService.encodePassword(params.password)
+			}
             if (!userInstance.hasErrors() && userInstance.save(flush: true)) {
 				UserRole.removeAll(userInstance)//同步删除中间表数据
 				for (roleId in params.list('roles')) {
@@ -94,8 +98,7 @@ class UserController {
             else {
                 render(view: "edit", model: [userInstance: userInstance])
             }
-        }
-        else {
+        }else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
             redirect(action: "list")
         }

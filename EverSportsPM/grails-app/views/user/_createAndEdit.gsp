@@ -46,38 +46,18 @@
 			</tr>
 
 			<tr class="prop">
-				<td valign="top" class="name"><label for="firstName"><g:message
-							code="user.firstName.label" default="First Name" />
+				<td valign="top" class="name"><label for=employeeName><g:message
+							code="user.employeeName.label" default="Employee Name" />
 				</label></td>
 				<td valign="top"
-					class="value ${hasErrors(bean: userInstance, field: 'firstName', 'errors')}">
-					<g:textField name="firstName" value="${userInstance?.firstName}" />
+					class="value ${hasErrors(bean: userInstance, field: 'employeeName', 'errors')}">
+					<g:textField name="employeeName" value="${userInstance?.employeeName}" />
 				</td>
 				<td>&nbsp;
 				<g:if
-					test="${hasErrors(bean: userInstance, field: 'firstName', 'errors')}">
-					<jqvalui:renderError for="firstName" style="margin-top: -5px">
-						<g:eachError bean="${userInstance}" field="firstName">
-							<g:message error="${it}" />
-						</g:eachError>
-					</jqvalui:renderError>
-				</g:if>
-				</td>
-			</tr>
-
-			<tr class="prop">
-				<td valign="top" class="name"><label for="lastName"><g:message
-							code="user.lastName.label" default="Last Name" />
-				</label></td>
-				<td valign="top"
-					class="value ${hasErrors(bean: userInstance, field: 'lastName', 'errors')}">
-					<g:textField name="lastName" value="${userInstance?.lastName}" />
-				</td>
-				<td>&nbsp;
-				<g:if
-					test="${hasErrors(bean: userInstance, field: 'lastName', 'errors')}">
-					<jqvalui:renderError for="lastName" style="margin-top: -5px">
-						<g:eachError bean="${userInstance}" field="lastName" >
+					test="${hasErrors(bean: userInstance, field: 'employeeName', 'errors')}">
+					<jqvalui:renderError for="employeeName" style="margin-top: -5px">
+						<g:eachError bean="${userInstance}" field="employeeName">
 							<g:message error="${it}" />
 						</g:eachError>
 					</jqvalui:renderError>
@@ -117,17 +97,6 @@
 						<g:checkBox name="roles" value="${vr.id}"/>&nbsp;<span>${vr?.encodeAsHTML()}</span>
 					</g:else>	
 					</g:each>
-				<td>&nbsp;</td>
-			</tr>
-			
-			<tr class="prop">
-				<td valign="top" class="name"><label for="isChinseName"><g:message
-							code="user.isChinseName.label" default="Is Chinse Name" />
-				</label></td>
-				<td valign="top"
-					class="value ${hasErrors(bean: userInstance, field: 'isChinseName', 'errors')}">
-					<g:checkBox name="isChinseName"
-						value="${userInstance?.isChinseName}" /></td>
 				<td>&nbsp;</td>
 			</tr>
 

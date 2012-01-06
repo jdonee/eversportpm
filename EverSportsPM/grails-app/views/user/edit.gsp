@@ -9,7 +9,7 @@
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
         <jqval:resources />
         <jqvalui:resources />
-        <jqvalui:renderValidationScript for="com.jdonee.User" not="enabled,isChinseName,accountExpired,accountLocked,passwordExpired,dateCreated,lastUpdated" form="userForm" errorClass="invalid" validClass="success" onsubmit="false"  renderErrorsOnTop="true"/>
+        <jqvalui:renderValidationScript for="com.jdonee.User" not="enabled,accountExpired,accountLocked,passwordExpired,dateCreated,lastUpdated" form="userForm" errorClass="invalid" validClass="success" onsubmit="false"  renderErrorsOnTop="true"/>
     </head>
     <body>
         <h3 class="ui-widget-header"><g:message code="default.edit.label" args="[entityName]" /></h3>
