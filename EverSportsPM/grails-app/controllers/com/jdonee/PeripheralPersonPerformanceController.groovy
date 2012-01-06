@@ -19,6 +19,10 @@ class PeripheralPersonPerformanceController {
 	}
 
 	def show = {
+		if(!personalPerformanceService.checkPersonalPerformanceByUser(currentUser,jobService.getCodesByUser(currentUser),params.long('id'))){
+			redirect(controller: "login", action: "denied")
+			return
+		}else{
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		def currectJob=new Job()
 		if (!personalPerformanceInstance) {
@@ -36,6 +40,7 @@ class PeripheralPersonPerformanceController {
 				}
 			}
 			[personalPerformanceInstance: personalPerformanceInstance,currectJob:currectJob]
+		}
 		}
 	}
 

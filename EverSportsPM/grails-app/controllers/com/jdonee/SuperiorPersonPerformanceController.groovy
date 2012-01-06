@@ -21,6 +21,10 @@ class SuperiorPersonPerformanceController {
 	}
 	
 	def show = {
+		if(!personalPerformanceService.checkPersonalPerformanceByUser(currentUser,jobService.getCodesByUser(currentUser),params.long('id'))){
+			redirect(controller: "login", action: "denied")
+			return
+		}
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		def jobInstanceList=[]
 		if (!personalPerformanceInstance) {

@@ -44,6 +44,28 @@ class PersonalPerformanceService {
 		}
 		return results
 	}
+	
+	def checkPersonalPerformanceByUser(user,codes,id) {
+		def boo=Boolean.FALSE
+		def jobs=Job.findAllByUserAndCompanyResponsible(user,Boolean.TRUE)
+		if(jobs){
+			boo=Boolean.TRUE
+		}else{
+			def results = PersonalPerformance.withCriteria{
+				job{
+					or{
+						'in'("code",codes)
+						'in'("parentCode",codes)
+					}
+				}
+				eq("id",id)
+			}
+			if(results){
+				boo=Boolean.TRUE
+			}
+		}
+		return boo
+	}
 
 	def findAllMyPersonalPerformanceByUser(codes,params) {
 		def results=[]

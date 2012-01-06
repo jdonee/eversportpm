@@ -20,6 +20,10 @@ class MyPersonPerformanceController {
 	}
 	
 	def show = {
+		if(!personalPerformanceService.checkPersonalPerformanceByUser(currentUser,jobService.getCodesByUser(currentUser),params.long('id'))){
+			redirect(controller: "login", action: "denied")
+			return
+		}
 		def personalPerformanceInstance = PersonalPerformance.get(params.id)
 		if (!personalPerformanceInstance) {
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), params.id])}"
