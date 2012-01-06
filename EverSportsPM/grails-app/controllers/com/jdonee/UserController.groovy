@@ -32,7 +32,7 @@ class UserController {
 
     def save = {
         def userInstance = new User(params)
-		if(params.password.length()>0){
+		if(params.password){
 			userInstance.password = springSecurityService.encodePassword(params.password)
 		}
         if (userInstance.save(flush: true)) {
@@ -82,10 +82,10 @@ class UserController {
                     return
                 }
             }
-            userInstance.properties = params
-			if(params.password.length()>0){
-			userInstance.password = springSecurityService.encodePassword(params.password)
+			if(params.password&&params.password!=userInstance.password){
+				params.password = springSecurityService.encodePassword(params.password)
 			}
+			userInstance.properties = params
             if (!userInstance.hasErrors() && userInstance.save(flush: true)) {
 				UserRole.removeAll(userInstance)//同步删除中间表数据
 				for (roleId in params.list('roles')) {

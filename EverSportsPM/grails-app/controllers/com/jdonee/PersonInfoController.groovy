@@ -20,7 +20,7 @@ class PersonInfoController {
 		def userInstance = User.get(currentUser.id)
 		def messageMap=[:]
 		if (userInstance) {
-			if(params.password.length()>0){
+			if(params.password&&params.password!=userInstance.password){
 				userInstance.password = springSecurityService.encodePassword(params.password)
 			}
 			if(userInstance.save(flush: true)){
