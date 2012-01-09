@@ -7,7 +7,7 @@
         <g:set var="entityName" value="${message(code: 'personalPerformance.label', default: 'PersonalPerformance')}" />
         <title><g:message code="personPerformanceReport.list.label" default="Person Performance Report" /></title>
         <jq:jquery>
-        	$("#personalPerformanceList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
+        	$("#reportList").css({"color":"#ff6600","font-weight":"bold","text-decoration":"none"});
 		</jq:jquery>
     </head>
     <h3 class="ui-widget-header"><g:message code="personPerformanceReport.list.label" default="Person Performance Report" /></h3>
