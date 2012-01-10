@@ -19,7 +19,7 @@ class Requestmap {
 		url blank: false, unique: true
 		configAttribute blank: false
 		description blank: false , unique: true,maxSize : 150
-		customed blank: false
+		customed()
 		dateCreated()
 		lastUpdated()
 	}

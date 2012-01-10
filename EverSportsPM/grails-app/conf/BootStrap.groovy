@@ -53,7 +53,6 @@ class BootStrap {
 				new Requestmap(description:'系统登入',url: '/login/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
 				new Requestmap(description:'系统登出',url: '/logout/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
 				new Requestmap(description:'根目录',url: '/*', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY',customed:false).save()
-				new Requestmap(description:'安全测试',url: '/secure/**', configAttribute: 'ROLE_ADMIN,ROLE_USER',customed:true).save()
 				new Requestmap(description:'公司管理',url: '/company/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
 				new Requestmap(description:'部门管理',url: '/department/**', configAttribute: 'ROLE_ADMIN',customed:true).save()
 				new Requestmap(description:'角色管理',url: '/role/**', configAttribute: 'ROLE_ADMIN',customed:true).save()

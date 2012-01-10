@@ -23,9 +23,9 @@ class Job {
     static belongsTo = [user:User,department:Department,jobType:JobType]
 	static hasMany = [personalPerformances:PersonalPerformance]
     static constraints = {
-		company(blank:false)
-		department(blank:false)
-		user(blank:false)
+		company()
+		department()
+		user()
 		name(blank:false,maxSize:50)
 		code(blank:false,unique:true,maxSize:50,matches:"^[0-9]+-[0-9]+\$")
 		parentCode(nullable: true,matches:"^[0-9]+-[0-9]+\$")

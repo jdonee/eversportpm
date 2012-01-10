@@ -17,7 +17,7 @@ class JobRuleScore {
 		jobRule()
 		job()
 		used()
-		score(blank: false,nullable: true,min:0,max:100)
+		score(nullable: true,min:0,max:100)
     }
 	
 	static void removeAll(JobRule jobRule) {

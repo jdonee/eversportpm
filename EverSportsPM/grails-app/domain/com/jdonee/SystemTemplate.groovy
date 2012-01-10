@@ -18,7 +18,7 @@ class SystemTemplate {
 	Date lastUpdated
 	static transients =['templateContentBy']
     static constraints = {
-		templateType(blank: false)
+		templateType()
 		templateContent(blank: false)
 		enabled()
 		dateCreated()

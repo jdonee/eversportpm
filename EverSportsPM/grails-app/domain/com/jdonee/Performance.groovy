@@ -27,11 +27,11 @@ class Performance  {
 	static hasMany = [personalPerformances:PersonalPerformance]
 	static constraints = {
 		name(blank:false,maxSize:50)
-		startDate(blank:false)
-		endDate(blank:false)
-		mainWeight(blank:false,min:0,max:100)
-		auxiliaryWeight(blank:false, min:0,max:100)
-		peripheralWeight(blank:false,min:0,max:100)
+		startDate()
+		endDate()
+		mainWeight(min:0,max:100)
+		auxiliaryWeight(min:0,max:100)
+		peripheralWeight(min:0,max:100)
 		description(nullable:true,maxSize:150)
 		closed()
 		useTemplate()
