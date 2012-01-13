@@ -6,7 +6,7 @@ class SystemController {
 
 	def springSecurityService
 	def jobService
-    def index = { 
+    def index = {
 		def currentUserInstance = null
 		if (springSecurityService.isLoggedIn()) {
 			currentUserInstance = currentUser

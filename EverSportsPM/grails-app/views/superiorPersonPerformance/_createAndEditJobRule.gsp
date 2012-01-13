@@ -103,7 +103,7 @@
 					<label for="peripheralScore"><g:message code="jobRule.peripheralScore.label" default="Peripheral Score" /></label>
 					<p id="peripheralScore" class="text ui-widget-content ui-corner-all"></p>
 					<label for="score"><g:message code="jobRule.score.label" default="Score" /></label>
-					<g:textField name="score" class="text ui-widget-content ui-corner-all"/>
+					<g:textField name="score" class="text ui-widget-content ui-corner-all"/><span>(${message(code: 'personalPerformance.score.info.label', default: '100 Points out.')})</span>
 					<label for="expectation"><g:message code="jobRule.expectation.label" default="Expectation" /></label>
 					<g:textArea name="jExpectation" style="width: 500px; height: 100px;" class="text ui-widget-content ui-corner-all"/>					
 				</fieldset>

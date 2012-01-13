@@ -96,7 +96,7 @@
 					<label for="personSummary"><g:message code="jobRule.personSummary.label" default="Person Summary" /></label>
 					<p id="personSummary" class="text ui-widget-content ui-corner-all"></p>
 					<label for="score"><g:message code="jobRuleScore.score.label" default="Score" /></label>
-					<g:textField name="score" class="text ui-widget-content ui-corner-all"/>					
+					<g:textField name="score" class="text ui-widget-content ui-corner-all"/><span>(${message(code: 'personalPerformance.score.info.label', default: '100 Points out.')})</span>					
 				</fieldset>
 				</form>
 			</div>

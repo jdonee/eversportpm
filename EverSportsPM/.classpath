@@ -11,7 +11,6 @@
 	<classpathentry kind="src" path="test/integration"/>
 	<classpathentry kind="src" path="test/unit"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="com.springsource.sts.grails.core.CLASSPATH_CONTAINER"/>
 	<classpathentry kind="src" path=".link_to_grails_plugins/constraints-0.6.0/grails-app/i18n">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
@@ -197,5 +196,11 @@
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="com.springsource.sts.grails.core.CLASSPATH_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/FZeng/git/JdoneeGitRep/EverSportsPM/lib/jxls-core-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/FZeng/git/JdoneeGitRep/EverSportsPM/lib/poi-3.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/FZeng/git/JdoneeGitRep/EverSportsPM/lib/poi-ooxml-3.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/FZeng/git/JdoneeGitRep/EverSportsPM/lib/commons-jexl-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/FZeng/git/JdoneeGitRep/EverSportsPM/lib/commons-digester-2.0.jar"/>
 	<classpathentry kind="output" path="target-eclipse/classes"/>
 </classpath>

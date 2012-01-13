@@ -211,3 +211,6 @@ jqueryValidationUi {
 	]	
 }
 
+//Custom Configuration
+file.excelTemplatePathPrefix = "/web-app/templates/"
+file.excelOutputPathPrefix = "/web-app/"

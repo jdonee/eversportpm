@@ -204,6 +204,7 @@
 													<th><g:message code="jobRule.score.label" default="Score" /></th>
 													<th><g:message code="jobRule.expectation.label" default="Expectation" /></th>
 													</g:grep>
+													<th><g:message code="jobRule.customed.label" default="Customed" /></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -266,10 +267,9 @@
             <%--
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${personalPerformanceInstance?.id}" />
+                    <g:hiddenField name="id" value="${personalPerformanceInstance?.id}" />  
                 </g:form>
-            </div> 
-             --%>              
+            </div> --%>          
         </div>
         </div>
         <div class="hiddenForms"></div><!-- End demo -->   

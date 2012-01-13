@@ -2,6 +2,7 @@ package com.jdonee
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import com.jdonee.PersonalPerformance
+import com.jdonee.utils.Constants
 
 class ReportController {
 	
@@ -127,8 +128,7 @@ class ReportController {
 		if (!personalPerformanceInstance) {
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'personalPerformance.label', default: 'PersonalPerformance'), params.id])}"
 			redirect(action: "list")
-		}
-		else {
+		}else {
 			def peripheralPeople=personalPerformanceInstance.peripheralPeople
 			if(peripheralPeople!=null&&peripheralPeople.length()>0){
 				jobInstanceList=jobService.findAllPeripheralPeopleByCodes(peripheralPeople.tokenize(Constants.COMMA_SEPARATOR))

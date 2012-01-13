@@ -2,12 +2,20 @@ package com.jdonee.utils;
 
 public interface Constants {
 	
-	final static Integer TOTAL_SCORE=Integer.valueOf(100);
+	Integer TOTAL_SCORE=Integer.valueOf(100);
 	
-	final static String DEFAULT_SEPARATOR="||";
+	String DEFAULT_SEPARATOR="||";
 	
-	final static String COMMA_SEPARATOR=",";
+	String COMMA_SEPARATOR=",";
 	
-	final static Integer WEIGHT_PERCENT=Integer.valueOf(100);
+	Integer WEIGHT_PERCENT=Integer.valueOf(100);
+	
+	Integer SINGLE_SHEET_MAX_RECORDS = 10000;
+	
+	String EXCEL_FILE_EXT=".xls";
+	
+	String OUTPUT_BASE_FOLDER="/web-app/custom/report/";
+	
+	String EXCEL_TEMPLATE_FOLDER ="/web-app/templates/";
 
 }

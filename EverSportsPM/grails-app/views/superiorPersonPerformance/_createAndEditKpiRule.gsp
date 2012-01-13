@@ -110,7 +110,7 @@
 					<label for="actualValue"><g:message code="kpiRule.actualValue.label" default="Actual Value" /></label>
 					<g:textArea name="actualValue" style="width: 500px; height: 50px;" class="text ui-widget-content ui-corner-all"/>
 					<label for="score"><g:message code="kpiRule.score.label" default="Score" /></label>
-					<g:textField name="score" class="text ui-widget-content ui-corner-all"/>
+					<g:textField name="score" class="text ui-widget-content ui-corner-all"/><span>(${message(code: 'personalPerformance.score.info.label', default: '100 Points out.')})</span>
 				</fieldset>
 				</form>
 </div>

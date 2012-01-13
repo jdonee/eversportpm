@@ -320,7 +320,6 @@
                     </tbody>
                 </table>
             </div>
-            <g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[012]'"><%--只有在初始化和已完成指标状态下可以在此编辑和删除 --%>
             <div class="buttons">
                 <g:form>
                     <g:hiddenField name="id" value="${personalPerformanceInstance?.id}" />
@@ -328,6 +327,7 @@
                     	<span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
                     	<span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                     	</g:grep>
+                    	<span class="button"><g:actionSubmit class="export" action="excelExport" value="${message(code: 'default.button.excelExport.label', default: 'Excel Export')}"/></span>
                     	<g:grep in="${personalPerformanceInstance?.status?.code?.encodeAsHTML()}" filter="~'[0]'">    
                     	<span class="button"><g:actionSubmit class="check" action="inputFinish" value="${message(code: 'default.button.inputFinish.label', default: 'Input Finish')}"/></span>
                     	</g:grep>
@@ -344,9 +344,7 @@
                     	</g:if>
                     	</g:grep>
                 </g:form>
-            </div>
-            </g:grep>
-               
+            </div>              
         </div>
         </div>
         <div class="hiddenForms">

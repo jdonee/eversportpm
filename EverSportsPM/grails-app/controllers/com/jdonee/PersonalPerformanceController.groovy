@@ -3,6 +3,7 @@ package com.jdonee
 import grails.converters.JSON
 import com.jdonee.utils.PerformanceStatus
 import com.jdonee.utils.Constants
+import com.jdonee.excel.SimpleExcelUtils
 class PersonalPerformanceController {
 
 	static allowedMethods =[GET:"show", PUT:"update", DELETE:"delete", POST:"save"]
@@ -257,12 +258,27 @@ class PersonalPerformanceController {
 			redirect(action: "list")
 		}
 	}
+	
+	/*导出Excel*/
+	def excelExport = {
+		def personalPerformanceInstance = PersonalPerformance.get(params.id)
+		def jobInstanceList=[]
+		if (personalPerformanceInstance) {
+			def beans = [:];
+			beans.put("personPerformance", personalPerformanceInstance);
+			String filePath=SimpleExcelUtils.execute("personPerformance", beans,personalPerformanceInstance.job.user.username+"-"+personalPerformanceInstance.job.code)
+			def file = new File(filePath)
+			response.setContentType("application/vnd.ms-excel")
+			response.setHeader("Content-disposition", "attachment;filename=${file.getName()}")
+			response.outputStream << file.newInputStream() // Performing a binary stream copy
+		}
+	}
 
 	private getCurrentUser() {
 		return User.get(springSecurityService.principal.id)
 	}
 
-	def checkUnique(def params){
+	private checkUnique(def params){
 		def personalPerformanceCount=PersonalPerformance.findAllByPerformanceAndJob(Performance.get(params.long('performance.id')),Job.get(params.long('job.id'))).size()
 		def boo=Boolean.FALSE
 		if(params.id==null){
